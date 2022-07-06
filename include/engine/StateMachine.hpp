@@ -10,11 +10,12 @@ namespace engine {
 
 	class StateMachine {
 	public:
-		void addState(const std::string& name, std::unique_ptr<State> state);
-
 		/**
-		 * @brief	Initializes current state. MUST call function, ONLY after adding states. See 'engine/Engine.cpp': `init()`.
+		 * @brief	This one should be obvious. Please add states before initializing.
+		 * @param name 
+		 * @param state 
 		*/
+		void addState(const std::string& name, std::unique_ptr<State> state);
 
 		/**
 		 * @brief	Sets initial state.
@@ -32,6 +33,7 @@ namespace engine {
 		 * @return	The current active state
 		*/
 		State* operator->();
+
 
 	private:
 		std::map<const std::string, std::unique_ptr<State>, std::less<>> _states;

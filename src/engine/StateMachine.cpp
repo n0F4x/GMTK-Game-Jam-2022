@@ -29,8 +29,8 @@ void StateMachine::processChanges() {
 		else {
 			std::cerr << "StateMachine: Failed changing state to \"" << _currentState->getNextState() << "\"\n";
 		}
+		_currentState->activate();
 	}
-	_currentState->activate();
 }
 
 

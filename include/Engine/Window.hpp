@@ -30,6 +30,7 @@ namespace engine {
 		*/
 		static sf::FloatRect getBounds();
 
+
 		/////////////
 		// Drawing //
 		/////////////
@@ -48,13 +49,15 @@ namespace engine {
 		*/
 		static void display();
 
+
 		///////////
 		// CLOSE //
 		///////////
 		/**
-		 * @brief	Closes the window
+		 * @brief	Closes the window (and the application).
 		*/
 		static void close();
+
 
 		//////////////////////////
 		// Non-static functions //
@@ -84,6 +87,7 @@ namespace engine {
 		 * @param FPS	Frames per second. Default is 60
 		*/
 		void lock_FPS() const;
+
 
 	private:
 		static sf::RenderWindow _window;
