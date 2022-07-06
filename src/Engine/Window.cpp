@@ -16,6 +16,10 @@ Window::Window() {
 }
 
 
+const sf::RenderWindow& engine::Window::window() {
+	return _window;
+}
+
 sf::Vector2f Window::getSize() {
 	return sf::Vector2f{ sf::Vector2u{ _getVideoMode().width, _getVideoMode().height } };
 }
