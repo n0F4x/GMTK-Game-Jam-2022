@@ -13,6 +13,7 @@ public:
 			engine::Window::getSize() / 2.f - sf::Vector2f{ _shape.getGlobalBounds().width, _shape.getGlobalBounds().height }
 		);
 	}
+
 	void update() override { 
 		switch (static_cast<int>(_clock.getElapsedTime().asSeconds()) % 4) {
 		case 0:
@@ -41,9 +42,11 @@ public:
 	}
 
 private:
+	// Overriding sf::Drawable
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
 		target.draw(_shape);
 	}
+
 
 	// Variables //
 	sf::CircleShape _shape{ 30.f, 50 };
@@ -51,19 +54,17 @@ private:
 };
 
 
+
 class SampleState : public engine::State {
 public:
 	SampleState() {
 		addObject(&_sampleObject);
+
+		renderer().add_static(&_sampleObject);
 	}
 
 	void handle_event(const sf::Event&) override { /*empty*/ }
-	void update() override {
-		update_objects();
-	}
-	void draw() override {
-		draw_objects();
-	}
+
 
 private:
 	SampleObject _sampleObject;

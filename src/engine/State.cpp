@@ -5,22 +5,18 @@
 using namespace engine;
 
 
-void State::handle_event_objects(const sf::Event& event) const {
-	for (const auto object : _objects) {
-		object->handle_event(event);
-	}
-}
-
-void State::update_objects() const {
-	for (const auto object : _objects) {
+void State::update() {
+	for (auto object : _objects) {
 		object->update();
 	}
+
+	for (const auto& logic : _logicBlocks) {
+		logic();
+	}
 }
 
-void State::draw_objects() const {
-	for (const Object* object : _objects) {
-		Window::draw(*object);
-	}
+void engine::State::draw() {
+	_renderer.render();
 }
 
 
@@ -45,4 +41,14 @@ void State::changeState(const std::string_view& nextState) {
 
 void engine::State::addObject(Object* object) {
 	_objects.push_back(object);
+}
+
+
+void engine::State::addLogic(const std::function<void()>& logic) {
+	_logicBlocks.push_back(logic);
+}
+
+
+Renderer& engine::State::renderer() {
+	return _renderer;
 }
