@@ -18,7 +18,7 @@ namespace engine {
 		 * @brief	Getter for inner window
 		 * @return	Inner static window
 		*/
-		static const sf::RenderWindow& window() { return _window; }
+		static const sf::RenderWindow& window();
 		/**
 		 * @brief	Getter for the size of the window
 		 * @return	The size of the window
