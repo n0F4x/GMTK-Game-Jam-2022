@@ -10,12 +10,6 @@ namespace engine {
 
 	class StateMachine {
 	public:
-		/**
-		 * @brief	Checks for active state
-		 * @return	True if one of the states is currently active
-		*/
-		bool isActive() const; /// TODO
-
 		void addState(const std::string& name, std::unique_ptr<State> state);
 
 		/**
@@ -27,7 +21,7 @@ namespace engine {
 					MUST call function, ONLY after adding states. See 'engine/Engine.cpp': `init()`.
 		 * @param initState 
 		*/
-		void init(const std::string_view& initState);
+		void initialize(const std::string_view& initState);
 
 		/**
 		 * @brief	Switches between states if needed

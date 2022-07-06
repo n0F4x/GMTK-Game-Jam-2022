@@ -12,7 +12,7 @@ namespace engine {
 		void run();
 
 	private:
-		void init();
+		void initialize();
 		void game_loop();
 
 		Window _window;

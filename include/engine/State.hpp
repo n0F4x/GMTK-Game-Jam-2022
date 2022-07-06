@@ -37,7 +37,6 @@ namespace engine {
 
 		void handle_event_objects(const sf::Event&) const;
 		void update_objects() const;
-		void draw_objects() const;
 
 		//////////////////
 		// StateMachine //

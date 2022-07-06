@@ -5,17 +5,12 @@
 using namespace engine;
 
 
-bool StateMachine::isActive() const {
-	return false;
-}
-
-
-void engine::StateMachine::addState(const std::string& name, std::unique_ptr<State> state) {
+void StateMachine::addState(const std::string& name, std::unique_ptr<State> state) {
 	_states.try_emplace(name, std::move(state));
 }
 
 
-void engine::StateMachine::init(const std::string_view& initState) {
+void StateMachine::initialize(const std::string_view& initState) {
 	if (auto nextState = _states.find(initState); nextState != _states.end()) {
 		_currentState = nextState->second.get();
 	}
