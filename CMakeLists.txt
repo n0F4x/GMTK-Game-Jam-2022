@@ -5,28 +5,26 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_compile_options(
-    -std=c++20
-    -ggdb3
-    -Wall
-    # -Wextra
-)
-
-include(FetchContent)
-FetchContent_Declare(SFML
-    GIT_REPOSITORY https://github.com/SFML/SFML.git
-    GIT_TAG 2.5.1)
-FetchContent_MakeAvailable(SFML)
+if(MSVC)
+    add_compile_options(/W4 /WX)
+else()
+    add_compile_options(-Wall -Wextra -Werror)
+endif()
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/Engine
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/engine
 )
 
 set(SOURCE_FILES
-    src/main.cpp
-    src/Engine/Engine.cpp
+    "src/main.cpp"
+    "src/engine/Engine.cpp"
+    "src/engine/Window.cpp"
 )
+
+set(SFML_DIR C:/Programming/Languages/C++/SFML-2.5.1/lib/cmake/SFML)
+
+find_package(SFML 2.5 COMPONENTS graphics audio system window REQUIRED)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
