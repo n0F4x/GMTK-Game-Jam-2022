@@ -24,7 +24,7 @@ set(SOURCE_FILES
 
 set(SFML_DIR C:/Programming/Languages/C++/SFML-2.5.1/lib/cmake/SFML)
 
-find_package(SFML 2.5 COMPONENTS graphics audio system window REQUIRED)
+find_package(SFML 2.5.1 COMPONENTS graphics audio system window REQUIRED)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
