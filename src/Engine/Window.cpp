@@ -38,6 +38,9 @@ void Window::draw(const sf::Drawable& drawable, const sf::RenderStates& states) 
 }
 
 
+void Window::close() { _window.close(); }
+
+
 void Window::open() const {
 	if (!_window.isOpen()) {
 		_window.create(_getVideoMode(), _title, _style, _settings);
@@ -46,8 +49,6 @@ void Window::open() const {
 		_window.setKeyRepeatEnabled(false);
 	}
 }
-
-void Window::close() const { _window.close(); }
 
 bool Window::isOpen() {
 	_FPSClock.restart();

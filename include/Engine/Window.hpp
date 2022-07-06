@@ -15,7 +15,7 @@ namespace engine {
 		// API //
 		/////////
 		/**
-		 * @brief	Getter for inner window
+		 * @brief	Getter for inner window. Some SFML functions require window access
 		 * @return	Inner static window
 		*/
 		static const sf::RenderWindow& window();
@@ -48,6 +48,14 @@ namespace engine {
 		*/
 		static void display();
 
+		///////////
+		// CLOSE //
+		///////////
+		/**
+		 * @brief	Closes the window
+		*/
+		static void close();
+
 		//////////////////////////
 		// Non-static functions //
 		//////////////////////////
@@ -59,10 +67,6 @@ namespace engine {
 		 * @brief	Opens the window
 		*/
 		void open() const;
-		/**
-		 * @brief	Closes the window
-		*/
-		void close() const;
 		/**
 		 * @brief	Checks whether the window is open. Starts timer for limiting FPS via `lock_FPS()`
 		 * @return	True if the window is open

@@ -20,7 +20,7 @@ void Engine::game_loop() {
 		// Poll and handle events
 		while (_window.poll_event(event)) {
 			if (event.type == sf::Event::Closed) {
-				_window.close();
+				Window::close();
 			}
 			_stateMachine->handle_event(event);
 		}
