@@ -8,6 +8,7 @@ using namespace engine;
 void Engine::init() {
 	_window.open();
 
+	// Add states here:
 	_stateMachine.addState("Sample", std::make_unique<SampleState>());
 
 	_stateMachine.init("<name of the first state>");
