@@ -5,13 +5,13 @@
 using namespace engine;
 
 
-void Engine::init() {
+void Engine::initialize() {
 	_window.open();
 
 	// Add states here:
 	_stateMachine.addState("Sample", std::make_unique<SampleState>());
 
-	_stateMachine.init("<name of the first state>");
+	_stateMachine.initialize("<name of the first state>");
 }
 
 void Engine::game_loop() {
@@ -39,7 +39,7 @@ void Engine::game_loop() {
 }
 
 void Engine::run() {
-	init();
+	initialize();
 
 	game_loop();
 }
