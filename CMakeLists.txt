@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(MSVC)
-    add_compile_options(/W4 /WX)
+    add_compile_options(/WX)
 else()
     add_compile_options(-Wall -Wextra -Werror)
 endif()
@@ -20,7 +20,10 @@ set(SOURCE_FILES
     "src/main.cpp"
     "src/engine/Engine.cpp"
     "src/engine/Window.cpp"
-)
+    "src/engine/StateMachine.cpp"
+    "src/engine/State.cpp"
+    "src/engine/Object.cpp"
+ )
 
 set(SFML_DIR C:/Programming/Languages/C++/SFML-2.5.1/lib/cmake/SFML)
 
