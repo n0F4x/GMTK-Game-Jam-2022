@@ -6,7 +6,7 @@
 
 namespace engine {
 
-	class Engine;
+	class Core;
 
 	/**
 	 * @brief	Once a Window object is created (inside the engine), its static functions can be used anywhere in the project
@@ -62,10 +62,10 @@ namespace engine {
 
 
 	private:
-		////////////
-		// Engine //
-		////////////
-		friend Engine;
+		//////////
+		// Core //
+		//////////
+		friend Core;
 		/**
 		 * @brief	Opens the window
 		*/
