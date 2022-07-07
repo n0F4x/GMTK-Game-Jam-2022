@@ -8,8 +8,6 @@ class Object : public sf::Drawable, public sf::Transformable {
 public:
 	virtual void update() { /*empty by default*/ }
 
-	const Object* getParent() const;
-
 	/*
 	* @brief Methods creating or destroying parent - child connections (setting both sides in one call)
 	*/

@@ -1,29 +1,43 @@
 #include "Object.hpp"
 
 
-const Object* Object::getParent() const {
-	return _parent;
-}
-
-
 void Object::attachChild(Object* child) {
-	if (_parent == child || child->getParent() == this) return;
-	child->attachParent(this);
+	// TODO: Recursive parent/child relation check
+	if (child == this) {
+		return;
+	}
+	if (child == _parent) {
+		return;
+	}
+	if (child->_parent == this) {
+		return;
+	}
+
+	child->detachParent();
+
+	child->_parent = this;
 	_children.push_back(child);
 }
+
 void Object::detachChild(Object* child) {
-	_children.remove(child);
-	if (child->getParent() != this) return;
-	child->detachParent();
+	if (auto it = std::ranges::find(_children, child); it != _children.end()) {
+		child->_parent = nullptr;
+
+		_children.erase(it);
+	}
 }
+
 void Object::attachParent(Object* parent) {
-	if (_parent == this) return;
-	if (_parent != nullptr) detachParent();
-	_parent = parent;
-	_parent->attachChild(this);
+	// TODO: Recursive parent/child relation check
+	if (_parent == this) {
+		return;
+	}
+
+	parent->attachChild(this);
 }
+
 void Object::detachParent() {
-	Object* parent = _parent;
-	_parent = nullptr;
-	if (parent != nullptr) parent->detachChild(this);
+	if (_parent != nullptr) {
+		_parent->detachChild(this);
+	}
 }
