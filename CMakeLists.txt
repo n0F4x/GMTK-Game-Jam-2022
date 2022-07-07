@@ -24,6 +24,7 @@ set(SOURCE_FILES
     "src/engine/State.cpp"
     "src/engine/Object.cpp"
     "src/engine/Renderer.cpp"
+    "src/GUI/Panel.cpp"
 )
 
 set(SFML_DIR C:/Programming/Languages/C++/SFML-2.5.1/lib/cmake/SFML)
