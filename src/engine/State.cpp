@@ -5,7 +5,7 @@
 using namespace engine;
 
 
-void State::update() const {
+void State::update() {
 	for (auto object : _objects) {
 		object->update();
 	}
