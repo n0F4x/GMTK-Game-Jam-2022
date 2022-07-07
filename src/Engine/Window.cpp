@@ -5,15 +5,25 @@
 using namespace engine;
 
 
+//////////////
+// Settings //
+//////////////
 sf::RenderWindow Window::_window;
 std::function<sf::VideoMode()> Window::_getVideoMode = sf::VideoMode::getDesktopMode;
+sf::String Window::_title = "Platforms";
+sf::ContextSettings Window::_settings{
+	/*depthBits*/			24,
+	/*stencilBits*/			8,
+	/*antialiasingLevel*/	0,
+	/*majorVersion*/		1,
+	/*minorVersion*/		1,
+	/*attributeFlags*/		sf::ContextSettings::Attribute::Default,
+	/*sRgbCapable*/			true
+};
+sf::Uint32 Window::_style = sf::Style::Fullscreen;
+float Window::_FPS = 60.f;
+sf::Clock Window::_FPSClock;
 
-
-Window::Window() {
-	_settings.depthBits = 24;
-	_settings.stencilBits = 8;
-	_settings.sRgbCapable = true;
-}
 
 
 const sf::RenderWindow& engine::Window::window() {
@@ -41,7 +51,7 @@ void Window::draw(const sf::Drawable& drawable, const sf::RenderStates& states) 
 void Window::close() { _window.close(); }
 
 
-void Window::open() const {
+void Window::open() {
 	if (!_window.isOpen()) {
 		_window.create(_getVideoMode(), _title, _style, _settings);
 
@@ -55,11 +65,11 @@ bool Window::isOpen() {
 	return _window.isOpen();
 }
 
-bool Window::poll_event(sf::Event& event) const {
+bool Window::poll_event(sf::Event& event) {
 	return _window.pollEvent(event);
 }
 
-void Window::lock_FPS() const {
+void Window::lock_FPS() {
 	float elapsedTime = _FPSClock.getElapsedTime().asSeconds();
 
 	if (elapsedTime < 1.f / _FPS) {
