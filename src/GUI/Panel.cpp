@@ -1,22 +1,33 @@
 #include "GUI/Panel.hpp"
 
+
+Panel::Panel(sf::Vector2f scale, sf::Vector2f position, float border, sf::Color backgroundColor, sf::Color borderColor, int borderDistortion, bool borderFade)
+	: _border{ border }, _borderDistortion{ borderDistortion }, _borderFade{ borderFade }, _backgroundColor{ backgroundColor }, _borderColor{ borderColor }
+{
+	Object::setScale(scale);
+	Object::setPosition(position);
+
+	calculateVertices();
+}
+
+
 void Panel::update() {
 	//TODO update vertices on animation
 }
 
+
 void Panel::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	int verticesToDraw = _border == 0 ? 6 : 42;
+	const size_t verticesToDraw = _border == 0 ? 6 : 42;
 
-
-	sf::Vertex transformedVertices[42];
-	for (size_t i = 0; i < verticesToDraw; i++)
-	{
+	std::array<sf::Vertex, 42> transformedVertices;
+	for (size_t i = 0; i < verticesToDraw; i++) {
 		transformedVertices[i].position = Transformable::getTransform().transformPoint(_vertices[i].position);
 		transformedVertices[i].color = _vertices[i].color;
 	}
 
-	target.draw(transformedVertices, verticesToDraw, sf::Triangles);
+	target.draw(transformedVertices.data(), verticesToDraw, sf::Triangles);
 }
+
 
 void Panel::calculateVertices() {
 	sf::Vector2f scale = getScale();
@@ -106,8 +117,7 @@ void Panel::calculateVertices() {
 	if (_borderFade) {
 		for (size_t i = 7; i < 18; i++)
 			if (i % 3 != 0) _vertices[i].color.a = 0;
-		for (size_t i = 20; i < 41; i += 6)
-		{
+		for (size_t i = 20; i < 41; i += 6) {
 			_vertices[i].color.a = 0;
 			_vertices[i + 1].color.a = 0;
 			_vertices[i + 2].color.a = 0;

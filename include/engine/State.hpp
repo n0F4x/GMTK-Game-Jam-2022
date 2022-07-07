@@ -21,7 +21,7 @@ namespace engine {
 		 *				_objects
 		 *				_logicBlocks
 		*/
-		void update();
+		void update() const;
 		/**
 		 * @brief	Equivalent to calling Renderer::render() within the state
 		*/
