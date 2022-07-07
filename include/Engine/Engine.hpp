@@ -16,7 +16,6 @@ namespace engine {
 		void initialize();
 		void game_loop();
 
-		Window _window;
 		StateMachine _stateMachine;
 	};
 

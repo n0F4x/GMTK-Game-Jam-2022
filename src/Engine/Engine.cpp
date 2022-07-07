@@ -6,7 +6,7 @@ using namespace engine;
 
 
 void Engine::initialize() {
-	_window.open();
+	Window::open();
 
 	// Add states here:
 	_stateMachine.addState("Sample", std::make_unique<SampleState>());
@@ -16,9 +16,9 @@ void Engine::initialize() {
 
 void Engine::game_loop() {
 	sf::Event event;
-	while (_window.isOpen()) {
+	while (Window::isOpen()) {
 		// Poll and handle events
-		while (_window.poll_event(event)) {
+		while (Window::poll_event(event)) {
 			if (event.type == sf::Event::Closed) {
 				Window::close();
 			}
@@ -34,9 +34,10 @@ void Engine::game_loop() {
 		Window::display();
 
 		// Set FPS (amount specified withing window)
-		_window.lock_FPS();
+		Window::lock_FPS();
 	}
 }
+
 
 void Engine::run() {
 	initialize();

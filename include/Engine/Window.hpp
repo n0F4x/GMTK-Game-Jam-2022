@@ -6,6 +6,8 @@
 
 namespace engine {
 
+	class Engine;
+
 	/**
 	 * @brief	Once a Window object is created (inside the engine), its static functions can be used anywhere in the project
 	*/
@@ -50,54 +52,53 @@ namespace engine {
 		static void display();
 
 
-		///////////
-		// CLOSE //
-		///////////
+		/////////////
+		// EXITING //
+		/////////////
 		/**
 		 * @brief	Closes the window (and the application).
 		*/
 		static void close();
 
 
-		//////////////////////////
-		// Non-static functions //
-		//////////////////////////
-		/**
-		 * @brief	Constructs a new Window
-		*/
-		Window();
+	private:
+		////////////
+		// Engine //
+		////////////
+		friend Engine;
 		/**
 		 * @brief	Opens the window
 		*/
-		void open() const;
+		static void open();
 		/**
 		 * @brief	Checks whether the window is open. Starts timer for limiting FPS via `lock_FPS()`
 		 * @return	True if the window is open
 		*/
-		bool isOpen();
+		static bool isOpen();
 		/**
 		 * @brief	Calls pollEvent on the inner sf::RenderWindow
 		 * @param event	Reference to event where information will be distributed
 		 * @return	True in case a new event was polled
 		*/
-		bool poll_event(sf::Event& event) const;
+		static bool poll_event(sf::Event& event);
 		/**
 		 * @brief	Locks the number of frames per second.
 				Makes sure by causing potential delay that the right amount of time has passed since the last call of the function
 		 * @param FPS	Frames per second. Default is 60
 		*/
-		void lock_FPS() const;
+		static void lock_FPS();
 
 
-	private:
+		///////////////
+		// Variables //
+		///////////////
 		static sf::RenderWindow _window;
 		static std::function<sf::VideoMode()> _getVideoMode;
-
-		sf::String _title = "Platforms";
-		sf::ContextSettings _settings;
-		sf::Uint32 _style = sf::Style::Fullscreen;
-		float _FPS = 60.f;
-		sf::Clock _FPSClock;
+		static sf::String _title;
+		static sf::ContextSettings _settings;
+		static sf::Uint32 _style;
+		static float _FPS;
+		static sf::Clock _FPSClock;
 	};
 
 }
