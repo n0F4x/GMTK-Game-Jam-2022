@@ -9,10 +9,10 @@ class Panel : public Object {
 public:
 	Panel(
 		sf::Vector2f scale,
-		sf::Vector2f position = sf::Vector2f(0, 0),
+		sf::Vector2f position = sf::Vector2f{ 0, 0 },
 		float border = 0,
-		sf::Color backgroundColor = sf::Color(150, 150, 150, 200),
-		sf::Color borderColor = sf::Color(100, 100, 100, 250),
+		sf::Color backgroundColor = sf::Color{ 150, 150, 150, 200 },
+		sf::Color borderColor = sf::Color{ 100, 100, 100, 250 },
 		int borderDistortion = 0,
 		bool borderFade = false
 	);
