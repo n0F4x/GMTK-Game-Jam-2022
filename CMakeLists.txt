@@ -18,12 +18,13 @@ include_directories(
 
 set(SOURCE_FILES
     "src/main.cpp"
-    "src/engine/Engine.cpp"
+    "src/engine/Core.cpp"
     "src/engine/Window.cpp"
     "src/engine/StateMachine.cpp"
     "src/engine/State.cpp"
     "src/engine/Object.cpp"
     "src/engine/Renderer.cpp"
+    "src/engine/Assets.cpp"
 )
 
 set(SFML_DIR C:/Programming/Languages/C++/SFML-2.5.1/lib/cmake/SFML)

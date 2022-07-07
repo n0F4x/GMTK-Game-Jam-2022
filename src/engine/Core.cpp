@@ -1,20 +1,34 @@
-#include "Engine.hpp"
+#include "Core.hpp"
 
+#include "Assets.hpp"
+#include "Window.hpp"
+
+// include States here:
 #include "Sample.hpp"
+
 
 using namespace engine;
 
 
-void Engine::initialize() {
+StateMachine Core::_stateMachine;
+
+
+int Core::initialize() {
+	if (Assets::load() != 0) {
+		return 1;
+	}
+
 	Window::open();
 
 	// Add states here:
 	_stateMachine.addState("Sample", std::make_unique<SampleState>());
 
 	_stateMachine.initialize("<name of the first state>");
+
+	return 0;
 }
 
-void Engine::game_loop() {
+void Core::game_loop() {
 	sf::Event event;
 	while (Window::isOpen()) {
 		// Poll and handle events
@@ -39,8 +53,10 @@ void Engine::game_loop() {
 }
 
 
-void Engine::run() {
-	initialize();
+void Core::run() {
+	if (initialize() != 0) {
+		return;
+	}
 
 	game_loop();
 }
