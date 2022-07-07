@@ -82,9 +82,8 @@ const sf::Texture& Assets::getTexture(const std::string_view& name) {
 }
 
 
-
 /////////////
-// Private //
+// Loaders //
 /////////////
 int Assets::loadFont(const std::string& name, const std::string& filePath) {
 	if (_fonts.contains(name)) {
@@ -159,10 +158,10 @@ int Assets::loadTexture(const std::string& name, const std::string& filePath) {
 }
 
 
-////////////////////
-// Load everyting //
-////////////////////
-int Assets::load() {
+/////////////////////////////////////////
+// Load global assets from top of file //
+/////////////////////////////////////////
+int Assets::load_global() {
 	// Load fonts
 	for (auto const& [name, filePath] : fonts) {
 		if (loadFont(name, filePath) != 0) {

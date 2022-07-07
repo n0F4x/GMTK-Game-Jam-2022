@@ -9,9 +9,8 @@ void StateMachine::addState(const std::string& name, std::unique_ptr<State> stat
 	_states.try_emplace(name, std::move(state));
 }
 
-
-void StateMachine::initialize(const std::string_view& initState) {
-	if (auto nextState = _states.find(initState); nextState != _states.end()) {
+void StateMachine::setInitialState(const std::string_view& name) {
+	if (auto nextState = _states.find(name); nextState != _states.end()) {
 		_currentState = nextState->second.get();
 	}
 	else {
@@ -21,13 +20,32 @@ void StateMachine::initialize(const std::string_view& initState) {
 }
 
 
+int StateMachine::initialize() {
+	if (_currentState == nullptr) {
+		if (!_states.empty()) {
+			_currentState = _states.begin()->second.get();
+		}
+		else {
+			std::cerr << "\nStateMachine: [ERROR] Failed initializing - state machine has not states!";
+			return 1;
+		}
+	}
+
+	for (const auto& [name, statePtr] : _states) {
+		statePtr->initialize();
+	}
+
+	return 0;
+}
+
+
 void StateMachine::processChanges() {
 	if (!_currentState->isActive()) {
 		if (auto nextState = _states.find(_currentState->getNextState()); nextState != _states.end()) {
 			_currentState = nextState->second.get();
 		}
 		else {
-			std::cerr << "StateMachine: Failed changing state to \"" << _currentState->getNextState() << "\"\n";
+			std::cerr << "\nStateMachine: Failed changing state to \"" << _currentState->getNextState() << "\"\n";
 		}
 		_currentState->activate();
 	}
