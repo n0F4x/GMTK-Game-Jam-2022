@@ -81,7 +81,7 @@ void Panel::calculateVertices() {
 	_vertices[28].position = sf::Vector2f{ .5f + _border / scale.x, .5f };
 	_vertices[29].position = sf::Vector2f{ .5f, .5f };
 
-	//{bottom}
+	//(bottom)
 	_vertices[30].position = sf::Vector2f{ .5f, -.5f };
 	_vertices[31].position = sf::Vector2f{ -.5f, -.5f };
 	_vertices[32].position = sf::Vector2f{ .5f, -.5f - _border / scale.y };
@@ -90,7 +90,7 @@ void Panel::calculateVertices() {
 	_vertices[34].position = sf::Vector2f{ -.5f, -.5f - _border / scale.y };
 	_vertices[35].position = sf::Vector2f{ -.5f, -.5f };
 
-	//{left}
+	//(left)
 	_vertices[36].position = sf::Vector2f{ -.5f, -.5f };
 	_vertices[37].position = sf::Vector2f{ -.5f, .5f };
 	_vertices[38].position = sf::Vector2f{ -.5f - _border / scale.x, .5f };
