@@ -10,14 +10,26 @@
 
 namespace engine {
 
+	class StateMachine;
+
 	class State {
 	public:
+		///////////////////////////////////
+		// Initializing before game loop //
+		///////////////////////////////////
+		/**
+		 * @brief	Initializes inner StateMachines and calls `load_assets()'.
+		 * @return	0 on success
+		*/
+		int initialize() const;
+
+
 		///////////////
 		// Game loop //
 		///////////////
 		virtual void handle_event(const sf::Event&) = 0;
 		/**
-		 * @brief	Updates the following in order:
+		 * @brief	Updates the followings in order:
 		 *				_objects
 		 *				_logicBlocks
 		*/
@@ -42,6 +54,15 @@ namespace engine {
 		virtual ~State() = default;
 
 	protected:
+		//////////////////////
+		// Asset management //
+		//////////////////////
+		/**
+		 * @brief	Override this function to load the state's assets.
+		*/
+		virtual void load_assets() const { /*empty by default*/ }
+
+
 		////////////////////
 		// Object Support //
 		////////////////////
@@ -82,6 +103,17 @@ namespace engine {
 		void changeState(const std::string_view& nextState);
 
 
+		/////////////////////////
+		// Inner StateMachines //	State will initialize its machines.
+		/////////////////////////
+
+		/**
+		 * @brief	CALL THIS FUNCTION ONLY WHEN CONSTRUCTING INHERITED STATE.
+		 * @param machine 
+		*/
+		void addStateMachine(StateMachine* machine);
+
+
 	private:
 		bool _isActive = false;
 		std::string _nextState;
@@ -90,6 +122,8 @@ namespace engine {
 		std::vector<std::function<void()>> _logicBlocks;
 
 		Renderer _renderer;
+
+		std::vector<StateMachine*> _stateMachines;
 	};
 
 }

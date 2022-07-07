@@ -9,10 +9,11 @@
 namespace engine {
 
 	class Core;
+	class State;
 
 	/**
 	 * @brief	Class for managing assets. Acts as an API.
-	 *			EDIT TOP OF .CPP TO LOAD NEW ASSET
+	 *			EDIT TOP OF .CPP TO LOAD NEW GLOBAL ASSET. LOAD LOCAL ASSETS INSIDE THEIR RESPECTABLE STATE (override `State::load_assets()`).
 	 *			Does not support sf::Music.
 	*/
 	class Assets {
@@ -46,22 +47,26 @@ namespace engine {
 		static const sf::Texture& getTexture(const std::string_view& name);
 
 
+		//////////////////
+		// Initializing //	Call these functions to load local assets when initializing their state.
+		//////////////////
+		static int loadFont(const std::string& name, const std::string& filePath);
+		static int loadImage(const std::string& name, const std::string& filePath);
+		static int loadSoundBuffer(const std::string& name, const std::string& filePath);
+		static int loadTexture(const std::string& name, const std::string& filePath);
+
+
 	private:
 		//////////
 		// Core //
 		//////////
 		friend Core;
 		/**
-		 * @brief	Reads and stores assets from the corresponding files.
+		 * @brief	Reads and stores global assets from the corresponding files.
 		 * @return	0 - in case of success
 		*/
-		static int load();
+		static int load_global();
 
-		// Helper Functions //
-		static int loadFont(const std::string& name, const std::string& filePath);
-		static int loadImage(const std::string& name, const std::string& filePath);
-		static int loadSoundBuffer(const std::string& name, const std::string& filePath);
-		static int loadTexture(const std::string& name, const std::string& filePath);
 
 		// Variables (- Stores) //
 		static std::map<const std::string, const sf::Font, std::less<>> _fonts;

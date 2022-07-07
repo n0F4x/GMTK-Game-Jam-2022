@@ -14,7 +14,7 @@ StateMachine Core::_stateMachine;
 
 
 int Core::initialize() {
-	if (Assets::load() != 0) {
+	if (Assets::load_global() != 0) {
 		return 1;
 	}
 
@@ -23,7 +23,11 @@ int Core::initialize() {
 	// Add states here:
 	_stateMachine.addState("Sample", std::make_unique<SampleState>());
 
-	_stateMachine.initialize("<name of the first state>");
+	_stateMachine.setInitialState("<name of the first state>");
+
+	if (_stateMachine.initialize() != 0) {
+		return 1;
+	}
 
 	return 0;
 }

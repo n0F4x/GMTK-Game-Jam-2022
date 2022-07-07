@@ -18,14 +18,20 @@ namespace engine {
 		void addState(const std::string& name, std::unique_ptr<State> state);
 
 		/**
-		 * @brief	Sets initial state.
-					MUST call function, ONLY after adding states. See 'engine/Engine.cpp': `init()`.
-		 * @param initState 
+		 * @brief	Sets the initial state of the machine. ONLY call function before initializing machine!
+		 * @param name
 		*/
-		void initialize(const std::string_view& initState);
+		void setInitialState(const std::string_view& name);
 
 		/**
-		 * @brief	Switches between states if needed
+		 * @brief	Initializes states.
+					MUST call function, ONLY after adding states. See 'engine/Engine.cpp': `init()`.
+		 * @return	0 on success
+		*/
+		int initialize();
+
+		/**
+		 * @brief	Switches between states when needed
 		*/
 		void processChanges();
 
