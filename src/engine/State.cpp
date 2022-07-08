@@ -6,7 +6,39 @@
 using namespace engine;
 
 
-int State::initialize() const {
+void State::changeState(const std::string_view& nextState) {
+	_nextState = nextState;
+	_isActive = false;
+}
+
+
+void State::addObject(Object* object) {
+	_objects.push_back(object);
+}
+
+void State::update_objects() const {
+	for (auto object : _objects) {
+		object->update();
+	}
+}
+
+
+Renderer& State::renderer() {
+	return _renderer;
+}
+
+
+void State::addStateMachine(StateMachine* machine) {
+	_stateMachines.push_back(machine);
+}
+
+
+
+int State::initialize() {
+	if (setup() != 0) {
+		return 1;
+	}
+
 	for (const auto& machine : _stateMachines) {
 		if (machine->initialize() != 0) {
 			return 1;
@@ -17,19 +49,10 @@ int State::initialize() const {
 }
 
 
-// DON'T MAKE THIS FUNCTION CONST
-void State::update() {
-	for (auto object : _objects) {
-		object->update();
+void State::processChanges() const {
+	for (auto stateMachine : _stateMachines) {
+		stateMachine->processChanges();
 	}
-
-	for (const auto& logic : _logicBlocks) {
-		logic();
-	}
-}
-
-void State::draw() {
-	_renderer.render();
 }
 
 
@@ -43,30 +66,4 @@ bool State::isActive() const {
 
 const std::string& State::getNextState() const {
 	return _nextState;
-}
-
-
-void State::changeState(const std::string_view& nextState) {
-	_nextState = nextState;
-	_isActive = false;
-}
-
-
-void State::addStateMachine(StateMachine* machine) {
-	_stateMachines.push_back(machine);
-}
-
-
-void State::addObject(Object* object) {
-	_objects.push_back(object);
-}
-
-
-void State::addLogic(const std::function<void()>& logic) {
-	_logicBlocks.push_back(logic);
-}
-
-
-Renderer& State::renderer() {
-	return _renderer;
 }

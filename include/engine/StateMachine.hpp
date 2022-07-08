@@ -8,17 +8,20 @@
 
 namespace engine {
 
+	/**
+	 * @brief	StateMachines' main purpose is to be used inside States
+	*/
 	class StateMachine {
 	public:
 		/**
-		 * @brief	This one should be obvious. Please add states before initializing.
+		 * @brief	Add ALL states BEFORE initializing.
 		 * @param name 
 		 * @param state 
 		*/
 		void addState(const std::string& name, std::unique_ptr<State> state);
 
 		/**
-		 * @brief	Sets the initial state of the machine. ONLY call function before initializing machine!
+		 * @brief	Sets the initial state of the machine. ONLY CALL FUNCTION BEFORE INITIALIZING MACHINE!
 		 * @param name
 		*/
 		void setInitialState(const std::string_view& name);
@@ -31,19 +34,22 @@ namespace engine {
 		int initialize();
 
 		/**
-		 * @brief	Switches between states when needed
+		 * @brief	Switches between states when the current state goes inactive. 
+					Reactivates previous state as current, if the next one is not found.
+					Then does the same with all state machines inside the current state.
 		*/
 		void processChanges();
 
 		/**
-		 * @return	The current active state
+		 * @return	The current active state.
+		 *			Cannot return nullptr.
 		*/
 		State* operator->();
 
 
 	private:
 		std::map<const std::string, std::unique_ptr<State>, std::less<>> _states;
-		State* _currentState;
+		State* _currentState = nullptr;
 	};
 
 }

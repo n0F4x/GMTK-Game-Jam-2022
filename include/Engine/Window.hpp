@@ -9,7 +9,7 @@ namespace engine {
 	class Core;
 
 	/**
-	 * @brief	Once a Window object is created (inside the engine), its static functions can be used anywhere in the project
+	 * @brief	Once a Window object is created (inside `Core::run()`), its static functions can be used anywhere in the project
 	*/
 	class Window {
 	public:
