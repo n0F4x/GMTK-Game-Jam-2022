@@ -6,6 +6,11 @@
 using namespace engine;
 
 
+Core::Core() {
+	addStore(&_store);
+}
+
+
 int Core::load_global_assets() const {
 	if (Assets::load_global() != 0) {
 		return 1;

@@ -7,8 +7,13 @@ namespace engine {
 
 	class Core : public StateMachine {
 	public:
+		Core();
+
 		int load_global_assets() const;
 		void run();
+
+	private:
+		Store _store;
 	};
 
 }

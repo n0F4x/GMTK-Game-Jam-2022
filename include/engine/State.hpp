@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include "Object.hpp"
 #include "Renderer.hpp"
+#include "Store.hpp"
 
 
 namespace engine {
@@ -66,6 +67,16 @@ namespace engine {
 		virtual int setup() { return 0; }
 
 
+		/////////////
+		// Drawing //
+		/////////////
+		/**
+		 * @brief	Call this to render within the state.
+		 * @return	The state's renderer
+		*/
+		Renderer& renderer();
+
+
 		////////////////////
 		// Object Support //
 		////////////////////
@@ -80,24 +91,30 @@ namespace engine {
 		void update_objects() const;
 
 
-		/////////////
-		// Drawing //
-		/////////////
-		/**
-		 * @brief	Call this to render within the state.
-		 * @return	The state's renderer
-		*/
-		Renderer& renderer();
-
-
 		/////////////////////////
 		// Inner StateMachines //	Each State will initialize its own machines BY DEFAULT.
 		/////////////////////////
 		/**
 		 * @brief	CALL THIS FUNCTION ONLY INSIDE YOUR STATES CONSTRUCTOR.
+		 *			This will set the State <-> StateMachine
 		 * @param machine 
 		*/
 		void addStateMachine(StateMachine* machine);
+
+
+		//////////////////
+		// Data sharing //
+		//////////////////
+		/**
+		 * @brief	Getter for the store of the state
+		 * @return	The store of the state
+		*/
+		Store& store();
+		/**
+		 * @brief	Getter for the store of the State above the StateMachine
+		 * @return	!!! nullptr if the State is not added to a StateMachine. !!!
+		*/
+		Store* globalStore();
 
 
 	private:
@@ -128,15 +145,17 @@ namespace engine {
 		///////////////
 		// Variables //
 		///////////////
+		StateMachine* _stateMachine = nullptr;
+
 		bool _isActive = false;
 		std::string _nextState;
 
 		std::vector<Object*> _objects;
-		std::vector<std::function<void()>> _logicBlocks;
+		std::vector<StateMachine*> _stateMachines;
 
 		Renderer _renderer;
-
-		std::vector<StateMachine*> _stateMachines;
+		Store _store;
+		Store* _globalStore;
 	};
 
 }

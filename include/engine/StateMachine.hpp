@@ -47,9 +47,22 @@ namespace engine {
 		State* operator->();
 
 
-	private:
+	protected:
+		//////////////////
+		// Data sharing //
+		//////////////////
+		friend State;
+		void addStore(Store* store);
+
+
+
+		//////////////
+		// Variable //
+		//////////////
 		std::map<const std::string, std::unique_ptr<State>, std::less<>> _states;
 		State* _currentState = nullptr;
+
+		Store* _store = nullptr;
 	};
 
 }

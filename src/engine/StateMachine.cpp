@@ -10,7 +10,10 @@ void StateMachine::addState(const std::string& name, std::unique_ptr<State> stat
 		std::cerr << "\nStateMachine: Failed adding state\"" << name << "', as one with the same name is already added.\n";
 	}
 	else {
-		_states.try_emplace(name, std::move(state));
+		if (_states.try_emplace(name, std::move(state)).second) {
+			state->_stateMachine = this;
+			state->_globalStore = _store;
+		}
 	}
 }
 
@@ -62,4 +65,9 @@ void StateMachine::processChanges() {
 
 State* StateMachine::operator->() {
 	return _currentState;
+}
+
+
+void StateMachine::addStore(Store* store) {
+	_store = store;
 }
