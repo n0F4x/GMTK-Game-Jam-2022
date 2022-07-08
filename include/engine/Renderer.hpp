@@ -7,20 +7,27 @@
 
 namespace engine {
 
-	class State;
-
+	/**
+	 * @brief	Designed to be used inside States
+	 *			Utilize class for intricate drawing logic inside your state
+	 *			Call your State's Renderer with `State::renderer()`
+	*/
 	class Renderer {
-	private:
-		friend State;	// Intellinse won't recommend it this way
+	public:
+		/**
+		 * @brief	Draws currently added objects to Window
+		*/
 		void render();
 
-	public:
+		// Static drawing - drawn first
 		void add_static(const Object* object);
 		void remove_static(const Object* object);
 		void flush_static();
 
+		// Dynamic drawing (gets flushed after each frame)
+		// Basic - drawn after static
+		// Priority - drawn after basic
 		void push_basic(const Object* object);
-
 		void push_priority(const Object* object);
 
 

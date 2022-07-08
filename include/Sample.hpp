@@ -65,6 +65,14 @@ public:
 
 	void handle_event(const sf::Event&) override { /*empty*/ }
 
+	void update() override {
+		update_objects();
+	}
+
+	void draw() override {
+		renderer().render();
+	}
+
 
 private:
 	SampleObject _sampleObject;

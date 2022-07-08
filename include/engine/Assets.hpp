@@ -9,11 +9,10 @@
 namespace engine {
 
 	class Core;
-	class State;
 
 	/**
 	 * @brief	Class for managing assets. Acts as an API.
-	 *			EDIT TOP OF .CPP TO LOAD NEW GLOBAL ASSET. LOAD LOCAL ASSETS INSIDE THEIR RESPECTABLE STATE (override `State::load_assets()`).
+	 *			EDIT TOP OF .CPP TO LOAD NEW GLOBAL ASSET. LOAD LOCAL ASSETS INSIDE THEIR RESPECTABLE STATE (override `State::setup()`).
 	 *			Does not support sf::Music.
 	*/
 	class Assets {
@@ -68,7 +67,8 @@ namespace engine {
 		static int load_global();
 
 
-		// Variables (- Stores) //
+
+		// Variables (Global stores) //
 		static std::map<const std::string, const sf::Font, std::less<>> _fonts;
 		static std::map<const std::string, const sf::Image, std::less<>> _images;
 		static std::map<const std::string, const sf::SoundBuffer, std::less<>> _soundBuffers;

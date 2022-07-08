@@ -6,7 +6,12 @@ using namespace engine;
 
 
 void StateMachine::addState(const std::string& name, std::unique_ptr<State> state) {
-	_states.try_emplace(name, std::move(state));
+	if (_states.contains(name)) {
+		std::cerr << "\nStateMachine: Failed adding state\"" << name << "', as one with the same name is already added.\n";
+	}
+	else {
+		_states.try_emplace(name, std::move(state));
+	}
 }
 
 void StateMachine::setInitialState(const std::string_view& name) {
@@ -21,18 +26,19 @@ void StateMachine::setInitialState(const std::string_view& name) {
 
 
 int StateMachine::initialize() {
-	if (_currentState == nullptr) {
-		if (!_states.empty()) {
-			_currentState = _states.begin()->second.get();
-		}
-		else {
-			std::cerr << "\nStateMachine: [ERROR] Failed initializing - state machine has not states!";
+	if (_states.empty()) {
+		std::cerr << "\nStateMachine: [ERROR] Failed initializing - state machine has no states!";
+		return 1;
+	}
+
+	for (const auto& [name, statePtr] : _states) {
+		if (statePtr->initialize() != 0) {
 			return 1;
 		}
 	}
 
-	for (const auto& [name, statePtr] : _states) {
-		statePtr->initialize();
+	if (_currentState == nullptr) {
+		_currentState = _states.begin()->second.get();
 	}
 
 	return 0;
@@ -49,6 +55,8 @@ void StateMachine::processChanges() {
 		}
 		_currentState->activate();
 	}
+
+	_currentState->processChanges();
 }
 
 

@@ -12,75 +12,72 @@ namespace engine {
 
 	class StateMachine;
 
+	/**
+	 * @brief	Abstract class for describing a state inside a StateMachine.
+	*/
 	class State {
 	public:
-		///////////////////////////////////
-		// Initializing before game loop //
-		///////////////////////////////////
-		/**
-		 * @brief	Initializes inner StateMachines and calls `load_assets()'.
-		 * @return	0 on success
-		*/
-		int initialize() const;
-
-
 		///////////////
 		// Game loop //
 		///////////////
+		/**
+		 * @brief	Overwrite this function to handle events.
+		 *			You can also handle events from inner state machines here.
+		 * @param	sf::Event from 'main.cpp'
+		*/
 		virtual void handle_event(const sf::Event&) = 0;
 		/**
-		 * @brief	Updates the followings in order:
-		 *				_objects
-		 *				_logicBlocks
+		 * @brief	Override this function to update your object and state.
+		 *			You can also update the states of your inner state machine here.
+		 *			Use `update_objects()` for simple updates.
 		*/
-		void update();
+		virtual void update() = 0;
 		/**
-		 * @brief	Equivalent to calling Renderer::render() within the state
+		 * @brief	Overwrite this function for drawing.
+		 *			You can also draw stuff from inner state machines here.
+		 *			Use `renderer().render()' if you want.
 		*/
-		void draw();
+		virtual void draw() = 0;
 
 
+		// Virtual destructor //
+		virtual ~State() = default;
+
+	protected:
 		//////////////////
 		// StateMachine //
 		//////////////////
 		/**
-		 * @brief	Sets _isActive to true
+		 * @brief	Tells state machine to swap the active state with `processChanges()`
+		 * @param nextState	The name of the next state
 		*/
-		void activate();
-		bool isActive() const;
-		const std::string& getNextState() const;
+		void changeState(const std::string_view& nextState);
 
 
-		virtual ~State() = default;
-
-	protected:
-		//////////////////////
-		// Asset management //
-		//////////////////////
+		//////////////////
+		// Initializing //
+		//////////////////
 		/**
-		 * @brief	Override this function to load the state's assets.
+		 * @brief	Override this function for setting up your state.
+		 *			This function will be called by `initialize()`
+		 *			Print error message to std::cerr before returning with non-zero.
+		 * @return	0 ON SUCCESS
 		*/
-		virtual void load_assets() const { /*empty by default*/ }
+		virtual int setup() { return 0; }
 
 
 		////////////////////
 		// Object Support //
 		////////////////////
 		/**
-		 * @brief	Adds object to state
+		 * @brief	Adds object to state.
 		 * @param object 
 		*/
 		void addObject(Object* object);
-
-
-		/////////////////
-		// State Logic //
-		/////////////////
 		/**
-		 * @brief	Adds a script that will be called with update.
-		 * @param logic	Lambda function describing the relation of objects. Try making it simple. :)
+		 * @brief	Calls `Object::update()` on all objects that you added via `addObject()`.
 		*/
-		void addLogic(const std::function<void()>& logic);
+		void update_objects() const;
 
 
 		/////////////
@@ -93,28 +90,44 @@ namespace engine {
 		Renderer& renderer();
 
 
-		//////////////////
-		// StateMachine //
-		//////////////////
-		/**
-		 * @brief	Tells statemachine to swap the active state with `processChanges()`
-		 * @param nextState	The name of the next state
-		*/
-		void changeState(const std::string_view& nextState);
-
-
 		/////////////////////////
-		// Inner StateMachines //	State will initialize its machines.
+		// Inner StateMachines //	Each State will initialize its own machines BY DEFAULT.
 		/////////////////////////
-
 		/**
-		 * @brief	CALL THIS FUNCTION ONLY WHEN CONSTRUCTING INHERITED STATE.
+		 * @brief	CALL THIS FUNCTION ONLY INSIDE YOUR STATES CONSTRUCTOR.
 		 * @param machine 
 		*/
 		void addStateMachine(StateMachine* machine);
 
 
 	private:
+		//////////////////
+		// StateMachine //
+		//////////////////
+		friend StateMachine;
+
+		/**
+		 * @brief	Initializes inner StateMachines and calls `load_assets()'.
+		 * @return	0 on success
+		*/
+		int initialize();
+		/**
+		 * @brief	Calls `processChanges()` for inner StateMachines
+		*/
+		void processChanges() const;
+
+		/**
+		 * @brief	Sets _isActive to true
+		*/
+		void activate();
+		bool isActive() const;
+		const std::string& getNextState() const;
+
+
+
+		///////////////
+		// Variables //
+		///////////////
 		bool _isActive = false;
 		std::string _nextState;
 
