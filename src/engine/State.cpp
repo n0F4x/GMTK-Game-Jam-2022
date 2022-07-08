@@ -29,7 +29,17 @@ Renderer& State::renderer() {
 
 
 void State::addStateMachine(StateMachine* machine) {
+	_stateMachine->addStore(&_store);
 	_stateMachines.push_back(machine);
+}
+
+
+Store& State::store() {
+	return _store;
+}
+
+Store* State::globalStore() {
+	return _globalStore;
 }
 
 
