@@ -25,6 +25,7 @@ set(SOURCE_FILES
     "src/engine/Object.cpp"
     "src/engine/Renderer.cpp"
     "src/engine/Assets.cpp"
+    "src/engine/Store.cpp"
     "src/GUI/Panel.cpp"
 )
 
