@@ -41,10 +41,6 @@ sf::FloatRect Window::getBounds() {
 }
 
 
-void Window::display() { _window.display(); }
-
-void Window::clear() { _window.clear(); }
-
 void Window::draw(const sf::Drawable& drawable, const sf::RenderStates& states) {
 	_window.draw(drawable, states);
 }
@@ -70,6 +66,10 @@ bool Window::isOpen() {
 bool Window::poll_event(sf::Event& event) {
 	return _window.pollEvent(event);
 }
+
+void Window::display() { _window.display(); }
+
+void Window::clear() { _window.clear(); }
 
 void Window::lock_FPS() {
 	float elapsedTime = _FPSClock.getElapsedTime().asSeconds();
