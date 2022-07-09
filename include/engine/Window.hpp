@@ -83,8 +83,8 @@ namespace engine {
 		static bool poll_event(sf::Event& event);
 		/**
 		 * @brief	Locks the number of frames per second.
-				Makes sure by causing potential delay that the right amount of time has passed since the last call of the function
-		 * @param FPS	Frames per second. Default is 60
+					Utilizes `sf::sleep()` under the hood. FPS clock starts when calling `isOpen()`. 
+		 * @param FPS	Frames per second.
 		*/
 		static void lock_FPS();
 
