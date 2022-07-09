@@ -56,6 +56,7 @@ namespace engine {
 
 
 
+	private:
 		//////////////
 		// Variable //
 		//////////////
