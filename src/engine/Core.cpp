@@ -15,7 +15,7 @@ int Core::setup() const {
 	// Open window before loading assets duo to SFML bug: https://en.sfml-dev.org/forums/index.php?topic=25907.0
 	Window::open();
 
-	if (Assets::load_global() != 0) {
+	if (Assets::load() != 0) {
 		return 1;
 	}
 
@@ -46,7 +46,7 @@ void Core::run() {
 		operator->()->draw();
 		Window::display();
 
-		// Set FPS (amount specified withing window)
+		// Set FPS (amount specified within window)
 		Window::lock_FPS();
 	}
 }
