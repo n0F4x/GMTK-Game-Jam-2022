@@ -16,7 +16,7 @@ int main() {
 	engine::Core machine;
 
 
-	if (machine.load_global_assets() != 0) {
+	if (machine.setup() != 0) {
 		return 1;
 	}
 
