@@ -23,6 +23,8 @@ sf::ContextSettings Window::_settings{
 sf::Uint32 Window::_style = sf::Style::Fullscreen;
 float Window::_FPS = 60.f;
 sf::Clock Window::_FPSClock;
+static const bool verticalSyncEnabled = true;
+static const bool keyRepeatEnabled = false;
 
 
 
@@ -55,8 +57,8 @@ void Window::open() {
 	if (!_window.isOpen()) {
 		_window.create(_getVideoMode(), _title, _style, _settings);
 
-		_window.setVerticalSyncEnabled(true);
-		_window.setKeyRepeatEnabled(false);
+		_window.setVerticalSyncEnabled(verticalSyncEnabled);
+		_window.setKeyRepeatEnabled(keyRepeatEnabled);
 	}
 }
 
