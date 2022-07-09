@@ -21,7 +21,7 @@ void Panel::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 	std::array<sf::Vertex, 42> transformedVertices;
 	for (size_t i = 0; i < verticesToDraw; i++) {
-		transformedVertices[i].position = Transformable::getTransform().transformPoint(_vertices[i].position);
+		transformedVertices[i].position = getTransform().transformPoint(_vertices[i].position);
 		transformedVertices[i].color = _vertices[i].color;
 	}
 
