@@ -11,10 +11,10 @@ public:
 	/*
 	* @brief Methods creating or destroying parent - child connections (setting both sides in one call)
 	*/
-	void attachChild(Object* child);
-	void detachChild(Object* child);
-	void attachParent(Object* parent);
-	void detachParent();
+	void attach_child(Object* child);
+	void detach_child(Object* child);
+	void attach_parent(Object* parent);
+	void detach_parent();
 
     void setPosition(float x, float y);
     void setPosition(const sf::Vector2f& position);

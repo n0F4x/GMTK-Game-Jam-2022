@@ -1,34 +1,34 @@
 #include "Object.hpp"
 
 
-void Object::attachChild(Object* child) {
+void Object::attach_child(Object* child) {
 	if (child == this || child == _parent || child->_parent == this) {
 		return;
 	}
 
-	child->detachParent();
+	child->detach_parent();
 
 	child->_parent = this;
 	_children.push_back(child);
 }
 
-void Object::detachChild(Object* child) {
+void Object::detach_child(Object* child) {
 	if (_children.remove(child) > 0) {
 		child->_parent = nullptr;
 	}
 }
 
-void Object::attachParent(Object* parent) {
+void Object::attach_parent(Object* parent) {
 	if (_parent == this) {
 		return;
 	}
 
-	parent->attachChild(this);
+	parent->attach_child(this);
 }
 
-void Object::detachParent() {
+void Object::detach_parent() {
 	if (_parent != nullptr) {
-		_parent->detachChild(this);
+		_parent->detach_child(this);
 	}
 }
 
