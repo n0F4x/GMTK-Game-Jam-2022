@@ -6,14 +6,12 @@ using namespace engine;
 
 
 void StateMachine::addState(const std::string& name, std::unique_ptr<State> state) {
-	if (_states.contains(name)) {
-		std::cerr << "\nStateMachine: Failed adding state\"" << name << "', as one with the same name is already added.\n";
+	if (auto [it, success] = _states.try_emplace(name, std::move(state)); success) {
+		it->second->_stateMachine = this;
+		it->second->_globalStore = _store;
 	}
 	else {
-		if (_states.try_emplace(name, std::move(state)).second) {
-			state->_stateMachine = this;
-			state->_globalStore = _store;
-		}
+		std::cerr << "\nStateMachine: Failed adding state\"" << name << "', as one with the same name is already added.\n";
 	}
 }
 
