@@ -45,11 +45,6 @@ void Object::setRotation(float angle) {
 }
 
 void Object::rotate(float angle) {
-	/*if (_parent == nullptr) Transformable::rotate(angle);
-	else {
-		sf::Transform t = getTransform();
-		t.rotate(angle, _parent->getOrigin());
-	}*/
 	Transformable::rotate(angle);
 	for (auto object : _children) {
 		object->rotate(angle);

@@ -4,8 +4,12 @@
 #include <SFML/Graphics.hpp>
 
 
-class Object : public sf::Drawable, private sf::Transformable {
+class Object : private sf::Sprite {
 public:
+    Object() {}
+    Object(const sf::Texture &texture) : Sprite(texture) {}
+    Object(const sf::Texture &texture, const sf::IntRect &rectangle) : Sprite(texture, rectangle) {}
+
 	virtual void update() { /*empty by default*/ }
 
 	/*
@@ -16,9 +20,20 @@ public:
 	void attach_parent(Object* parent);
 	void detach_parent();
 
+    // Sprite methods
+    using Sprite::setTexture;
+    using Sprite::setTextureRect;
+    using Sprite::setColor;
+    using Sprite::getTexture;
+    using Sprite::getTextureRect;
+    using Sprite::getColor;
+    using Sprite::getLocalBounds;
+    using Sprite::getGlobalBounds;
+
+    // Transformable methods
     void setPosition(float x, float y);
     void setPosition(const sf::Vector2f& position);
-    void setRotation(float angle);
+    void setRotation(float angle); //TODO
     void setScale(float factorX, float factorY);
     void setScale(const sf::Vector2f& factors);
     void setOrigin(float x, float y);
@@ -29,7 +44,7 @@ public:
     const sf::Vector2f& getOrigin() const;
     void move(float offsetX, float offsetY);
     void move(const sf::Vector2f& offset);
-    void rotate(float angle);
+    void rotate(float angle); //TODO
     void scale(float factorX, float factorY);
     void scale(const sf::Vector2f& factor);
     const sf::Transform& getTransform() const;
