@@ -17,7 +17,7 @@ public:
 		bool borderFade = false
 	);
 
-	void calculateVertices();
+	void apply_changes();
 
 	void update() override;
 

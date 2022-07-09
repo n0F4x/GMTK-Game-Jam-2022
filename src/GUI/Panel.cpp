@@ -7,7 +7,7 @@ Panel::Panel(sf::Vector2f scale, sf::Vector2f position, float border, sf::Color 
 	Object::setScale(scale);
 	Object::setPosition(position);
 
-	calculateVertices();
+	apply_changes();
 }
 
 
@@ -29,7 +29,7 @@ void Panel::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 
-void Panel::calculateVertices() {
+void Panel::apply_changes() {
 	sf::Vector2f scale = getScale();
 
 	// Inside triangles
