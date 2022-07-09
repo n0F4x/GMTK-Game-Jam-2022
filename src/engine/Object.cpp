@@ -20,10 +20,8 @@ void Object::attachChild(Object* child) {
 }
 
 void Object::detachChild(Object* child) {
-	if (auto it = std::ranges::find(_children, child); it != _children.end()) {
+	if (_children.remove(child) > 0) {
 		child->_parent = nullptr;
-
-		_children.erase(it);
 	}
 }
 
