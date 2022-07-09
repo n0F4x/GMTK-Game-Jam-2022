@@ -11,17 +11,19 @@ Core::Core() {
 }
 
 
-int Core::load_global_assets() const {
+int Core::setup() const {
+	// Open window before loading assets duo to SFML bug: https://en.sfml-dev.org/forums/index.php?topic=25907.0
+	Window::open();
+
 	if (Assets::load_global() != 0) {
 		return 1;
 	}
+
 	return 0;
 }
 
 
 void Core::run() {
-	Window::open();
-
 	// Game loop
 	sf::Event event;
 	while (Window::isOpen()) {

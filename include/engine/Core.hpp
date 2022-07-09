@@ -9,7 +9,7 @@ namespace engine {
 	public:
 		Core();
 
-		int load_global_assets() const;
+		int setup() const;
 		void run();
 
 	private:
