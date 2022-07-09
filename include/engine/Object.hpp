@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 
-class Object : private sf::Sprite {
+class Object : public sf::Sprite {
 public:
     Object() {}
     Object(const sf::Texture &texture) : Sprite(texture) {}
@@ -19,16 +19,6 @@ public:
 	void detach_child(Object* child);
 	void attach_parent(Object* parent);
 	void detach_parent();
-
-    // Sprite methods
-    using Sprite::setTexture;
-    using Sprite::setTextureRect;
-    using Sprite::setColor;
-    using Sprite::getTexture;
-    using Sprite::getTextureRect;
-    using Sprite::getColor;
-    using Sprite::getLocalBounds;
-    using Sprite::getGlobalBounds;
 
     // Transformable methods
     void setPosition(float x, float y);
