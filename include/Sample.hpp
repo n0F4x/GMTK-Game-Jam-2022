@@ -1,6 +1,7 @@
 #pragma once
 
 #include "engine/Object.hpp"
+#include "engine/Assets.hpp"
 #include "engine/State.hpp"
 #include "engine/Window.hpp"
 
@@ -12,6 +13,7 @@ public:
 		_shape.setPosition(
 			engine::Window::getSize() / 2.f - sf::Vector2f{ _shape.getGlobalBounds().width, _shape.getGlobalBounds().height }
 		);
+		_shape.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
 	}
 
 	void update() override { 
