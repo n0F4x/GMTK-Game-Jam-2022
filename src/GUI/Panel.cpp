@@ -16,6 +16,8 @@ void Panel::update() {
 
 void Panel::setTexture(const sf::Texture& texture) {
 	_backgroundSprite.setTexture(texture);
+	_backgroundSprite.setScale(getScale().x / texture.getSize().x, getScale().y / texture.getSize().y);
+	_backgroundSprite.setPosition(getPosition() - getScale() / 2.f);
 }
 
 const sf::Texture* Panel::getTexture() const {
@@ -32,13 +34,8 @@ void Panel::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		transformedVertices[i].color = _vertices[i].color;
 	}
 
-	if (getTexture()) {
-		//TODO...
-		target.draw(_backgroundSprite);
-		//TODO draw
-	}
-
 	target.draw(transformedVertices.data(), verticesToDraw, sf::Triangles);
+	if (getTexture()) target.draw(_backgroundSprite);
 }
 
 
