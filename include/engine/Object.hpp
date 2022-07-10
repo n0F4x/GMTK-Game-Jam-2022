@@ -6,8 +6,8 @@
 
 class Object : public sf::Sprite {
 public:
-    Object() {}
-    Object(const sf::Texture &texture) : Sprite(texture) {}
+    Object() = default;
+    explicit Object(const sf::Texture &texture) : Sprite(texture) {}
     Object(const sf::Texture &texture, const sf::IntRect &rectangle) : Sprite(texture, rectangle) {}
 
 	virtual void update() { /*empty by default*/ }
