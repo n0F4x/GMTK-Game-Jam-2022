@@ -22,11 +22,9 @@ sf::ContextSettings Window::_settings{
 	/*sRgbCapable*/			true
 };
 sf::Uint32 Window::_style = sf::Style::Fullscreen;
-float Window::_FPS = 60.f;
-sf::Clock Window::_FPSClock;
-static const bool verticalSyncEnabled = true;
+int Window::_FPSLimit = 120;
+bool Window::_vSyncEnabled = true;
 static const bool keyRepeatEnabled = false;
-
 
 
 const sf::RenderWindow& engine::Window::window() {
@@ -47,6 +45,38 @@ void Window::draw(const sf::Drawable& drawable, const sf::RenderStates& states) 
 }
 
 
+bool Window::getVSyncEnabled() {
+    return _vSyncEnabled;
+}
+
+void Window::setVSyncEnabled(bool enabled) {
+    if (_vSyncEnabled == enabled) return;
+
+    _vSyncEnabled = enabled;
+
+    if (_vSyncEnabled) {
+        // disable framerate limit, vsync will limit it instead
+        _window.setFramerateLimit(0);
+    } else {
+        _window.setFramerateLimit(_FPSLimit);
+    }
+
+    _window.setVerticalSyncEnabled(enabled);
+}
+
+int Window::getFPSLimit() {
+    return _FPSLimit;
+}
+
+void Window::setFPSLimit(int limit) {
+    _FPSLimit = limit;
+
+    if (!_vSyncEnabled) {
+        _window.setFramerateLimit(_FPSLimit);
+    }
+}
+
+
 void Window::close() { _window.close(); }
 
 
@@ -54,13 +84,12 @@ void Window::open() {
 	if (!_window.isOpen()) {
 		_window.create(_getVideoMode(), _title, _style, _settings);
 
-		_window.setVerticalSyncEnabled(verticalSyncEnabled);
+		_window.setVerticalSyncEnabled(_vSyncEnabled);
 		_window.setKeyRepeatEnabled(keyRepeatEnabled);
 	}
 }
 
 bool Window::isOpen() {
-	_FPSClock.restart();
 	return _window.isOpen();
 }
 
@@ -72,23 +101,5 @@ void Window::clear() { _window.clear(); }
 
 
 void Window::display() {
-    static bool init = false;
-    if (init) {
-        static sf::Text fpsText{ "FPS: ", Assets::getFont("AlbertSans-ExtraLight"), 18 };
-        float fps = 1.f / _FPSClock.getElapsedTime().asSeconds();
-        fpsText.setString("FPS: " + std::to_string((int) std::min(fps, _FPS)) + " (" + std::to_string((int) fps) + ")");
-        draw(fpsText);
-    } else {
-        init = true;
-    }
-
     _window.display();
-}
-
-void Window::lock_FPS() {
-	float elapsedTime = _FPSClock.getElapsedTime().asSeconds();
-
-	if (elapsedTime < 1.f / _FPS) {
-		sf::sleep(sf::seconds(1.f / _FPS - elapsedTime));
-	}
 }
