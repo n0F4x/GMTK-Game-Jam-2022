@@ -3,5 +3,6 @@
 !.vscode/launch.json
 !.vscode/tasks.json
 build/*
+dependencies/*
 out/*
 CMakeSettings.json
