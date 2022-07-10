@@ -1,5 +1,6 @@
 #include "Object.hpp"
 
+#include <cmath>
 #include <numbers>
 
 static const float PI = std::numbers::pi_v<float>;
@@ -55,8 +56,8 @@ void Object::rotate(float angle) {
 	if (_parent != nullptr) {
 		sf::Vector2f offset = getPosition() - _parent->getPosition();
 		setPosition(_parent->getPosition());
-		float newX = offset.x * cos(angle * PI / 180) - offset.y * sin(angle * PI / 180);
-		float newY = offset.x * sin(angle * PI / 180) + offset.y * cos(angle * PI / 180);
+		float newX = offset.x * std::cos(angle * PI / 180) - offset.y * std::sin(angle * PI / 180);
+		float newY = offset.x * std::sin(angle * PI / 180) + offset.y * std::cos(angle * PI / 180);
 		offset.x = newX;
 		offset.y = newY;
 		move(offset);
