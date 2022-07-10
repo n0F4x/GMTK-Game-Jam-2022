@@ -1,6 +1,7 @@
 #include "Window.hpp"
 
 #include <SFML/System.hpp>
+#include "Assets.hpp"
 
 using namespace engine;
 
@@ -67,9 +68,15 @@ bool Window::poll_event(sf::Event& event) {
 	return _window.pollEvent(event);
 }
 
-void Window::display() { _window.display(); }
-
 void Window::clear() { _window.clear(); }
+
+void Window::display() {
+    static sf::Text fpsText = sf::Text("FPS: ", Assets::getFont("Canterbury"), 18);
+    float fps = 1.f / _FPSClock.getElapsedTime().asSeconds();
+    fpsText.setString("FPS: " + std::to_string((int) std::min(fps, _FPS)) + " (" + std::to_string((int) fps) + ")");
+    draw(fpsText);
+    _window.display();
+}
 
 void Window::lock_FPS() {
 	float elapsedTime = _FPSClock.getElapsedTime().asSeconds();
