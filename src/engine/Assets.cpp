@@ -123,7 +123,7 @@ int Assets::load() {
 		}
 	}
 	if (_fonts.empty()) {
-		_fonts.try_emplace("Empty" /* emplacing a default constructed object */);
+		_fonts.try_emplace("invalid" /* emplacing a default constructed object */);
 	}
 
 	// Load sounds
@@ -152,7 +152,7 @@ int Assets::load() {
 		}
 	}
 	if (_textures.empty()) {
-		_textures.try_emplace("Empty" /* emplacing a default constructed object */);
+		_textures.try_emplace("invalid" /* emplacing a default constructed object */);
 	}
 	
 	return 0;

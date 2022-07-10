@@ -9,8 +9,8 @@ using namespace engine;
 Core::Core() {
 	addStore(&_store);
 
-	_loadingText.setString("Loading");
-	_loadingFont.loadFromFile(Assets::ASSETS_PATH + "fonts/Canterbury.ttf");
+	_loadingText.setString("Loading...");
+	_loadingFont.loadFromFile(Assets::ASSETS_PATH + "fonts/AlbertSans-ExtraLight.ttf");
 	_loadingText.setFont(_loadingFont);
 	_loadingText.setCharacterSize(100);
 	sf::FloatRect textRect = _loadingText.getLocalBounds();
@@ -28,6 +28,8 @@ int Core::setup() const {
 	Window::clear();
 	Window::draw(_loadingText);
 	Window::display();
+
+	sf::sleep(sf::seconds(10));
 
 	// Load assets
 	if (Assets::load() != 0) {
