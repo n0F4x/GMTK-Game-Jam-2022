@@ -9,7 +9,7 @@ using namespace engine;
 /**
  * @brief	Relative path from executable to assets folder
 */
-static const std::string ASSETS_PATH = "../../../assets/";
+const std::string Assets::ASSETS_PATH = "../../../assets/";
 
 
 
@@ -111,11 +111,11 @@ int Assets::loadTexture(const std::string& name, const std::string& filePath) {
 //////////////////////////////////////
 int Assets::load() {
 	// Load fonts
-	for (auto const& dir_entry : std::filesystem::recursive_directory_iterator(ASSETS_PATH + "fonts/")) {
+	for (auto const& dir_entry : std::filesystem::recursive_directory_iterator(Assets::ASSETS_PATH + "fonts/")) {
 		if (!dir_entry.is_directory()) {
 			auto path = dir_entry.path();
 			auto filePath = path.generic_string();
-			auto name = path.replace_extension("").generic_string().substr((ASSETS_PATH + "fonts/").length());
+			auto name = path.replace_extension("").generic_string().substr((Assets::ASSETS_PATH + "fonts/").length());
 
 			if (loadFont(name, filePath) != 0) {
 				return 1;
@@ -127,11 +127,11 @@ int Assets::load() {
 	}
 
 	// Load sounds
-	for (auto const& dir_entry : std::filesystem::recursive_directory_iterator(ASSETS_PATH + "sounds/")) {
+	for (auto const& dir_entry : std::filesystem::recursive_directory_iterator(Assets::ASSETS_PATH + "sounds/")) {
 		if (!dir_entry.is_directory()) {
 			auto path = dir_entry.path();
 			auto filePath = path.generic_string();
-			auto name = path.replace_extension("").generic_string().substr((ASSETS_PATH + "sounds/").length());
+			auto name = path.replace_extension("").generic_string().substr((Assets::ASSETS_PATH + "sounds/").length());
 
 			if (loadSoundBuffer(name, filePath) != 0) {
 				return 1;
@@ -140,11 +140,11 @@ int Assets::load() {
 	}
 
 	// Load textures
-	for (auto const& dir_entry : std::filesystem::recursive_directory_iterator(ASSETS_PATH + "textures/")) {
+	for (auto const& dir_entry : std::filesystem::recursive_directory_iterator(Assets::ASSETS_PATH + "textures/")) {
 		if (!dir_entry.is_directory()) {
 			auto path = dir_entry.path();
 			auto filePath = path.generic_string();
-			auto name = path.replace_extension("").generic_string().substr((ASSETS_PATH + "textures/").length());
+			auto name = path.replace_extension("").generic_string().substr((Assets::ASSETS_PATH + "textures/").length());
 
 			if (loadTexture(name, filePath) != 0) {
 				return 1;
