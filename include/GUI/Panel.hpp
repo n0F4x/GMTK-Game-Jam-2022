@@ -21,6 +21,9 @@ public:
 
 	void update() override;
 
+	void setTexture(const sf::Texture& texture);
+	const sf::Texture* getTexture() const;
+
 
 protected:
 	void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const override;
@@ -37,4 +40,6 @@ private:
 
 	sf::Color _backgroundColor;
 	sf::Color _borderColor;
+
+	sf::Sprite _backgroundSprite;
 };

@@ -5,6 +5,8 @@
 #include "engine/State.hpp"
 #include "engine/Window.hpp"
 
+#include "GUI/Panel.hpp"
+
 
 class SampleObject : public Object {
 public:
@@ -83,6 +85,9 @@ private:
 class SampleState : public engine::State {
 public:
 	SampleState() {
+		_panel.setTexture(engine::Assets::getTexture(""));
+		renderer().add_static(&_panel);
+
 		addStateMachine(&_machine);
 
 		_machine.addState("Child1", std::make_unique<SampleChildState>());
@@ -100,10 +105,12 @@ public:
 	}
 
 	void draw() override {
+		renderer().render();
 		_machine->draw();
 	}
 
 
 private:
 	engine::StateMachine _machine;
+	Panel _panel{ { 200, 200}, { 200, 200 }, 20 };
 };
