@@ -70,11 +70,18 @@ bool Window::poll_event(sf::Event& event) {
 
 void Window::clear() { _window.clear(); }
 
+
 void Window::display() {
-    static sf::Text fpsText = sf::Text("FPS: ", Assets::getFont("Canterbury"), 18);
-    float fps = 1.f / _FPSClock.getElapsedTime().asSeconds();
-    fpsText.setString("FPS: " + std::to_string((int) std::min(fps, _FPS)) + " (" + std::to_string((int) fps) + ")");
-    draw(fpsText);
+    static bool init = false;
+    if (init) {
+        static sf::Text fpsText{ "FPS: ", Assets::getFont("Canterbury"), 18 };
+        float fps = 1.f / _FPSClock.getElapsedTime().asSeconds();
+        fpsText.setString("FPS: " + std::to_string((int) std::min(fps, _FPS)) + " (" + std::to_string((int) fps) + ")");
+        draw(fpsText);
+    } else {
+        init = true;
+    }
+
     _window.display();
 }
 
