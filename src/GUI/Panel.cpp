@@ -14,6 +14,14 @@ void Panel::update() {
 	//TODO update vertices on animation
 }
 
+void Panel::setTexture(const sf::Texture& texture) {
+	_backgroundSprite.setTexture(texture);
+}
+
+const sf::Texture* Panel::getTexture() const {
+	return _backgroundSprite.getTexture();
+}
+
 
 void Panel::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	const size_t verticesToDraw = _border == 0 ? 6 : 42;
@@ -23,14 +31,14 @@ void Panel::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		transformedVertices[i].position = getTransform().transformPoint(_vertices[i].position);
 		transformedVertices[i].color = _vertices[i].color;
 	}
-	
+
 	if (getTexture()) {
 		//TODO...
-		states.transform *= getTransform();//Fucks up?
-		states.texture = getTexture();
+		target.draw(_backgroundSprite);
 		//TODO draw
 	}
-	else target.draw(transformedVertices.data(), verticesToDraw, sf::Triangles);
+
+	target.draw(transformedVertices.data(), verticesToDraw, sf::Triangles);
 }
 
 
