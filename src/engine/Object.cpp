@@ -1,5 +1,5 @@
 #include "Object.hpp"
-
+#include <numbers>
 
 void Object::attach_child(Object* child) {
 	if (child == this || child == _parent || child->_parent == this) {
@@ -46,6 +46,18 @@ void Object::setRotation(float angle) {
 
 void Object::rotate(float angle) {
 	Transformable::rotate(angle);
+
+	if (_parent != nullptr) {
+		sf::Vector2f offset = getPosition() - _parent->getPosition();
+		setPosition(_parent->getPosition());
+		const float pi = 3.14159265358979323846f;
+		float newX = offset.x * cos(angle * pi / 180) - offset.y * sin(angle * pi / 180);
+		float newY = offset.x * sin(angle * pi / 180) + offset.y * cos(angle * pi / 180);
+		offset.x = newX;
+		offset.y = newY;
+		move(offset);
+	}
+
 	for (auto object : _children) {
 		object->rotate(angle);
 	}
