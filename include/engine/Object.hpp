@@ -4,12 +4,17 @@
 #include <SFML/Graphics.hpp>
 
 
-class Object : public sf::Sprite {
+/**
+ * @brief   Implementing sprite based on sf::Sprite to support hierarchy.
+ *          Calling transform functions will also apply changes to lower levels of the hierarchy.
+*/
+class Object : public sf::Drawable {
 public:
     Object() = default;
-    explicit Object(const sf::Texture &texture) : Sprite(texture) {}
-    Object(const sf::Texture &texture, const sf::IntRect &rectangle) : Sprite(texture, rectangle) {}
+    explicit Object(const sf::Texture& texture);
+    Object(const sf::Texture& texture, const sf::IntRect& rectangle);
 
+    // Game loop
 	virtual void update() { /*empty by default*/ }
 
 	/*
@@ -20,10 +25,13 @@ public:
 	void attach_parent(Object* parent);
 	void detach_parent();
 
-    // Transformable methods
+
+    ///////////////////
+    // Transformable //
+    ///////////////////
     void setPosition(float x, float y);
     void setPosition(const sf::Vector2f& position);
-    void setRotation(float angle); //TODO
+    void setRotation(float angle);
     void setScale(float factorX, float factorY);
     void setScale(const sf::Vector2f& factors);
     void setOrigin(float x, float y);
@@ -34,13 +42,34 @@ public:
     const sf::Vector2f& getOrigin() const;
     void move(float offsetX, float offsetY);
     void move(const sf::Vector2f& offset);
-    void rotate(float angle); //TODO
+    void rotate(float angle);
     void scale(float factorX, float factorY);
     void scale(const sf::Vector2f& factor);
     const sf::Transform& getTransform() const;
     const sf::Transform& getInverseTransform() const;
 
+    ////////////
+    // Sprite //
+    ////////////
+    void setTexture(const sf::Texture& texture, bool resetRect = false);
+    void setTextureRect(const sf::IntRect& rectangle);
+    void setColor(const sf::Color& color);
+    const sf::Texture* getTexture() const;
+    const sf::IntRect& getTextureRect() const;
+    const sf::Color& getColor() const;
+    sf::FloatRect getLocalBounds() const;
+    sf::FloatRect getGlobalBounds() const;
+
+
+protected:
+    // Overriding sf::Drawable
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+
+
 private:
 	Object* _parent = nullptr;
 	std::list<Object*> _children;
+
+    sf::Sprite _sprite;
 };
