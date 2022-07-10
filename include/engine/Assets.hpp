@@ -58,9 +58,11 @@ namespace engine {
 
 
 
-		///////////////////////////////
-		// Variables (Global stores) //
-		///////////////////////////////
+		///////////////
+		// Variables //
+		///////////////
+		static const std::string ASSETS_PATH;
+
 		static std::map<const std::string, const sf::Font, std::less<>> _fonts;
 		static std::map<const std::string, const sf::SoundBuffer, std::less<>> _soundBuffers;
 		static std::map<const std::string, const sf::Texture, std::less<>> _textures;
