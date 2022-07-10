@@ -74,7 +74,7 @@ void Window::clear() { _window.clear(); }
 void Window::display() {
     static bool init = false;
     if (init) {
-        static sf::Text fpsText{ "FPS: ", Assets::getFont("Canterbury"), 18 };
+        static sf::Text fpsText{ "FPS: ", Assets::getFont("AlbertSans-ExtraLight"), 18 };
         float fps = 1.f / _FPSClock.getElapsedTime().asSeconds();
         fpsText.setString("FPS: " + std::to_string((int) std::min(fps, _FPS)) + " (" + std::to_string((int) fps) + ")");
         draw(fpsText);
