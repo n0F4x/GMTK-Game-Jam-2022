@@ -5,8 +5,6 @@
 #include "engine/State.hpp"
 #include "engine/Window.hpp"
 
-#include <iostream>
-
 
 class SampleObject : public Object {
 public:
