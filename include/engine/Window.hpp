@@ -3,7 +3,6 @@
 #include <functional>
 #include <SFML/Graphics.hpp>
 
-
 namespace engine {
 
 	class Core;
@@ -44,6 +43,19 @@ namespace engine {
 		static void draw(const sf::Drawable& drawable, const sf::RenderStates& states = sf::RenderStates::Default);
 
 
+        ////////////////////
+        // Video settings //
+        ////////////////////
+
+        static bool getVSyncEnabled();
+
+        static void setVSyncEnabled(bool enabled);
+
+        static int getFPSLimit();
+
+        static void setFPSLimit(int limit);
+
+
 		/////////////
 		// EXITING //
 		/////////////
@@ -81,12 +93,6 @@ namespace engine {
 		 * @brief	Displays the contents of the window
 		*/
 		static void display();
-		/**
-		 * @brief	Locks the number of frames per second.
-					Utilizes `sf::sleep()` under the hood. FPS clock starts when calling `isOpen()`. 
-		 * @param FPS	Frames per second.
-		*/
-		static void lock_FPS();
 
 
 		///////////////
@@ -97,8 +103,8 @@ namespace engine {
 		static sf::String _title;
 		static sf::ContextSettings _settings;
 		static sf::Uint32 _style;
-		static float _FPS;
-		static sf::Clock _FPSClock;
+		static int _FPSLimit;
+        static bool _vSyncEnabled;
 	};
 
 }
