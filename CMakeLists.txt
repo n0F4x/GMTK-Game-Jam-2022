@@ -29,7 +29,7 @@ set(SOURCE_FILES
     "src/GUI/Panel.cpp"
 )
 
-set(SFML_DIR C:/Programming/Languages/C++/SFML-2.5.1/lib/cmake/SFML)
+set(SFML_DIR ./dependencies/SFML-2.5.1/lib/cmake/SFML)
 
 find_package(SFML 2.5.1 COMPONENTS graphics audio system window REQUIRED)
 
