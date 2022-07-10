@@ -9,6 +9,7 @@
 namespace engine {
 
 	class Core;
+    class Window;
 
 	/**
 	 * @brief	Class for managing assets. Acts as an API for sf::Font, sf::Sound and sf::Texture.
@@ -45,6 +46,8 @@ namespace engine {
 		// Core //
 		//////////
 		friend Core;
+        friend Window;
+
 		/**
 		 * @brief	Reads and stores global assets from the corresponding files.
 		 * @return	0 - in case of success
