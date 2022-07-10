@@ -37,19 +37,11 @@ namespace engine {
 		// Drawing //
 		/////////////
 		/**
-		 * @brief	Clears the window
-		*/
-		static void clear();
-		/**
 		 * @brief	Draws object to window
 		 * @param drawable	Object to be drawn
 		 * @param states	Render states
 		*/
 		static void draw(const sf::Drawable& drawable, const sf::RenderStates& states = sf::RenderStates::Default);
-		/**
-		 * @brief	Displays the contents of the window
-		*/
-		static void display();
 
 
 		/////////////
@@ -81,6 +73,14 @@ namespace engine {
 		 * @return	True in case a new event was polled
 		*/
 		static bool poll_event(sf::Event& event);
+		/**
+		 * @brief	Clears the window
+		*/
+		static void clear();
+		/**
+		 * @brief	Displays the contents of the window
+		*/
+		static void display();
 		/**
 		 * @brief	Locks the number of frames per second.
 					Utilizes `sf::sleep()` under the hood. FPS clock starts when calling `isOpen()`. 
