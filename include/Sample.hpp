@@ -1,6 +1,7 @@
 #pragma once
 
 #include "engine/Object.hpp"
+#include "engine/Assets.hpp"
 #include "engine/State.hpp"
 #include "engine/Window.hpp"
 
@@ -8,38 +9,14 @@
 class SampleObject : public Object {
 public:
 	SampleObject() {
-		_shape.setOrigin(_shape.getGlobalBounds().width, _shape.getGlobalBounds().width);
-		_shape.setPosition(
-			engine::Window::getSize() / 2.f - sf::Vector2f{ _shape.getGlobalBounds().width, _shape.getGlobalBounds().height }
-		);
+		_shape.setOrigin(_shape.getGlobalBounds().width / 2.f, _shape.getGlobalBounds().height / 2.f);
+		_shape.setPosition(engine::Window::getSize() / 2.f);
+		_shape.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
 	}
 
-	void update() override { 
-		switch (static_cast<int>(_clock.getElapsedTime().asSeconds()) % 4) {
-		case 0:
-			_shape.setPosition(
-				engine::Window::getSize() / 2.f + sf::Vector2f{ _shape.getGlobalBounds().width, _shape.getGlobalBounds().height }
-			);
-			break;
-		case 1:
-			_shape.setPosition(
-				engine::Window::getSize() / 2.f + sf::Vector2f{ -_shape.getGlobalBounds().width, _shape.getGlobalBounds().height }
-			);
-			break;
-		case 2:
-			_shape.setPosition(
-				engine::Window::getSize() / 2.f + sf::Vector2f{ -_shape.getGlobalBounds().width, -_shape.getGlobalBounds().height }
-			);
-			break;
-		case 3:
-			_shape.setPosition(
-				engine::Window::getSize() / 2.f + sf::Vector2f{ _shape.getGlobalBounds().width, -_shape.getGlobalBounds().height }
-			);
-			break;
-		default:
-			break;
-		}
-	}
+	void setPosition(const sf::Vector2f& amount) { _shape.setPosition(amount); }
+
+	void update() override { /*empty*/ }
 
 private:
 	// Overriding sf::Drawable
@@ -47,26 +24,49 @@ private:
 		target.draw(_shape);
 	}
 
-
 	// Variables //
 	sf::CircleShape _shape{ 30.f, 50 };
-	sf::Clock _clock;
 };
 
 
-
-class SampleState : public engine::State {
+class SampleChildState : public engine::State {
 public:
-	SampleState() {
-		addObject(&_sampleObject);
-
+	SampleChildState() {
 		renderer().add_static(&_sampleObject);
+	}
+
+	int setup() override {
+		if (globalStore()->get("side") == nullptr) {
+			return 1;
+		}
+		return 0;
 	}
 
 	void handle_event(const sf::Event&) override { /*empty*/ }
 
 	void update() override {
-		update_objects();
+		if (*globalStore()->get("restart") == "true") {
+			if (*globalStore()->get("side") == "Left") {
+				_sampleObject.setPosition(engine::Window::getSize() / 2.f - sf::Vector2f{ 50, 0 });
+			}
+			else if (*globalStore()->get("side") == "Right") {
+				_sampleObject.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 50, 0 });
+			}
+			_clock.restart();
+			*globalStore()->get("restart") = "false";
+		}
+
+		if (_clock.getElapsedTime().asSeconds() > 1.f) {
+			if (*globalStore()->get("side") == "Left") {
+				*globalStore()->get("side") = "Right";
+				changeState("Child2");
+			}
+			else if (*globalStore()->get("side") == "Right") {
+				*globalStore()->get("side") = "Left";
+				changeState("Child1");
+			}
+			*globalStore()->get("restart") = "true";
+		}
 	}
 
 	void draw() override {
@@ -76,4 +76,34 @@ public:
 
 private:
 	SampleObject _sampleObject;
+	sf::Clock _clock;
+};
+
+
+class SampleState : public engine::State {
+public:
+	SampleState() {
+		addStateMachine(&_machine);
+
+		_machine.addState("Child1", std::make_unique<SampleChildState>());
+		_machine.addState("Child2", std::make_unique<SampleChildState>());
+		_machine.setInitialState("Child1");	// this is the default
+
+		store().add("side", "Right");
+		store().add("restart", "true");
+	}
+
+	void handle_event(const sf::Event&) override { /*empty*/ }
+
+	void update() override {
+		_machine->update();
+	}
+
+	void draw() override {
+		_machine->draw();
+	}
+
+
+private:
+	engine::StateMachine _machine;
 };
