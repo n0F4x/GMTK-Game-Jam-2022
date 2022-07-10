@@ -1,9 +1,13 @@
 #include "Object.hpp"
 
-#include <cmath>
 #include <numbers>
 
 static const float PI = std::numbers::pi_v<float>;
+
+
+
+Object::Object(const sf::Texture& texture) : _sprite{ texture } {}
+Object::Object(const sf::Texture& texture, const sf::IntRect& rectangle) : _sprite{ texture, rectangle } {}
 
 
 void Object::attach_child(Object* child) {
@@ -38,122 +42,165 @@ void Object::detach_parent() {
 }
 
 
+///////////////////
+// Transformable //
+///////////////////
+
 void Object::setPosition(float x, float y) {
-	move(x - getPosition().x, y - getPosition().y);
+	_sprite.setPosition(x, y);
+	for (auto sprite : _children) {
+		sprite->setPosition(x, y);
+	}
 }
 
 void Object::setPosition(const sf::Vector2f& position) {
-	move(position - getPosition());
+	_sprite.setPosition(position);
+	for (auto sprite : _children) {
+		sprite->setPosition(position);
+	}
 }
 
 void Object::setRotation(float angle) {
 	rotate(angle - getRotation());
 }
 
-void Object::rotate(float angle) {
-	Transformable::rotate(angle);
-
-	if (_parent != nullptr) {
-		sf::Vector2f offset = getPosition() - _parent->getPosition();
-		setPosition(_parent->getPosition());
-		float newX = offset.x * std::cos(angle * PI / 180) - offset.y * std::sin(angle * PI / 180);
-		float newY = offset.x * std::sin(angle * PI / 180) + offset.y * std::cos(angle * PI / 180);
-		offset.x = newX;
-		offset.y = newY;
-		move(offset);
-	}
-
-	for (auto object : _children) {
-		object->rotate(angle);
-	}
-}
-
 void Object::setScale(float factorX, float factorY) {
-	scale(factorX / getScale().x, factorY / getScale().y);
+	_sprite.setScale(factorX, factorY);
+	for (auto sprite : _children) {
+		auto origin = sprite->getOrigin();
+		sprite->setOrigin(getPosition() - sprite->getPosition() + getOrigin());
+		sprite->setScale(factorX, factorY);
+		sprite->setOrigin(origin);
+	}
 }
 
 void Object::setScale(const sf::Vector2f& factors) {
-	setScale(factors.x, factors.y);
+	_sprite.setScale(factors);
+	for (auto sprite : _children) {
+		auto origin = sprite->getOrigin();
+		sprite->setOrigin(getPosition() - sprite->getPosition() + getOrigin());
+		sprite->setScale(factors);
+		sprite->setOrigin(origin);
+	}
 }
 
 void Object::setOrigin(float x, float y) {
-	Transformable::setOrigin(x, y);
+	_sprite.setOrigin(x, y);
 }
 
 void Object::setOrigin(const sf::Vector2f& origin) {
-	Transformable::setOrigin(origin);
+	_sprite.setOrigin(origin);
 }
 
 const sf::Vector2f& Object::getPosition() const {
-	return Transformable::getPosition();
+	return _sprite.getPosition();
 }
 
 float Object::getRotation() const {
-	return Transformable::getRotation();
+	return _sprite.getRotation();
 }
 
 const sf::Vector2f& Object::getScale() const {
-	return Transformable::getScale();
+	return _sprite.getScale();
 }
 
 const sf::Vector2f& Object::getOrigin() const {
-	return Transformable::getOrigin();
+	return _sprite.getOrigin();
 }
 
 void Object::move(float offsetX, float offsetY) {
-	Transformable::move(offsetX, offsetY);
-	for (auto object : _children) {
-		object->move(offsetX, offsetY);
+	_sprite.move(offsetX, offsetY);
+	for (auto sprite : _children) {
+		sprite->move(offsetX, offsetY);
 	}
 }
 
 void Object::move(const sf::Vector2f& offset) {
-	Transformable::move(offset);
-	for (auto object : _children) {
-		object->move(offset);
+	_sprite.move(offset);
+	for (auto sprite : _children) {
+		sprite->move(offset);
+	}
+}
+
+void Object::rotate(float angle) {
+	_sprite.rotate(angle);
+	for (auto child : _children) {
+		sf::Vector2f offset = child->getPosition() - getPosition();
+		child->setPosition(getPosition());
+		float newX = offset.x * std::cos(angle * PI / 180) - offset.y * std::sin(angle * PI / 180);
+		float newY = offset.x * std::sin(angle * PI / 180) + offset.y * std::cos(angle * PI / 180);
+		offset.x = newX;
+		offset.y = newY;
+		child->move(offset);
 	}
 }
 
 void Object::scale(float factorX, float factorY) {
-	Transformable::scale(factorX, factorY);
-
-	if (_parent != nullptr) {
-		sf::Vector2f distance = getPosition() - _parent->getPosition();
-
-		distance.x *= factorX;
-		distance.y *= factorY;
-
-		distance -= getPosition() - _parent->getPosition();
-		move(distance);
-	}
-
-	for (auto object : _children) {
-		object->scale(factorX, factorY);
+	_sprite.scale(factorX, factorY);
+	for (auto sprite : _children) {
+		auto origin = sprite->getOrigin();
+		sprite->setOrigin(getPosition() - sprite->getPosition() + getOrigin());
+		sprite->scale(factorX, factorY);
+		sprite->setOrigin(origin);
 	}
 }
 
 void Object::scale(const sf::Vector2f& factor) {
-	Transformable::scale(factor);
-	
-	if (_parent != nullptr) {
-		sf::Vector2f distance = getPosition() - _parent->getPosition();
-
-		distance.x *= factor.x;
-		distance.y *= factor.y;
-
-		distance -= getPosition() - _parent->getPosition();
-		move(distance);
-	}
-
-	for (auto object : _children) {
-		object->scale(factor);
+	_sprite.scale(factor);
+	for (auto sprite : _children) {
+		auto origin = sprite->getOrigin();
+		sprite->setOrigin(getPosition() - sprite->getPosition() + getOrigin());
+		sprite->scale(factor);
+		sprite->setOrigin(origin);
 	}
 }
 
 const sf::Transform& Object::getTransform() const {
-	return Transformable::getTransform();
+	return _sprite.getTransform();
 }
 
 const sf::Transform& Object::getInverseTransform() const {
-	return Transformable::getInverseTransform();
+	return _sprite.getInverseTransform();
+}
+
+
+////////////
+// Sprite //
+////////////
+
+void Object::setTexture(const sf::Texture& texture, bool resetRect) {
+	_sprite.setTexture(texture, resetRect);
+}
+
+void Object::setTextureRect(const sf::IntRect& rectangle) {
+	_sprite.setTextureRect(rectangle);
+}
+
+void Object::setColor(const sf::Color& color) {
+	_sprite.setColor(color);
+}
+
+const sf::Texture* Object::getTexture() const {
+	return _sprite.getTexture();
+}
+
+const sf::IntRect& Object::getTextureRect() const {
+	return _sprite.getTextureRect();
+}
+
+const sf::Color& Object::getColor() const {
+	return _sprite.getColor();
+}
+
+sf::FloatRect Object::getLocalBounds() const {
+	return _sprite.getLocalBounds();
+}
+
+sf::FloatRect Object::getGlobalBounds() const {
+	return _sprite.getGlobalBounds();
+}
+
+
+void Object::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	target.draw(_sprite, states);
 }

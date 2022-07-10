@@ -11,23 +11,13 @@
 class SampleObject : public Object {
 public:
 	SampleObject() {
-		_shape.setOrigin(_shape.getGlobalBounds().width / 2.f, _shape.getGlobalBounds().height / 2.f);
-		_shape.setPosition(engine::Window::getSize() / 2.f);
-		_shape.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
+		setTexture(engine::Assets::getTexture("myState/ThumbsUp"));
+		setScale(0.1f, 0.1f);
+		setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
+		setPosition(engine::Window::getSize() / 2.f);
 	}
-
-	void setPosition(const sf::Vector2f& amount) { _shape.setPosition(amount); }
 
 	void update() override { /*empty*/ }
-
-private:
-	// Overriding sf::Drawable
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
-		target.draw(_shape);
-	}
-
-	// Variables //
-	sf::CircleShape _shape{ 30.f, 50 };
 };
 
 
@@ -85,8 +75,11 @@ private:
 class SampleState : public engine::State {
 public:
 	SampleState() {
-		_panel.setTexture(engine::Assets::getTexture(""));
+		_panel.setTexture(engine::Assets::getTexture("myState/ThumbsUp"));
 		renderer().add_static(&_panel);
+		_object.setPosition(_panel.getPosition() + sf::Vector2f{ 100.f, 100.f });
+		renderer().add_static(&_object);
+		_panel.attach_child(&_object);
 
 		addStateMachine(&_machine);
 
@@ -101,6 +94,8 @@ public:
 	void handle_event(const sf::Event&) override { /*empty*/ }
 
 	void update() override {
+		_panel.rotate(-1);
+
 		_machine->update();
 	}
 
@@ -113,4 +108,5 @@ public:
 private:
 	engine::StateMachine _machine;
 	Panel _panel{ { 200, 200}, { 200, 200 }, 20 };
+	SampleObject _object;
 };
