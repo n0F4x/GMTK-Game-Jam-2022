@@ -29,8 +29,6 @@ int Core::setup() const {
 	Window::draw(_loadingText);
 	Window::display();
 
-	sf::sleep(sf::seconds(10));
-
 	// Load assets
 	if (Assets::load() != 0) {
 		return 1;
