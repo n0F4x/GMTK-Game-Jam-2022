@@ -47,14 +47,13 @@ public:
 	void handle_event(const sf::Event&) override { /*empty*/ }
 
 	void update() override {
-		if (*globalStore()->get("side") == "Left") {
-			_sampleObject.setPosition(engine::Window::getSize() / 2.f - sf::Vector2f{ 50, 0 });
-		}
-		else if (*globalStore()->get("side") == "Right") {
-			_sampleObject.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 50, 0 });
-		}
-
 		if (*globalStore()->get("restart") == "true") {
+			if (*globalStore()->get("side") == "Left") {
+				_sampleObject.setPosition(engine::Window::getSize() / 2.f - sf::Vector2f{ 50, 0 });
+			}
+			else if (*globalStore()->get("side") == "Right") {
+				_sampleObject.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 50, 0 });
+			}
 			_clock.restart();
 			*globalStore()->get("restart") = "false";
 		}
