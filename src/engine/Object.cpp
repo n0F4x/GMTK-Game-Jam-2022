@@ -1,5 +1,9 @@
 #include "Object.hpp"
+
 #include <numbers>
+
+static const float PI = std::numbers::pi_v<float>;
+
 
 void Object::attach_child(Object* child) {
 	if (child == this || child == _parent || child->_parent == this) {
@@ -32,6 +36,7 @@ void Object::detach_parent() {
 	}
 }
 
+
 void Object::setPosition(float x, float y) {
 	move(x - getPosition().x, y - getPosition().y);
 }
@@ -50,9 +55,8 @@ void Object::rotate(float angle) {
 	if (_parent != nullptr) {
 		sf::Vector2f offset = getPosition() - _parent->getPosition();
 		setPosition(_parent->getPosition());
-		const float pi = 3.14159265358979323846f;
-		float newX = offset.x * cos(angle * pi / 180) - offset.y * sin(angle * pi / 180);
-		float newY = offset.x * sin(angle * pi / 180) + offset.y * cos(angle * pi / 180);
+		float newX = offset.x * cos(angle * PI / 180) - offset.y * sin(angle * PI / 180);
+		float newY = offset.x * sin(angle * PI / 180) + offset.y * cos(angle * PI / 180);
 		offset.x = newX;
 		offset.y = newY;
 		move(offset);
