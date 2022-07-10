@@ -1,6 +1,5 @@
 #include "GUI/Panel.hpp"
 
-
 Panel::Panel(sf::Vector2f scale, sf::Vector2f position, float border, sf::Color backgroundColor, sf::Color borderColor, int borderDistortion, bool borderFade)
 	: _border{ border }, _borderDistortion{ borderDistortion }, _borderFade{ borderFade }, _backgroundColor{ backgroundColor }, _borderColor{ borderColor }
 {
@@ -24,8 +23,14 @@ void Panel::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		transformedVertices[i].position = getTransform().transformPoint(_vertices[i].position);
 		transformedVertices[i].color = _vertices[i].color;
 	}
-
-	target.draw(transformedVertices.data(), verticesToDraw, sf::Triangles);
+	
+	if (getTexture()) {
+		//TODO...
+		states.transform *= getTransform();//Fucks up?
+		states.texture = getTexture();
+		//TODO draw
+	}
+	else target.draw(transformedVertices.data(), verticesToDraw, sf::Triangles);
 }
 
 
