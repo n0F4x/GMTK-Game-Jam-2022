@@ -3,6 +3,11 @@
 using namespace engine;
 
 
+Sprite::Sprite(const sf::Texture& texture) :_sprite{texture} {}
+
+Sprite::Sprite(const sf::Texture& texture, const sf::IntRect& rectangle) : _sprite{texture, rectangle} {}
+
+
 void Sprite::setTexture(const sf::Texture& texture, bool resetRect) {
 	_sprite.setTexture(texture, resetRect);
 }

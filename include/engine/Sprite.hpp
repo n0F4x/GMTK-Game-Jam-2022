@@ -10,6 +10,10 @@ namespace engine {
 	*/
 	class Sprite : public Object {
 	public:
+		using Object::Object;
+		explicit Sprite(const sf::Texture& texture);
+		Sprite(const sf::Texture& texture, const sf::IntRect& rectangle);
+
 		void setTexture(const sf::Texture& texture, bool resetRect = false);
 		void setTextureRect(const sf::IntRect& rectangle);
 		void setColor(const sf::Color& color);
