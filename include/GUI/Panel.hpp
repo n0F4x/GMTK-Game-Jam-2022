@@ -20,14 +20,17 @@ public:
 
 	void update() override;
 
-	void setBackground(const sf::Texture& texture);
-
-
-protected:
-	void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const override;
+	void setTexture(const sf::Texture& texture);
 
 
 private:
+	void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const final;
+
+
+
+	///////////////
+	// Variables //
+	///////////////
 	sf::VertexArray _vertices{ sf::Triangles, 42 };
 
 	// Border size in pixels

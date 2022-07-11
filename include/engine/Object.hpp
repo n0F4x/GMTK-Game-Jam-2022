@@ -52,6 +52,13 @@ namespace engine {
         // Overriding sf::Drawable
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override = 0;
 
+        // Helper functions - designed for inheritance //
+        virtual void onMove(float offsetX, float offsetY) { /*empty by default*/ };
+        virtual void onMove(const sf::Vector2f& offset) { /*empty by default*/ };
+        virtual void onRotate(float angle) { /*empty by default*/ };
+        virtual void onScale(float factorX, float factorY) { /*empty by default*/ };
+        virtual void onScale(const sf::Vector2f& factor) { /*empty by default*/ };
+
 
 
     private:
