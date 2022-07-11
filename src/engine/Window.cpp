@@ -10,7 +10,7 @@ using namespace engine;
 // Settings //
 //////////////
 sf::RenderWindow Window::_window;
-std::function<sf::VideoMode()> Window::_getVideoMode = sf::VideoMode::getDesktopMode;
+sf::VideoMode Window::_VideoMode = sf::VideoMode(1600, 900);
 sf::String Window::_title = "Platforms";
 sf::ContextSettings Window::_settings{
 	/*depthBits*/			24,
@@ -21,7 +21,7 @@ sf::ContextSettings Window::_settings{
 	/*attributeFlags*/		sf::ContextSettings::Attribute::Default,
 	/*sRgbCapable*/			true
 };
-sf::Uint32 Window::_style = sf::Style::Fullscreen;
+sf::Uint32 Window::_style = sf::Style::Default;
 int Window::_FPSLimit = 120;
 bool Window::_vSyncEnabled = true;
 static const bool keyRepeatEnabled = false;
@@ -32,7 +32,7 @@ const sf::RenderWindow& engine::Window::window() {
 }
 
 sf::Vector2f Window::getSize() {
-	return sf::Vector2f{ sf::Vector2u{ _getVideoMode().width, _getVideoMode().height } };
+	return sf::Vector2f{ sf::Vector2u{ _VideoMode.width, _VideoMode.height } };
 }
 
 sf::FloatRect Window::getBounds() {
@@ -82,7 +82,7 @@ void Window::close() { _window.close(); }
 
 void Window::open() {
 	if (!_window.isOpen()) {
-		_window.create(_getVideoMode(), _title, _style, _settings);
+		_window.create(_VideoMode, _title, _style, _settings);
 
 		_window.setVerticalSyncEnabled(_vSyncEnabled);
 		_window.setKeyRepeatEnabled(keyRepeatEnabled);
