@@ -9,12 +9,22 @@
 
 class SampleChildState : public engine::State {
 public:
-	SampleChildState() {
+	explicit SampleChildState(const std::string_view& side) : _side{ side } {
+		_sprite.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
+		_sprite.setSize({ 100.f, 100.f });
 		renderer().add_static(&_sprite);
+
+		if (side == "Left") {
+			_sprite.setOrigin(0.f, _sprite.getSize().y / 2.f);
+		}
+		else if (side == "Right") {
+			_sprite.setOrigin(_sprite.getSize().x, _sprite.getSize().y / 2.f);
+		}
+		_sprite.setPosition(engine::Window::getSize() / 2.f + _sprite.getOrigin() - _sprite.getSize() / 2.f + sf::Vector2f{ 0, 100.f });
 	}
 
 	int setup() override {
-		if (globalStore()->get("side") == nullptr) {
+		if (_restart = globalStore()->get("restart"); _restart == nullptr) {
 			return 1;
 		}
 		return 0;
@@ -23,27 +33,27 @@ public:
 	void handle_event(const sf::Event&) override { /*empty*/ }
 
 	void update() override {
-		if (*globalStore()->get("restart") == "true") {
-			if (*globalStore()->get("side") == "Left") {
-				_sprite.setPosition(engine::Window::getSize() / 2.f - sf::Vector2f{ 50, 0 });
-			}
-			else if (*globalStore()->get("side") == "Right") {
-				_sprite.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 50, 0 });
-			}
+		if (*_restart == "true") {
 			_clock.restart();
-			*globalStore()->get("restart") = "false";
+			*_restart = "false";
 		}
 
-		if (_clock.getElapsedTime().asSeconds() > 1.f) {
-			if (*globalStore()->get("side") == "Left") {
-				*globalStore()->get("side") = "Right";
+		if (_side == "Left") {
+			_sprite.rotate(-1.f * _rotationClock.restart().asSeconds() / _rotationTime * 360.f);
+		}
+		else if (_side == "Right") {
+			_sprite.rotate(_rotationClock.restart().asSeconds() / _rotationTime * 360.f);
+		}
+
+		if (_clock.getElapsedTime().asSeconds() >= _rotationTime) {
+			if (_side == "Left") {
 				changeState("Child2");
 			}
-			else if (*globalStore()->get("side") == "Right") {
-				*globalStore()->get("side") = "Left";
+			else if (_side == "Right") {
 				changeState("Child1");
 			}
-			*globalStore()->get("restart") = "true";
+			_sprite.setRotation(0.f);
+			*_restart = "true";
 		}
 	}
 
@@ -55,6 +65,11 @@ public:
 private:
 	sf::RectangleShape _sprite;
 	sf::Clock _clock;
+	sf::Clock _rotationClock;
+	float _rotationTime = 2.f;
+
+	const std::string _side;
+	std::string* _restart = nullptr;
 };
 
 
@@ -65,17 +80,16 @@ public:
 		_object.getComponent<engine::Animator>();
 
 		_sprite.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
-		_sprite.setSize({ 100.f, 100.f });
+		_sprite.setSize({ 200.f, 200.f });
 		_sprite.setOrigin(_sprite.getSize() / 2.f);
-		_sprite.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 200.f, 0.f });
+		_sprite.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 0.f, -200.f });
 
 		addStateMachine(&_machine);
 
-		_machine.addState("Child1", std::make_unique<SampleChildState>());
-		_machine.addState("Child2", std::make_unique<SampleChildState>());
+		_machine.addState("Child1", std::make_unique<SampleChildState>("Left"));
+		_machine.addState("Child2", std::make_unique<SampleChildState>("Right"));
 		_machine.setInitialState("Child1");	// this is the default
 
-		store().add("side", "Right");
 		store().add("restart", "true");
 	}
 
@@ -88,7 +102,6 @@ public:
 	}
 
 	void draw() override {
-		renderer().render();
 		_machine->draw();
 		engine::Window::draw(_sprite);
 	}
