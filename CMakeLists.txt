@@ -20,14 +20,15 @@ include_directories(
 
 set(SOURCE_FILES
     "src/main.cpp"
-    "src/engine/Core.cpp"
+    "src/engine/Assets.cpp"
     "src/engine/Window.cpp"
+    "src/engine/Core.cpp"
     "src/engine/StateMachine.cpp"
     "src/engine/State.cpp"
-    "src/engine/Object.cpp"
     "src/engine/Renderer.cpp"
-    "src/engine/Assets.cpp"
     "src/engine/Store.cpp"
+    "src/engine/Object.cpp"
+    "src/engine/Sprite.cpp"
     "src/GUI/Panel.cpp"
 )
 

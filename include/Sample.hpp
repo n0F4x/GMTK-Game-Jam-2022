@@ -1,6 +1,6 @@
 #pragma once
 
-#include "engine/Object.hpp"
+#include "engine/Sprite.hpp"
 #include "engine/Assets.hpp"
 #include "engine/State.hpp"
 #include "engine/Window.hpp"
@@ -8,7 +8,7 @@
 #include "GUI/Panel.hpp"
 
 
-class SampleObject : public Object {
+class SampleObject : public engine::Sprite {
 public:
 	SampleObject() {
 		setTexture(engine::Assets::getTexture("myState/ThumbsUp"));
