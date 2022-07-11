@@ -60,7 +60,7 @@ private:
 class SampleState : public engine::State {
 public:
 	SampleState() {
-		_object.setComponent(engine::ComponentType::ANIMATOR, std::make_unique<engine::Animator>());
+		_object.setComponent(std::make_unique<engine::Animator>());
 		_object.getComponent<engine::Animator>();
 
 		_sprite.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));

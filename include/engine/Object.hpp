@@ -35,9 +35,14 @@ namespace engine {
         ////////////////
         // Components //
         ////////////////
-        void setComponent(ComponentType type, std::unique_ptr<Component> component);
+        void setComponent(std::unique_ptr<Animator> component);
+        void setComponent(std::unique_ptr<Collider> component);
+        void setComponent(std::unique_ptr<Drawable> component);
+        void setComponent(std::unique_ptr<Physics> component);
+
         template<typename COMPONENT>
         COMPONENT* getComponent();
+
         void update();
 
 
