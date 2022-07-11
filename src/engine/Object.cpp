@@ -10,15 +10,6 @@ using namespace engine;
 static const float PI = std::numbers::pi_v<float>;
 
 
-// Downcast unique_ptr
-template<typename TO, typename FROM>
-std::unique_ptr<TO> dynamic_unique_pointer_cast(std::unique_ptr<FROM>&& old) {
-	return std::unique_ptr<TO>{dynamic_cast<TO*>(old.release())};
-	// conversion: unique_ptr<FROM>->FROM*->TO*->unique_ptr<TO>
-}
-
-
-
 void Object::attach_child(Object* child) {
 	if (child == this || child == _parent || child->_parent == this) {
 		return;
@@ -58,49 +49,17 @@ void Object::detach_parent() {
 // Components //
 ////////////////
 
-void Object::setComponent(ComponentType type, std::unique_ptr<Component> component) {
-	Component* tempPtr = component.get();
-
-	switch (type) {
-	case ComponentType::ANIMATOR:
-		if (auto ptr = dynamic_cast<Animator*>(std::move(component).release()); ptr) {
-			_animator.reset(ptr);
-		}
-		else {
-			std::cerr << "\nObject: Failed adding component. Component type does not match component.\n";
-			return;
-		}
-		break;
-	case ComponentType::COLLIDER:
-		if (auto ptr = dynamic_cast<Collider*>(std::move(component).release()); ptr) {
-			_collider.reset(ptr);
-		}
-		else {
-			std::cerr << "\nObject: Failed adding component. Component type does not match component.\n";
-			return;
-		}
-		break;
-	case ComponentType::DRAWABLE:
-		if (auto ptr = dynamic_cast<Drawable*>(std::move(component).release()); ptr) {
-			_drawable.reset(ptr);
-		}
-		else {
-			std::cerr << "\nObject: Failed adding component. Component type does not match component.\n";
-			return;
-		}
-		break;
-	case ComponentType::PHYSICS:
-		if (auto ptr = dynamic_cast<Physics*>(std::move(component).release()); ptr) {
-			_physics.reset(ptr);
-		}
-		else {
-			std::cerr << "\nObject: Failed adding component. Component type does not match component.\n";
-			return;
-		}
-		break;
-	}
-
-	tempPtr->_object = this;
+void Object::setComponent(std::unique_ptr<Animator> component) {
+	_animator = std::move(component);
+}
+void Object::setComponent(std::unique_ptr<Collider> component) {
+	_collider = std::move(component);
+}
+void Object::setComponent(std::unique_ptr<Drawable> component) {
+	_drawable = std::move(component);
+}
+void Object::setComponent(std::unique_ptr<Physics> component) {
+	_physics = std::move(component);
 }
 
 template<typename COMPONENT>
