@@ -75,11 +75,16 @@ private:
 class SampleState : public engine::State {
 public:
 	SampleState() {
-		_panel.setTexture(engine::Assets::getTexture("myState/ThumbsUp"));
+		_panel.setBackground(engine::Assets::getTexture("myState/ThumbsUp"));
 		renderer().add_static(&_panel);
 		_object.setPosition(_panel.getPosition() + sf::Vector2f{ 100.f, 100.f });
 		renderer().add_static(&_object);
 		_panel.attach_child(&_object);
+
+		_sprite.setTexture(engine::Assets::getTexture("myState/ThumbsUp"));
+		_sprite.setScale(0.1f, 0.1f);
+		_sprite.setOrigin(_sprite.getLocalBounds().width / 2.f, _sprite.getLocalBounds().height / 2.f);
+		_sprite.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 200.f, 0.f });
 
 		addStateMachine(&_machine);
 
@@ -97,11 +102,14 @@ public:
 		_panel.rotate(-1);
 
 		_machine->update();
+
+		_sprite.rotate(-1);
 	}
 
 	void draw() override {
 		renderer().render();
 		_machine->draw();
+		engine::Window::draw(_sprite);
 	}
 
 
@@ -109,4 +117,5 @@ private:
 	engine::StateMachine _machine;
 	Panel _panel{ { 200, 200}, { 200, 200 }, 20 };
 	SampleObject _object;
+	sf::Sprite _sprite;
 };

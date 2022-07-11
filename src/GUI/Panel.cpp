@@ -14,14 +14,11 @@ void Panel::update() {
 	//TODO update vertices on animation
 }
 
-void Panel::setTexture(const sf::Texture& texture) {
-	_backgroundSprite.setTexture(texture);
-	_backgroundSprite.setScale(getScale().x / texture.getSize().x, getScale().y / texture.getSize().y);
-	_backgroundSprite.setPosition(getPosition() - getScale() / 2.f);
-}
 
-const sf::Texture* Panel::getTexture() const {
-	return _backgroundSprite.getTexture();
+void Panel::setBackground(const sf::Texture& texture) {
+	_backgroundSprite.setTexture(texture);
+	_backgroundSprite.setScale(getScale().x / (float) texture.getSize().x, getScale().y / (float) texture.getSize().y);
+	_backgroundSprite.setPosition(getPosition() - getScale() / 2.f);
 }
 
 
@@ -35,7 +32,7 @@ void Panel::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	}
 
 	target.draw(transformedVertices.data(), verticesToDraw, sf::Triangles);
-	if (getTexture()) target.draw(_backgroundSprite);
+	target.draw(_backgroundSprite); /// TODO: transform _backgroundSprite
 }
 
 
