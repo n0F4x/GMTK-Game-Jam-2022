@@ -99,7 +99,7 @@ namespace engine {
 		// Variables //
 		///////////////
 		static sf::RenderWindow _window;
-		static std::function<sf::VideoMode()> _getVideoMode;
+		static sf::VideoMode _VideoMode;
 		static sf::String _title;
 		static sf::ContextSettings _settings;
 		static sf::Uint32 _style;
