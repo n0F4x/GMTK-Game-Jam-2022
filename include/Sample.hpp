@@ -1,8 +1,9 @@
 #pragma once
 
 #include "engine/Assets.hpp"
-#include "engine/State.hpp"
 #include "engine/Window.hpp"
+#include "engine/State.hpp"
+#include "engine/StateMachine.hpp"
 #include "engine/Object.hpp"
 
 
