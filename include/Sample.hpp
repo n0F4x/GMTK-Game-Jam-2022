@@ -1,30 +1,15 @@
 #pragma once
 
-#include "engine/Sprite.hpp"
 #include "engine/Assets.hpp"
 #include "engine/State.hpp"
 #include "engine/Window.hpp"
-
-#include "GUI/Panel.hpp"
-
-
-class SampleObject : public engine::Sprite {
-public:
-	SampleObject() {
-		setTexture(engine::Assets::getTexture("myState/ThumbsUp"));
-		setScale(0.1f, 0.1f);
-		setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-		setPosition(engine::Window::getSize() / 2.f);
-	}
-
-	void update() override { /*empty*/ }
-};
+#include "engine/Object.hpp"
 
 
 class SampleChildState : public engine::State {
 public:
 	SampleChildState() {
-		renderer().add_static(&_sampleObject);
+		renderer().add_static(&_sprite);
 	}
 
 	int setup() override {
@@ -39,10 +24,10 @@ public:
 	void update() override {
 		if (*globalStore()->get("restart") == "true") {
 			if (*globalStore()->get("side") == "Left") {
-				_sampleObject.setPosition(engine::Window::getSize() / 2.f - sf::Vector2f{ 50, 0 });
+				_sprite.setPosition(engine::Window::getSize() / 2.f - sf::Vector2f{ 50, 0 });
 			}
 			else if (*globalStore()->get("side") == "Right") {
-				_sampleObject.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 50, 0 });
+				_sprite.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 50, 0 });
 			}
 			_clock.restart();
 			*globalStore()->get("restart") = "false";
@@ -67,7 +52,7 @@ public:
 
 
 private:
-	SampleObject _sampleObject;
+	sf::RectangleShape _sprite;
 	sf::Clock _clock;
 };
 
@@ -75,11 +60,8 @@ private:
 class SampleState : public engine::State {
 public:
 	SampleState() {
-		_panel.setTexture(engine::Assets::getTexture("myState/ThumbsUp"));
-		renderer().add_static(&_panel);
-		_object.setPosition(_panel.getPosition() + sf::Vector2f{ 100.f, 100.f });
-		renderer().add_static(&_object);
-		_panel.attach_child(&_object);
+		_object.setComponent(engine::ComponentType::ANIMATOR, std::make_unique<engine::Animator>());
+		_object.getComponent<engine::Animator>();
 
 		_sprite.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
 		_sprite.setSize({ 100.f, 100.f });
@@ -99,8 +81,6 @@ public:
 	void handle_event(const sf::Event&) override { /*empty*/ }
 
 	void update() override {
-		_panel.rotate(-1);
-
 		_machine->update();
 
 		_sprite.rotate(-1);
@@ -115,7 +95,6 @@ public:
 
 private:
 	engine::StateMachine _machine;
-	Panel _panel{ { 200, 200}, { 200, 200 }, 20 };
-	SampleObject _object;
 	sf::RectangleShape _sprite;
+	engine::Object _object;
 };
