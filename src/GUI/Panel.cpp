@@ -18,7 +18,7 @@ void Panel::update() {
 }
 
 
-void Panel::setBackground(const sf::Texture& texture) {
+void Panel::setTexture(const sf::Texture& texture) {
 	_backgroundTexture = texture;
 	//_backgroundSprite.setScale(getScale().x / (float) texture.getSize().x, getScale().y / (float) texture.getSize().y);
 	//_backgroundSprite.setPosition(getPosition() - getScale() / 2.f);

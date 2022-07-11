@@ -46,14 +46,17 @@ void Object::detach_parent() {
 ///////////////////
 
 void Object::setPosition(float x, float y) {
-	_transformable.setPosition(x, y);
+	auto newPos = sf::Vector2f{ x, y };
+	_transformable.move(newPos - getPosition());
+
 	for (auto sprite : _children) {
 		sprite->setPosition(x, y);
 	}
 }
 
 void Object::setPosition(const sf::Vector2f& position) {
-	_transformable.setPosition(position);
+	_transformable.move(position - getPosition());
+
 	for (auto sprite : _children) {
 		sprite->setPosition(position);
 	}
@@ -97,6 +100,9 @@ const sf::Vector2f& Object::getOrigin() const {
 
 void Object::move(float offsetX, float offsetY) {
 	_transformable.move(offsetX, offsetY);
+
+	onMove(offsetX, offsetY);
+
 	for (auto sprite : _children) {
 		sprite->move(offsetX, offsetY);
 	}
@@ -104,6 +110,9 @@ void Object::move(float offsetX, float offsetY) {
 
 void Object::move(const sf::Vector2f& offset) {
 	_transformable.move(offset);
+
+	onMove(offset);
+
 	for (auto sprite : _children) {
 		sprite->move(offset);
 	}
@@ -111,6 +120,9 @@ void Object::move(const sf::Vector2f& offset) {
 
 void Object::rotate(float angle) {
 	_transformable.rotate(angle);
+
+	onRotate(angle);
+
 	for (auto child : _children) {
 		child->rotate(angle);
 
@@ -126,6 +138,9 @@ void Object::rotate(float angle) {
 
 void Object::scale(float factorX, float factorY) {
 	_transformable.scale(factorX, factorY);
+
+	onScale(factorX, factorY);
+
 	for (auto sprite : _children) {
 		sprite->scale(factorX, factorY);
 
@@ -139,6 +154,9 @@ void Object::scale(float factorX, float factorY) {
 
 void Object::scale(const sf::Vector2f& factor) {
 	_transformable.scale(factor);
+
+	onScale(factor);
+
 	for (auto sprite : _children) {
 		sprite->scale(factor);
 

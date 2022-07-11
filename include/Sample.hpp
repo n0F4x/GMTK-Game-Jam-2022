@@ -75,7 +75,7 @@ private:
 class SampleState : public engine::State {
 public:
 	SampleState() {
-		_panel.setBackground(engine::Assets::getTexture("myState/ThumbsUp"));
+		_panel.setTexture(engine::Assets::getTexture("myState/ThumbsUp"));
 		renderer().add_static(&_panel);
 		_object.setPosition(_panel.getPosition() + sf::Vector2f{ 100.f, 100.f });
 		renderer().add_static(&_object);
