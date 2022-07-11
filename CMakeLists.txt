@@ -20,6 +20,7 @@ include_directories(
 
 set(SOURCE_FILES
     "src/main.cpp"
+    "src/engine/Timer.cpp"
     "src/engine/Assets.cpp"
     "src/engine/Window.cpp"
     "src/engine/Core.cpp"
@@ -27,9 +28,12 @@ set(SOURCE_FILES
     "src/engine/State.cpp"
     "src/engine/Renderer.cpp"
     "src/engine/Store.cpp"
-    "src/engine/Node.cpp"
-    "src/engine/Sprite.cpp"
-    "src/GUI/Panel.cpp"
+    "src/engine/Object.cpp"
+    "src/engine/Component.cpp"
+    "src/engine/Animator.cpp"
+    "src/engine/Collider.cpp"
+    "src/engine/Drawable.cpp"
+    "src/engine/Physics.cpp"
 )
 
 set(SFML_DIR ./dependencies/SFML-2.5.1/lib/cmake/SFML)
