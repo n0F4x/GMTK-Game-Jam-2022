@@ -1,4 +1,4 @@
-#include "Object.hpp"
+#include "Node.hpp"
 
 #include <numbers>
 #include <cmath>
@@ -9,7 +9,7 @@ static const float PI = std::numbers::pi_v<float>;
 
 
 
-void Object::attach_child(Object* child) {
+void Node::attach_child(Node* child) {
 	if (child == this || child == _parent || child->_parent == this) {
 		return;
 	}
@@ -20,13 +20,13 @@ void Object::attach_child(Object* child) {
 	_children.push_back(child);
 }
 
-void Object::detach_child(Object* child) {
+void Node::detach_child(Node* child) {
 	if (_children.remove(child) > 0) {
 		child->_parent = nullptr;
 	}
 }
 
-void Object::attach_parent(Object* parent) {
+void Node::attach_parent(Node* parent) {
 	if (_parent == this) {
 		return;
 	}
@@ -34,7 +34,7 @@ void Object::attach_parent(Object* parent) {
 	parent->attach_child(this);
 }
 
-void Object::detach_parent() {
+void Node::detach_parent() {
 	if (_parent != nullptr) {
 		_parent->detach_child(this);
 	}
@@ -45,7 +45,7 @@ void Object::detach_parent() {
 // Transformable //
 ///////////////////
 
-void Object::setPosition(float x, float y) {
+void Node::setPosition(float x, float y) {
 	auto newPos = sf::Vector2f{ x, y };
 	_transformable.move(newPos - getPosition());
 
@@ -54,7 +54,7 @@ void Object::setPosition(float x, float y) {
 	}
 }
 
-void Object::setPosition(const sf::Vector2f& position) {
+void Node::setPosition(const sf::Vector2f& position) {
 	_transformable.move(position - getPosition());
 
 	for (auto sprite : _children) {
@@ -62,43 +62,43 @@ void Object::setPosition(const sf::Vector2f& position) {
 	}
 }
 
-void Object::setRotation(float angle) {
+void Node::setRotation(float angle) {
 	rotate(angle - getRotation());
 }
 
-void Object::setScale(float factorX, float factorY) {
+void Node::setScale(float factorX, float factorY) {
 	scale(factorX / getScale().x, factorY / getScale().y);
 }
 
-void Object::setScale(const sf::Vector2f& factors) {
+void Node::setScale(const sf::Vector2f& factors) {
 	setScale(factors.x, factors.y);
 }
 
-void Object::setOrigin(float x, float y) {
+void Node::setOrigin(float x, float y) {
 	_transformable.setOrigin(x, y);
 }
 
-void Object::setOrigin(const sf::Vector2f& origin) {
+void Node::setOrigin(const sf::Vector2f& origin) {
 	_transformable.setOrigin(origin);
 }
 
-const sf::Vector2f& Object::getPosition() const {
+const sf::Vector2f& Node::getPosition() const {
 	return _transformable.getPosition();
 }
 
-float Object::getRotation() const {
+float Node::getRotation() const {
 	return _transformable.getRotation();
 }
 
-const sf::Vector2f& Object::getScale() const {
+const sf::Vector2f& Node::getScale() const {
 	return _transformable.getScale();
 }
 
-const sf::Vector2f& Object::getOrigin() const {
+const sf::Vector2f& Node::getOrigin() const {
 	return _transformable.getOrigin();
 }
 
-void Object::move(float offsetX, float offsetY) {
+void Node::move(float offsetX, float offsetY) {
 	_transformable.move(offsetX, offsetY);
 
 	onMove(offsetX, offsetY);
@@ -108,7 +108,7 @@ void Object::move(float offsetX, float offsetY) {
 	}
 }
 
-void Object::move(const sf::Vector2f& offset) {
+void Node::move(const sf::Vector2f& offset) {
 	_transformable.move(offset);
 
 	onMove(offset);
@@ -118,7 +118,7 @@ void Object::move(const sf::Vector2f& offset) {
 	}
 }
 
-void Object::rotate(float angle) {
+void Node::rotate(float angle) {
 	_transformable.rotate(angle);
 
 	onRotate(angle);
@@ -136,7 +136,7 @@ void Object::rotate(float angle) {
 	}
 }
 
-void Object::scale(float factorX, float factorY) {
+void Node::scale(float factorX, float factorY) {
 	_transformable.scale(factorX, factorY);
 
 	onScale(factorX, factorY);
@@ -152,7 +152,7 @@ void Object::scale(float factorX, float factorY) {
 	}
 }
 
-void Object::scale(const sf::Vector2f& factor) {
+void Node::scale(const sf::Vector2f& factor) {
 	_transformable.scale(factor);
 
 	onScale(factor);
@@ -168,10 +168,10 @@ void Object::scale(const sf::Vector2f& factor) {
 	}
 }
 
-const sf::Transform& Object::getTransform() const {
+const sf::Transform& Node::getTransform() const {
 	return _transformable.getTransform();
 }
 
-const sf::Transform& Object::getInverseTransform() const {
+const sf::Transform& Node::getInverseTransform() const {
 	return _transformable.getInverseTransform();
 }
