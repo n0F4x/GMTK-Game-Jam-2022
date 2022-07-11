@@ -11,7 +11,7 @@ using namespace engine;
 //////////////
 sf::RenderWindow Window::_window;
 sf::VideoMode Window::_VideoMode = sf::VideoMode(1600, 900);
-sf::String Window::_title = "Platforms";
+sf::String Window::_title = "Title";
 sf::ContextSettings Window::_settings{
 	/*depthBits*/			24,
 	/*stencilBits*/			8,

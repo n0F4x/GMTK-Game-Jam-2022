@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include <Object.hpp>
 
 
 namespace engine {
@@ -20,21 +19,21 @@ namespace engine {
 		void render();
 
 		// Static drawing - drawn first
-		void add_static(const Object* object);
-		void remove_static(const Object* object);
+		void add_static(const sf::Drawable* object);
+		void remove_static(const sf::Drawable* object);
 		void flush_static();
 
 		// Dynamic drawing (gets flushed after each frame)
 		// Basic - drawn after static
 		// Priority - drawn after basic
-		void push_basic(const Object* object);
-		void push_priority(const Object* object);
+		void push_basic(const sf::Drawable* object);
+		void push_priority(const sf::Drawable* object);
 
 
 	private:
-		std::vector<const Object*> _static;
-		std::vector<const Object*> _basic;
-		std::vector<const Object*> _priority;
+		std::vector<const sf::Drawable*> _static;
+		std::vector<const sf::Drawable*> _basic;
+		std::vector<const sf::Drawable*> _priority;
 	};
 
 }

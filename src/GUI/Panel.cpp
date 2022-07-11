@@ -3,11 +3,11 @@
 #include <array>
 
 
-Panel::Panel(sf::Vector2f scale, sf::Vector2f position, float border, sf::Color backgroundColor, sf::Color borderColor, int borderDistortion, bool borderFade)
-	: _border{ border }, _borderDistortion{ borderDistortion }, _borderFade{ borderFade }, _backgroundColor{ backgroundColor }, _borderColor{ borderColor }
+Panel::Panel(sf::Vector2f scale, sf::Vector2f position, float borderWidth, sf::Color backgroundColor, sf::Color borderColor, int borderDistortion, bool borderFade)
+	: _borderWidth{ borderWidth }, _borderDistortion{ borderDistortion }, _borderFade{ borderFade }, _backgroundColor{ backgroundColor }, _borderColor{ borderColor }
 {
-	Object::setScale(scale);
-	Object::setPosition(position);
+	Node::setScale(scale);
+	Node::setPosition(position);
 
 	apply_changes();
 }
@@ -30,7 +30,7 @@ void Panel::setTexture(const sf::Texture& texture) {
 
 
 void Panel::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	const size_t verticesToDraw = _border == 0 ? 6 : 42;
+	const size_t verticesToDraw = _borderWidth == 0 ? 6 : 42;
 
 	std::array<sf::Vertex, 42> transformedVertices;
 	for (size_t i = 0; i < verticesToDraw; i++) {
@@ -61,60 +61,60 @@ void Panel::apply_changes() {
 
 	for (size_t i = 0; i < 6; i++) _vertices[i].color = _backgroundColor;
 
-	if (_border == 0) return;
+	if (_borderWidth == 0) return;
 
 	// Border corners
 	_vertices[6].position = sf::Vector2f{ -.5f, .5f };
-	_vertices[7].position = sf::Vector2f{ -.5f - _border / scale.x, .5f };
-	_vertices[8].position = sf::Vector2f{ -.5f, .5f + _border / scale.y };
+	_vertices[7].position = sf::Vector2f{ -.5f - _borderWidth / scale.x, .5f };
+	_vertices[8].position = sf::Vector2f{ -.5f, .5f + _borderWidth / scale.y };
 
 	_vertices[9].position = sf::Vector2f{ .5f, .5f };
-	_vertices[10].position = sf::Vector2f{ .5f + _border / scale.x, .5f };
-	_vertices[11].position = sf::Vector2f{ .5f, .5f + _border / scale.y };
+	_vertices[10].position = sf::Vector2f{ .5f + _borderWidth / scale.x, .5f };
+	_vertices[11].position = sf::Vector2f{ .5f, .5f + _borderWidth / scale.y };
 
 	_vertices[12].position = sf::Vector2f{ .5f, -.5f };
-	_vertices[13].position = sf::Vector2f{ .5f + _border / scale.x, -.5f };
-	_vertices[14].position = sf::Vector2f{ .5f, -.5f - _border / scale.y };
+	_vertices[13].position = sf::Vector2f{ .5f + _borderWidth / scale.x, -.5f };
+	_vertices[14].position = sf::Vector2f{ .5f, -.5f - _borderWidth / scale.y };
 
 	_vertices[15].position = sf::Vector2f{ -.5f, -.5f };
-	_vertices[16].position = sf::Vector2f{ -.5f - _border / scale.x, -.5f };
-	_vertices[17].position = sf::Vector2f{ -.5f, -.5f - _border / scale.y };
+	_vertices[16].position = sf::Vector2f{ -.5f - _borderWidth / scale.x, -.5f };
+	_vertices[17].position = sf::Vector2f{ -.5f, -.5f - _borderWidth / scale.y };
 
 	// Border edges
 	//(top)
 	_vertices[18].position = sf::Vector2f{ -.5f, .5f };
 	_vertices[19].position = sf::Vector2f{ .5f, .5f };
-	_vertices[20].position = sf::Vector2f{ -.5f, .5f + _border / scale.y };
+	_vertices[20].position = sf::Vector2f{ -.5f, .5f + _borderWidth / scale.y };
 
-	_vertices[21].position = sf::Vector2f{ -.5f, .5f + _border / scale.y };
-	_vertices[22].position = sf::Vector2f{ .5f, .5f + _border / scale.y };
+	_vertices[21].position = sf::Vector2f{ -.5f, .5f + _borderWidth / scale.y };
+	_vertices[22].position = sf::Vector2f{ .5f, .5f + _borderWidth / scale.y };
 	_vertices[23].position = sf::Vector2f{ .5f, .5f };
 
 	//(right)
 	_vertices[24].position = sf::Vector2f{ .5f, .5f };
 	_vertices[25].position = sf::Vector2f{ .5f, -.5f };
-	_vertices[26].position = sf::Vector2f{ .5f + _border / scale.x, -.5f };
+	_vertices[26].position = sf::Vector2f{ .5f + _borderWidth / scale.x, -.5f };
 
-	_vertices[27].position = sf::Vector2f{ .5f + _border / scale.x, -.5f };
-	_vertices[28].position = sf::Vector2f{ .5f + _border / scale.x, .5f };
+	_vertices[27].position = sf::Vector2f{ .5f + _borderWidth / scale.x, -.5f };
+	_vertices[28].position = sf::Vector2f{ .5f + _borderWidth / scale.x, .5f };
 	_vertices[29].position = sf::Vector2f{ .5f, .5f };
 
 	//(bottom)
 	_vertices[30].position = sf::Vector2f{ .5f, -.5f };
 	_vertices[31].position = sf::Vector2f{ -.5f, -.5f };
-	_vertices[32].position = sf::Vector2f{ .5f, -.5f - _border / scale.y };
+	_vertices[32].position = sf::Vector2f{ .5f, -.5f - _borderWidth / scale.y };
 
-	_vertices[33].position = sf::Vector2f{ .5f, -.5f - _border / scale.y };
-	_vertices[34].position = sf::Vector2f{ -.5f, -.5f - _border / scale.y };
+	_vertices[33].position = sf::Vector2f{ .5f, -.5f - _borderWidth / scale.y };
+	_vertices[34].position = sf::Vector2f{ -.5f, -.5f - _borderWidth / scale.y };
 	_vertices[35].position = sf::Vector2f{ -.5f, -.5f };
 
 	//(left)
 	_vertices[36].position = sf::Vector2f{ -.5f, -.5f };
 	_vertices[37].position = sf::Vector2f{ -.5f, .5f };
-	_vertices[38].position = sf::Vector2f{ -.5f - _border / scale.x, .5f };
+	_vertices[38].position = sf::Vector2f{ -.5f - _borderWidth / scale.x, .5f };
 
-	_vertices[39].position = sf::Vector2f{ -.5f - _border / scale.x, .5f };
-	_vertices[40].position = sf::Vector2f{ -.5f - _border / scale.x, -.5f };
+	_vertices[39].position = sf::Vector2f{ -.5f - _borderWidth / scale.x, .5f };
+	_vertices[40].position = sf::Vector2f{ -.5f - _borderWidth / scale.x, -.5f };
 	_vertices[41].position = sf::Vector2f{ -.5f, -.5f };
 
 	if (_borderDistortion == 0)

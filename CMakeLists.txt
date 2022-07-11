@@ -27,7 +27,7 @@ set(SOURCE_FILES
     "src/engine/State.cpp"
     "src/engine/Renderer.cpp"
     "src/engine/Store.cpp"
-    "src/engine/Object.cpp"
+    "src/engine/Node.cpp"
     "src/engine/Sprite.cpp"
     "src/GUI/Panel.cpp"
 )

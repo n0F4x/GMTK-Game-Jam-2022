@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Object.hpp"
+#include "Node.hpp"
 
 
 namespace engine {
@@ -8,9 +8,9 @@ namespace engine {
 	/**
 	 * @brief   Implementing sprite based on sf::Sprite to support Object hierarchy.
 	*/
-	class Sprite : public Object {
+	class Sprite : public Node {
 	public:
-		using Object::Object;
+		using Node::Node;
 		explicit Sprite(const sf::Texture& texture);
 		Sprite(const sf::Texture& texture, const sf::IntRect& rectangle);
 
