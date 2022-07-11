@@ -3,12 +3,10 @@
 #include <numbers>
 #include <cmath>
 
+using namespace engine;
+
 static const float PI = std::numbers::pi_v<float>;
 
-
-
-Object::Object(const sf::Texture& texture) : _sprite{ texture } {}
-Object::Object(const sf::Texture& texture, const sf::IntRect& rectangle) : _sprite{ texture, rectangle } {}
 
 
 void Object::attach_child(Object* child) {
@@ -48,14 +46,14 @@ void Object::detach_parent() {
 ///////////////////
 
 void Object::setPosition(float x, float y) {
-	_sprite.setPosition(x, y);
+	_transformable.setPosition(x, y);
 	for (auto sprite : _children) {
 		sprite->setPosition(x, y);
 	}
 }
 
 void Object::setPosition(const sf::Vector2f& position) {
-	_sprite.setPosition(position);
+	_transformable.setPosition(position);
 	for (auto sprite : _children) {
 		sprite->setPosition(position);
 	}
@@ -74,45 +72,45 @@ void Object::setScale(const sf::Vector2f& factors) {
 }
 
 void Object::setOrigin(float x, float y) {
-	_sprite.setOrigin(x, y);
+	_transformable.setOrigin(x, y);
 }
 
 void Object::setOrigin(const sf::Vector2f& origin) {
-	_sprite.setOrigin(origin);
+	_transformable.setOrigin(origin);
 }
 
 const sf::Vector2f& Object::getPosition() const {
-	return _sprite.getPosition();
+	return _transformable.getPosition();
 }
 
 float Object::getRotation() const {
-	return _sprite.getRotation();
+	return _transformable.getRotation();
 }
 
 const sf::Vector2f& Object::getScale() const {
-	return _sprite.getScale();
+	return _transformable.getScale();
 }
 
 const sf::Vector2f& Object::getOrigin() const {
-	return _sprite.getOrigin();
+	return _transformable.getOrigin();
 }
 
 void Object::move(float offsetX, float offsetY) {
-	_sprite.move(offsetX, offsetY);
+	_transformable.move(offsetX, offsetY);
 	for (auto sprite : _children) {
 		sprite->move(offsetX, offsetY);
 	}
 }
 
 void Object::move(const sf::Vector2f& offset) {
-	_sprite.move(offset);
+	_transformable.move(offset);
 	for (auto sprite : _children) {
 		sprite->move(offset);
 	}
 }
 
 void Object::rotate(float angle) {
-	_sprite.rotate(angle);
+	_transformable.rotate(angle);
 	for (auto child : _children) {
 		child->rotate(angle);
 
@@ -127,7 +125,7 @@ void Object::rotate(float angle) {
 }
 
 void Object::scale(float factorX, float factorY) {
-	_sprite.scale(factorX, factorY);
+	_transformable.scale(factorX, factorY);
 	for (auto sprite : _children) {
 		sprite->scale(factorX, factorY);
 
@@ -140,7 +138,7 @@ void Object::scale(float factorX, float factorY) {
 }
 
 void Object::scale(const sf::Vector2f& factor) {
-	_sprite.scale(factor);
+	_transformable.scale(factor);
 	for (auto sprite : _children) {
 		sprite->scale(factor);
 
@@ -153,51 +151,9 @@ void Object::scale(const sf::Vector2f& factor) {
 }
 
 const sf::Transform& Object::getTransform() const {
-	return _sprite.getTransform();
+	return _transformable.getTransform();
 }
 
 const sf::Transform& Object::getInverseTransform() const {
-	return _sprite.getInverseTransform();
-}
-
-
-////////////
-// Sprite //
-////////////
-
-void Object::setTexture(const sf::Texture& texture, bool resetRect) {
-	_sprite.setTexture(texture, resetRect);
-}
-
-void Object::setTextureRect(const sf::IntRect& rectangle) {
-	_sprite.setTextureRect(rectangle);
-}
-
-void Object::setColor(const sf::Color& color) {
-	_sprite.setColor(color);
-}
-
-const sf::Texture* Object::getTexture() const {
-	return _sprite.getTexture();
-}
-
-const sf::IntRect& Object::getTextureRect() const {
-	return _sprite.getTextureRect();
-}
-
-const sf::Color& Object::getColor() const {
-	return _sprite.getColor();
-}
-
-sf::FloatRect Object::getLocalBounds() const {
-	return _sprite.getLocalBounds();
-}
-
-sf::FloatRect Object::getGlobalBounds() const {
-	return _sprite.getGlobalBounds();
-}
-
-
-void Object::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(_sprite, states);
+	return _transformable.getInverseTransform();
 }

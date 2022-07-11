@@ -1,5 +1,8 @@
 #include "GUI/Panel.hpp"
 
+#include <array>
+
+
 Panel::Panel(sf::Vector2f scale, sf::Vector2f position, float border, sf::Color backgroundColor, sf::Color borderColor, int borderDistortion, bool borderFade)
 	: _border{ border }, _borderDistortion{ borderDistortion }, _borderFade{ borderFade }, _backgroundColor{ backgroundColor }, _borderColor{ borderColor }
 {
@@ -16,9 +19,13 @@ void Panel::update() {
 
 
 void Panel::setBackground(const sf::Texture& texture) {
-	_backgroundSprite.setTexture(texture);
-	_backgroundSprite.setScale(getScale().x / (float) texture.getSize().x, getScale().y / (float) texture.getSize().y);
-	_backgroundSprite.setPosition(getPosition() - getScale() / 2.f);
+	_backgroundTexture = texture;
+	//_backgroundSprite.setScale(getScale().x / (float) texture.getSize().x, getScale().y / (float) texture.getSize().y);
+	//_backgroundSprite.setPosition(getPosition() - getScale() / 2.f);
+	_vertices[3].texCoords = sf::Vector2f{ 0, 0 };
+	_vertices[5].texCoords = sf::Vector2f{ 0, (float) texture.getSize().x };
+	_vertices[2].texCoords = sf::Vector2f{ (float)texture.getSize().y, 0 };
+	_vertices[0].texCoords = sf::Vector2f{ (float)texture.getSize().y, (float) texture.getSize().x };
 }
 
 
@@ -31,8 +38,12 @@ void Panel::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		transformedVertices[i].color = _vertices[i].color;
 	}
 
+	states.texture = &_backgroundTexture;
+	states.transform *= getTransform();
+
 	target.draw(transformedVertices.data(), verticesToDraw, sf::Triangles);
-	target.draw(_backgroundSprite); /// TODO: transform _backgroundSprite
+	target.draw(_vertices, states);
+	//target.draw(_backgroundSprite, states); /// TODO: transform _backgroundSprite
 }
 
 

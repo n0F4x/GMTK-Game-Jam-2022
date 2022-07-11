@@ -1,11 +1,10 @@
 #pragma once
 
-#include <array>
 #include <SFML/Graphics.hpp>
 #include <engine/Object.hpp>
 
 
-class Panel : public Object {
+class Panel : public engine::Object {
 public:
 	Panel(
 		sf::Vector2f scale,
@@ -29,7 +28,7 @@ protected:
 
 
 private:
-	std::array<sf::Vertex, 42> _vertices;
+	sf::VertexArray _vertices{ sf::Triangles, 42 };
 
 	// Border size in pixels
 	float _border;
@@ -40,5 +39,5 @@ private:
 	sf::Color _backgroundColor;
 	sf::Color _borderColor;
 
-	sf::Sprite _backgroundSprite;
+	sf::Texture _backgroundTexture;
 };

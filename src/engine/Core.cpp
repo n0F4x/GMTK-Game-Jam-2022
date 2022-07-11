@@ -116,7 +116,7 @@ void Core::run() {
         if (counter == SAMPLE_RATE) {
             std::stringstream text;
             text << std::fixed << std::setprecision(3);
-            text << "FPS: " << (int) (1 / ((frameTimeAcc) / SAMPLE_RATE)) << std::endl;
+            text << "FPS: " << (int) (1 / (frameTimeAcc / SAMPLE_RATE)) << std::endl;
 #ifdef ENGINE_DEBUG
             //text << "State switching: " << ta0 / SAMPLE_RATE * 1000 << " ms" << std::endl;
             text << "Event handling: " << ta1 / SAMPLE_RATE * 1000 << " ms" << std::endl;
