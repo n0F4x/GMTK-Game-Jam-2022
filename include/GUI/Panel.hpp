@@ -21,8 +21,7 @@ public:
 
 	void update() override;
 
-	void setTexture(const sf::Texture& texture);
-	const sf::Texture* getTexture() const;
+	void setBackground(const sf::Texture& texture);
 
 
 protected:

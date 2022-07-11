@@ -1,6 +1,7 @@
 #include "Object.hpp"
 
 #include <numbers>
+#include <cmath>
 
 static const float PI = std::numbers::pi_v<float>;
 
@@ -65,23 +66,11 @@ void Object::setRotation(float angle) {
 }
 
 void Object::setScale(float factorX, float factorY) {
-	_sprite.setScale(factorX, factorY);
-	for (auto sprite : _children) {
-		auto origin = sprite->getOrigin();
-		sprite->setOrigin(getPosition() - sprite->getPosition() + getOrigin());
-		sprite->setScale(factorX, factorY);
-		sprite->setOrigin(origin);
-	}
+	scale(factorX / getScale().x, factorY / getScale().y);
 }
 
 void Object::setScale(const sf::Vector2f& factors) {
-	_sprite.setScale(factors);
-	for (auto sprite : _children) {
-		auto origin = sprite->getOrigin();
-		sprite->setOrigin(getPosition() - sprite->getPosition() + getOrigin());
-		sprite->setScale(factors);
-		sprite->setOrigin(origin);
-	}
+	setScale(factors.x, factors.y);
 }
 
 void Object::setOrigin(float x, float y) {
@@ -125,6 +114,8 @@ void Object::move(const sf::Vector2f& offset) {
 void Object::rotate(float angle) {
 	_sprite.rotate(angle);
 	for (auto child : _children) {
+		child->rotate(angle);
+
 		sf::Vector2f offset = child->getPosition() - getPosition();
 		child->setPosition(getPosition());
 		float newX = offset.x * std::cos(angle * PI / 180) - offset.y * std::sin(angle * PI / 180);
@@ -138,20 +129,26 @@ void Object::rotate(float angle) {
 void Object::scale(float factorX, float factorY) {
 	_sprite.scale(factorX, factorY);
 	for (auto sprite : _children) {
-		auto origin = sprite->getOrigin();
-		sprite->setOrigin(getPosition() - sprite->getPosition() + getOrigin());
 		sprite->scale(factorX, factorY);
-		sprite->setOrigin(origin);
+
+		sf::Vector2f distance = sprite->getPosition() - getPosition();
+		distance.x *= factorX;
+		distance.y *= factorY;
+		distance -= sprite->getPosition() - getPosition();
+		sprite->move(distance);
 	}
 }
 
 void Object::scale(const sf::Vector2f& factor) {
 	_sprite.scale(factor);
 	for (auto sprite : _children) {
-		auto origin = sprite->getOrigin();
-		sprite->setOrigin(getPosition() - sprite->getPosition() + getOrigin());
 		sprite->scale(factor);
-		sprite->setOrigin(origin);
+
+		sf::Vector2f distance = sprite->getPosition() - getPosition();
+		distance.x *= factor.x;
+		distance.y *= factor.y;
+		distance -= sprite->getPosition() - getPosition();
+		sprite->move(distance);
 	}
 }
 
