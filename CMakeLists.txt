@@ -30,10 +30,10 @@ set(SOURCE_FILES
     "src/engine/Store.cpp"
     "src/engine/Object.cpp"
     "src/engine/Component.cpp"
-    "src/engine/Animator.cpp"
-    "src/engine/Collider.cpp"
-    "src/engine/Drawable.cpp"
-    "src/engine/Physics.cpp"
+    "src/Engine/Components/Animator.cpp"
+    "src/Engine/Components/Collider.cpp"
+    "src/Engine/Components/Drawable.cpp"
+    "src/Engine/Components/Physics.cpp"
 )
 
 set(SFML_DIR ./dependencies/SFML-2.5.1/lib/cmake/SFML)
