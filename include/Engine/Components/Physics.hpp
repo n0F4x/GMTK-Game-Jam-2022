@@ -1,8 +1,8 @@
 #pragma once
 
+#include <SFML/System/Vector2.hpp>
 #include "Component.hpp"
-#include "SFML/Graphics/Transformable.hpp"
-#include "Timer.hpp"
+
 
 namespace engine {
 
@@ -17,8 +17,12 @@ namespace engine {
 		void setFriction(float friction);
 
 	private:
-		sf::Vector2f _sumF, _acceleration, _velocity;
-		float _mass, _friction, _bounciness;
+		sf::Vector2f _sumF;
+		sf::Vector2f _acceleration;
+		sf::Vector2f _velocity;
+		float _mass;
+		float _friction;
+		float _bounciness;	// coefficient of restitution
 
 		void calc_acceleration();
 		void calc_velocity();

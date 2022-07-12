@@ -1,5 +1,6 @@
 #pragma once
 
+
 namespace engine {
 
 	class Object;
@@ -12,19 +13,23 @@ namespace engine {
 	};
 
 	/**
-	 * @brief	Abstract class (interface) used by Object
+	 * @brief	Abstract class used by Object
 	*/
 	class Component {
 	public:
 		void enable();
 		void disable();
-		bool is_enabled() const;
+		bool isEnabled() const;
 
 		virtual void update() = 0;
 
 		virtual ~Component() = default;
 
 	protected:
+		Object* object();
+
+
+	private:
 		friend Object;
 		Object* _object = nullptr;
 

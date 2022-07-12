@@ -39,13 +39,13 @@ public:
 		}
 
 		if (_side == "Left") {
-			_sprite.rotate(-1.f * _rotationClock.restart().asSeconds() / _rotationTime * 360.f);
+			_sprite.rotate(_rotationClock.restart() / _rotationTime * 360 * -1);
 		}
 		else if (_side == "Right") {
-			_sprite.rotate(_rotationClock.restart().asSeconds() / _rotationTime * 360.f);
+			_sprite.rotate(_rotationClock.restart() / _rotationTime * 360);
 		}
 
-		if (_clock.getElapsedTime().asSeconds() >= _rotationTime) {
+		if (_clock.getElapsedTime() >= _rotationTime) {
 			if (_side == "Left") {
 				changeState("Child2");
 			}
@@ -66,7 +66,7 @@ private:
 	sf::RectangleShape _sprite;
 	sf::Clock _clock;
 	sf::Clock _rotationClock;
-	float _rotationTime = 2.f;
+	sf::Time _rotationTime = sf::seconds(2);
 
 	const std::string _side;
 	std::string* _restart = nullptr;

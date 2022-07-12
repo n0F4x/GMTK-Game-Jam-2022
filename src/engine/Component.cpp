@@ -11,6 +11,10 @@ void Component::disable() {
 	_enabled = false;
 }
 
-bool Component::is_enabled() const {
+bool Component::isEnabled() const {
 	return _enabled;
+}
+
+Object* Component::object() {
+	return _object;
 }

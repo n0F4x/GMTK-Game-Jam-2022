@@ -1,4 +1,4 @@
-#include "Components/Animator.hpp"
+#include "engine/components/Animator.hpp"
 
 using namespace engine;
 
