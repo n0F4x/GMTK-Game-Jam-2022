@@ -55,9 +55,6 @@ void Object::setComponent(std::unique_ptr<Animator> component) {
 void Object::setComponent(std::unique_ptr<Collider> component) {
 	_collider = std::move(component);
 }
-void Object::setComponent(std::unique_ptr<Drawable> component) {
-	_drawable = std::move(component);
-}
 void Object::setComponent(std::unique_ptr<Physics> component) {
 	_physics = std::move(component);
 }
@@ -75,13 +72,10 @@ Collider* Object::getComponent() {
 	return _collider.get();
 }
 template<>
-Drawable* Object::getComponent() {
-	return _drawable.get();
-}
-template<>
 Physics* Object::getComponent() {
 	return _physics.get();
 }
+
 
 void Object::update() const { 
 	_physics->update();

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <SFML/System/Vector2.hpp>
-#include "Component.hpp"
-#include <algorithm>
+#include "engine/Component.hpp"
+
 
 namespace engine {
 
@@ -11,8 +11,12 @@ namespace engine {
 	class Physics : public Component {
 	public:
 		/*  If a physics object has negative or 0 mass, won't be updated */
-		Physics(float mass = 1.f, float friction = 0.f, float bounciness = 0.f, sf::Vector2f initialVelocity = sf::Vector2f{ 0.f,0.f })
-			: _mass(mass), _friction(std::clamp(friction, 0.f, 1.f)), _bounciness(std::clamp(bounciness, 0.f, 1.f)), _velocity(initialVelocity) {};
+		Physics(
+			float mass = 1.f,
+			float friction = 0.f,
+			float bounciness = 0.f,
+			sf::Vector2f initialVelocity = { 0.f,0.f }
+		);
 
 		void setMass(float mass);
 		float getMass() const;
