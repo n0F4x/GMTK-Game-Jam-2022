@@ -5,9 +5,6 @@
 
 namespace engine {
 
-	class Animator : public Component {
-	public:
-		void update() override { /*TODO*/ };
-	};
+	class Animator : public Component {};
 
 }

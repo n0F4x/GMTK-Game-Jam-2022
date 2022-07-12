@@ -21,8 +21,6 @@ namespace engine {
 		void disable();
 		bool isEnabled() const;
 
-		virtual void update() = 0;
-
 		virtual ~Component() = default;
 
 	protected:

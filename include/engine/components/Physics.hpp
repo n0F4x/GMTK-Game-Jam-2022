@@ -6,9 +6,10 @@
 
 namespace engine {
 
+	class Object;
+
 	class Physics : public Component {
 	public:
-		void update() override;
 
 		void apply_force(sf::Vector2f force);
 		void setForce(sf::Vector2f force);
@@ -17,6 +18,13 @@ namespace engine {
 		void setFriction(float friction);
 
 	private:
+		friend Object;
+		void update();
+
+
+		///////////////
+		// Variables //
+		///////////////
 		sf::Vector2f _sumF;
 		sf::Vector2f _acceleration;
 		sf::Vector2f _velocity;
