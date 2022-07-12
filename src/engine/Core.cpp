@@ -55,7 +55,6 @@ void Core::run() {
 	sf::Event event;
 	while (Window::isOpen()) {
         float t0 = clk.getElapsedTime().asSeconds();
-        Timer::restart();
 
 		// Switch between states
 		processChanges();
@@ -78,6 +77,8 @@ void Core::run() {
 
 		// Run general updates
 		operator->()->update();
+        // Track time since last update
+        Timer::restart();
 
 #ifdef ENGINE_DEBUG
         float t3 = clk.getElapsedTime().asSeconds();
