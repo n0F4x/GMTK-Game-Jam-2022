@@ -10,3 +10,7 @@ void Component::enable() {
 void Component::disable() {
 	_enabled = false;
 }
+
+bool Component::is_enabled() const {
+	return _enabled;
+}
