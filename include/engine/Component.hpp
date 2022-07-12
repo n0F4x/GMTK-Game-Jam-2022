@@ -1,6 +1,5 @@
 #pragma once
 
-
 namespace engine {
 
 	class Object;
@@ -19,12 +18,13 @@ namespace engine {
 	public:
 		void enable();
 		void disable();
+		bool is_enabled() const;
 
 		virtual void update() = 0;
 
 		virtual ~Component() = default;
 
-	private:
+	protected:
 		friend Object;
 		Object* _object = nullptr;
 
