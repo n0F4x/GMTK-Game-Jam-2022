@@ -1,11 +1,13 @@
-#include "Components/Physics.hpp"
+#include "engine/components/Physics.hpp"
 
-#include "Object.hpp"
+#include "engine/Object.hpp"
+#include "engine/Timer.hpp"
 
 using namespace engine;
 
+
 void Physics::update() {
-	if (!_enabled) return;
+	if (!isEnabled()) return;
 	calc_acceleration();
 	calc_velocity();
 	apply_movement();
@@ -22,10 +24,10 @@ void Physics::calc_velocity() {
 }
 
 void Physics::apply_movement() {
-	_object->move(_velocity * Timer::elapsedTime().asSeconds());
+	object()->move(_velocity * Timer::elapsedTime().asSeconds());
 }
 
-// Public methods used by the physics engine and at initialison
+// Public methods used by the physics engine and at initialization
 
 void Physics::apply_force(sf::Vector2f force) {
 	_sumF += force;
