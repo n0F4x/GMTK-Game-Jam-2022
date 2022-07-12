@@ -8,9 +8,10 @@ using namespace engine;
 
 void Physics::update() {
 	if (!isEnabled() || _mass <= 0) return;
+	apply_movement();
+	// For physics engine planning decisions
 	calc_acceleration();
 	calc_velocity();
-	apply_movement();
 }
 
 // Private methods used by update()
