@@ -31,40 +31,39 @@
 
 namespace engine {
 
-    /**
-     * @brief   Rewriting sf::Sprite to inherit from engine::Object instead of sf::Transformable
-    */
-    class Sprite : public sf::Drawable, public Object {
-    public:
-        Sprite() = default;
-        explicit Sprite(const sf::Texture& texture);
-        Sprite(const sf::Texture& texture, const sf::IntRect& rectangle);
+	/**
+	 * @brief   Rewriting sf::Sprite to inherit from engine::Object instead of sf::Transformable
+	*/
+	class Sprite : public sf::Drawable, public Object {
+	public:
+		Sprite() = default;
+		explicit Sprite(const sf::Texture& texture);
+		Sprite(const sf::Texture& texture, const sf::IntRect& rectangle);
 
-        void setTexture(const sf::Texture& texture, bool resetRect = false);
-        void setTextureRect(const sf::IntRect& rectangle);
-        void setColor(const sf::Color& color);
-        //void setSize(const sf::Vector2f size); // TODO
+		void setTexture(const sf::Texture& texture, bool resetRect = false);
+		void setTextureRect(const sf::IntRect& rectangle);
+		void setColor(const sf::Color& color);
 
-        const sf::Texture* getTexture() const;
-        const sf::IntRect& getTextureRect() const;
-        const sf::Color& getColor() const;
-        sf::Vector2f getSize() const;
-        sf::FloatRect getLocalBounds() const;
-        sf::FloatRect getGlobalBounds() const;
+		const sf::Texture* getTexture() const;
+		const sf::IntRect& getTextureRect() const;
+		const sf::Color& getColor() const;
+		sf::Vector2f getSize() const;
+		sf::FloatRect getLocalBounds() const;
+		sf::FloatRect getGlobalBounds() const;
 
-    private:
-        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	private:
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-        void updatePositions();
-        void updateTexCoords();
+		void updatePositions();
+		void updateTexCoords();
 
 
-        ///////////////
-        // Variables //
-        ///////////////
-        std::array<sf::Vertex, 4>   m_vertices; ///< Vertices defining the sprite's geometry
-        const sf::Texture*          m_texture = nullptr; ///< Texture of the sprite
-        sf::IntRect                 m_textureRect; ///< Rectangle defining the area of the source texture to display
-    };
+		///////////////
+		// Variables //
+		///////////////
+		std::array<sf::Vertex, 4>   m_vertices; ///< Vertices defining the sprite's geometry
+		const sf::Texture*			m_texture = nullptr; ///< Texture of the sprite
+		sf::IntRect                 m_textureRect; ///< Rectangle defining the area of the source texture to display
+	};
 
 }

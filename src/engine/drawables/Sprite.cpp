@@ -75,12 +75,6 @@ void Sprite::setColor(const sf::Color& color) {
 }
 
 
-//////////////////////////////////////////////////////////////
-//void Sprite::setSize(const sf::Vector2f size) {
-//	
-//}
-
-
 ////////////////////////////////////////////////////////////
 const sf::Texture* Sprite::getTexture() const {
 	return m_texture;
@@ -101,7 +95,7 @@ const sf::Color& Sprite::getColor() const {
 
 ////////////////////////////////////////////////////////////
 sf::Vector2f Sprite::getSize() const {
-	return { getGlobalBounds().width, getGlobalBounds().height };
+	return sf::Vector2f{ getGlobalBounds().width, getGlobalBounds().height };
 }
 
 
