@@ -3,10 +3,10 @@
 #include <memory>
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "Components/Animator.hpp"
-#include "Components/Collider.hpp"
-#include "Components/Drawable.hpp"
-#include "Components/Physics.hpp"
+#include "components/Animator.hpp"
+#include "components/Collider.hpp"
+#include "components/Drawable.hpp"
+#include "components/Physics.hpp"
 
 
 namespace engine {

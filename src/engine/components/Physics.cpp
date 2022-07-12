@@ -7,7 +7,7 @@ using namespace engine;
 
 
 void Physics::update() {
-	if (!isEnabled()) return;
+	if (!isEnabled() || _mass <= 0) return;
 	calc_acceleration();
 	calc_velocity();
 	apply_movement();
@@ -29,22 +29,40 @@ void Physics::apply_movement() {
 
 // Public methods used by the physics engine and at initialization
 
-void Physics::apply_force(sf::Vector2f force) {
-	_sumF += force;
+void Physics::setMass(float mass) {
+	_mass = mass;
+}
+float Physics::getMass() const {
+	return _mass;
 }
 
-void Physics::setForce(sf::Vector2f force) {
-	_sumF = force;
+void Physics::setFriction(float friction) {
+	_friction = friction;
+}
+float Physics::getFriction() const {
+	return _friction;
+}
+
+void Physics::setBounciness(float bounciness) {
+	_bounciness = bounciness;
+}
+float Physics::getBounciness() const {
+	return _bounciness;
 }
 
 void Physics::setVelocity(sf::Vector2f velocity) {
 	_velocity = velocity;
 }
-
-void Physics::setMass(float mass) {
-	_mass = mass;
+sf::Vector2f Physics::getVelocity() const {
+	return _velocity;
 }
 
-void Physics::setFriction(float friction) {
-	_friction = friction;
+void Physics::apply_force(sf::Vector2f force) {
+	_sumF += force;
+}
+void Physics::setForce(sf::Vector2f force) {
+	_sumF = force;
+}
+sf::Vector2f Physics::getForce() const {
+	return _sumF;
 }
