@@ -75,6 +75,12 @@ void Sprite::setColor(const sf::Color& color) {
 }
 
 
+//////////////////////////////////////////////////////////////
+//void Sprite::setSize(const sf::Vector2f size) {
+//	
+//}
+
+
 ////////////////////////////////////////////////////////////
 const sf::Texture* Sprite::getTexture() const {
 	return m_texture;
@@ -95,10 +101,7 @@ const sf::Color& Sprite::getColor() const {
 
 ////////////////////////////////////////////////////////////
 sf::Vector2f Sprite::getSize() const {
-	return {
-		static_cast<float>(std::abs(m_textureRect.width)),
-		static_cast<float>(std::abs(m_textureRect.height))
-	};
+	return { getGlobalBounds().width, getGlobalBounds().height };
 }
 
 
