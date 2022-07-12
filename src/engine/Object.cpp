@@ -83,7 +83,9 @@ Physics* Object::getComponent() {
 	return _physics.get();
 }
 
-void Object::update() { /*TODO*/ }
+void Object::update() const { 
+	_physics->update();
+}
 
 
 ///////////////////

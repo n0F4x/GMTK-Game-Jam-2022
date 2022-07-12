@@ -43,7 +43,7 @@ namespace engine {
         template<typename COMPONENT>
         COMPONENT* getComponent();
 
-        void update();
+        void update() const;
 
 
         ///////////////////

@@ -5,9 +5,6 @@
 
 namespace engine {
 
-	class Collider : public Component {
-	public:
-		void update() override { /*TODO*/ };
-	};
+	class Collider : public Component {};
 
 }
