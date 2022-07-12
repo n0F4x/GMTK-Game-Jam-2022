@@ -5,6 +5,7 @@
 #include "engine/State.hpp"
 #include "engine/StateMachine.hpp"
 #include "engine/Object.hpp"
+#include "engine/drawables/Sprite.hpp"
 
 
 class SampleChildState : public engine::State {
@@ -79,8 +80,8 @@ public:
 		_object.setComponent(std::make_unique<engine::Animator>());
 		_object.getComponent<engine::Animator>();
 
-		_sprite.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
-		_sprite.setSize({ 200.f, 200.f });
+		_sprite.setTexture(engine::Assets::getTexture("myState/ThumbsUp"));
+		_sprite.setScale(0.1f, 0.1f);
 		_sprite.setOrigin(_sprite.getSize() / 2.f);
 		_sprite.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 0.f, -200.f });
 
@@ -109,6 +110,6 @@ public:
 
 private:
 	engine::StateMachine _machine;
-	sf::RectangleShape _sprite;
+	engine::Sprite _sprite;
 	engine::Object _object;
 };

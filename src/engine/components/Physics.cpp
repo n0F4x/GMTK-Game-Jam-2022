@@ -1,9 +1,14 @@
 #include "engine/components/Physics.hpp"
 
+#include <algorithm>
 #include "engine/Object.hpp"
 #include "engine/Timer.hpp"
 
 using namespace engine;
+
+
+Physics::Physics(float mass, float friction, float bounciness, sf::Vector2f initialVelocity) : 
+	_mass(mass), _friction(std::clamp(friction, 0.f, 1.f)), _bounciness(std::clamp(bounciness, 0.f, 1.f)), _velocity(initialVelocity) {};
 
 
 void Physics::update() {

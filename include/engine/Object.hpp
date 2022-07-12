@@ -2,10 +2,9 @@
 
 #include <memory>
 #include <vector>
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Transformable.hpp>
 #include "components/Animator.hpp"
 #include "components/Collider.hpp"
-#include "components/Drawable.hpp"
 #include "components/Physics.hpp"
 
 
@@ -20,7 +19,6 @@ namespace engine {
     class Object {
     public:
         Object() = default;
-        virtual ~Object() = default;
 
 
         ///////////////
@@ -37,7 +35,6 @@ namespace engine {
         ////////////////
         void setComponent(std::unique_ptr<Animator> component);
         void setComponent(std::unique_ptr<Collider> component);
-        void setComponent(std::unique_ptr<Drawable> component);
         void setComponent(std::unique_ptr<Physics> component);
 
         template<typename COMPONENT>
@@ -78,7 +75,6 @@ namespace engine {
         // Components //
         std::unique_ptr<Animator> _animator;
         std::unique_ptr<Collider> _collider;
-        std::unique_ptr<Drawable> _drawable;
         std::unique_ptr<Physics> _physics;
     };
 

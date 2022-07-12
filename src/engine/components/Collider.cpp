@@ -2,6 +2,10 @@
 
 using namespace engine;
 
+
+Collider::Collider(sf::FloatRect rect, int layer) : _rectangle(rect), _collisionLayer(layer) {}
+
+
 sf::FloatRect Collider::getRect() const {
 	return _rectangle;
 }
@@ -14,6 +18,6 @@ int Collider::getLayer() const {
 	return _collisionLayer;
 }
 
-int Collider::setLayer(int layer) {
+void Collider::setLayer(int layer) {
 	_collisionLayer = layer;
 }

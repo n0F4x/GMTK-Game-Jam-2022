@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Component.hpp"
+#include "engine/Component.hpp"
 
 
 namespace engine {
