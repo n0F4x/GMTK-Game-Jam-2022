@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include "engine/Object.hpp"
-#include "engine/Timer.hpp"
 
 using namespace engine;
 
@@ -11,8 +10,10 @@ Physics::Physics(float mass, float friction, float bounciness, sf::Vector2f init
 	_mass(mass), _friction(std::clamp(friction, 0.f, 1.f)), _bounciness(std::clamp(bounciness, 0.f, 1.f)), _velocity(initialVelocity) {};
 
 
-void Physics::update() {
+void Physics::update(sf::Time deltaTime) {
 	if (!isEnabled() || _mass <= 0) return;
+
+	_deltaTime = deltaTime;
 	apply_movement();
 	// For physics engine planning decisions
 	calc_acceleration();
@@ -26,11 +27,11 @@ void Physics::calc_acceleration() {
 }
 
 void Physics::calc_velocity() {
-	_velocity += _acceleration * Timer::elapsedTime().asSeconds();
+	_velocity += _acceleration * _deltaTime.asSeconds();
 }
 
 void Physics::apply_movement() {
-	object()->move(_velocity * Timer::elapsedTime().asSeconds());
+	object()->move(_velocity * _deltaTime.asSeconds());
 }
 
 // Public methods used by the physics engine and at initialization

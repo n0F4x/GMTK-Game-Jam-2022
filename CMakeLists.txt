@@ -19,8 +19,7 @@ include_directories(
 )
 
 set(SOURCE_FILES
-    "src/main.cpp"
-    "src/engine/Timer.cpp"
+    "src/main.cpp"    
     "src/engine/Assets.cpp"
     "src/engine/Window.cpp"
     "src/engine/Core.cpp"

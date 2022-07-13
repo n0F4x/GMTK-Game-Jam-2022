@@ -1,12 +1,13 @@
 #pragma once
 
 #include <SFML/System/Vector2.hpp>
+#include <SFML/System/Time.hpp>
 #include "engine/Component.hpp"
 
 
 namespace engine {
 
-	class Object;
+	class State;
 
 	class Physics : public Component {
 	public:
@@ -35,13 +36,15 @@ namespace engine {
 		sf::Vector2f getForce() const;
 
 	private:
-		friend Object;
-		void update();
+		friend State;
+		void update(sf::Time deltaTime);
 
 
 		///////////////
 		// Variables //
 		///////////////
+		sf::Time _deltaTime;
+
 		float _mass;
 		float _friction;
 		float _bounciness;	// coefficient of restitution
