@@ -36,6 +36,7 @@ set(SOURCE_FILES
     "src/engine/drawables/Shape.cpp"
     "src/engine/drawables/RectangleShape.cpp"
     "src/engine/drawables/CircleShape.cpp"
+    "src/engine/drawables/Arc.cpp"
 )
 
 set(SFML_DIR ./dependencies/SFML-2.5.1/lib/cmake/SFML)
