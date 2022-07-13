@@ -6,6 +6,7 @@
 #include "engine/StateMachine.hpp"
 #include "engine/Object.hpp"
 #include "engine/drawables/Sprite.hpp"
+#include "engine/drawables/RectangleShape.hpp"
 #include "engine/drawables/CircleShape.hpp"
 #include "engine/drawables/Arc.hpp"
 
@@ -88,6 +89,14 @@ public:
 		_sprite.scale(0.2f, 0.2f);
 		_sprite.setOrigin(_sprite.getLocalBounds().width / 2, _sprite.getLocalBounds().height / 2);
 
+		// RectangleShape
+		_rectangleShape.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
+		_rectangleShape.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ -400.f, 0.f });
+		_rectangleShape.setSize({ 200.f, 200.f });
+		_rectangleShape.setOutlineThickness(5);
+		_rectangleShape.setOutlineColor(sf::Color::White);
+		_rectangleShape.setOrigin(_rectangleShape.getSize() / 2.f);
+
 		// CircleShape
 		_circleShape.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
 		_circleShape.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 0.f, +200.f });
@@ -96,11 +105,21 @@ public:
 		_circleShape.setOutlineColor(sf::Color::White);
 		_circleShape.setOrigin(_circleShape.getRadius(), _circleShape.getRadius());
 
-		// Arc
-		_arc.setOrigin(0, 0);
-		_arc.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 400.f, 0.f });
-		_arc.setColor(sf::Color::Blue);
-		_arc.getPoint(0).color = sf::Color::Magenta;
+		// Ball
+		_ball.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 450.f, -200.f });
+		_ball.setColor(sf::Color::Black);
+		_ball.getPoint(0).color = sf::Color::Blue;
+
+		// FlashLight
+		_flashLight.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 400.f, 0.f });
+		_flashLight.setColor(sf::Color::Black);
+		_flashLight.getPoint(0).color = sf::Color{ 200, 230, 0, 255 };
+
+		// Triangle
+		_triangle.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 400.f, 200.f });
+		_triangle.getPoint(0).color = sf::Color::Red;
+		_triangle.getPoint(1).color = sf::Color::Yellow;
+		_triangle.getPoint(2).color = sf::Color::Blue;
 
 		addStateMachine(&_machine);
 
@@ -114,24 +133,62 @@ public:
 	void handle_event(const sf::Event&) override { /*empty*/ }
 
 	void onUpdate() override {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+			changeState("Physics");
+		}
+
 		_machine->update();
 
 		_sprite.rotate(-1);
+		_rectangleShape.rotate(1);
 		_circleShape.rotate(1);
 	}
 
 	void draw() override {
 		_machine->draw();
 		engine::Window::draw(_sprite);
+		engine::Window::draw(_rectangleShape);
 		engine::Window::draw(_circleShape);
-		engine::Window::draw(_arc);
+		engine::Window::draw(_ball);
+		engine::Window::draw(_flashLight);
+		engine::Window::draw(_triangle);
 	}
 
 
 private:
 	engine::StateMachine _machine;
 	engine::Sprite _sprite;
+	engine::RectangleShape _rectangleShape;
 	engine::CircleShape _circleShape;
 	engine::Object _object;
-	engine::Arc _arc{ 100.f, 360.f };
+	engine::Arc _ball{ 80.f, 360.f };
+	engine::Arc _flashLight{ 120.f, 60.f, 8 };
+	engine::Arc _triangle{ 160.f, 60.f, 2 };
+};
+
+
+class PhysicsSampleState : public engine::State {
+public:
+	PhysicsSampleState() {
+		renderer().add_static(&_sprite);
+
+		_sprite.setOrigin(-500, -500);
+		_sprite.scale(0.2f, 0.2f);
+	}
+
+	void handle_event(const sf::Event&) override { /*empty*/ }
+
+	void onUpdate() override {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+			changeState("Sample");
+		}
+	}
+
+	void draw() override { 
+		renderer().render();
+	}
+
+
+private:
+	engine::Sprite _sprite{ engine::Assets::getTexture("myState/ThumbsUp") };
 };
