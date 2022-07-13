@@ -34,6 +34,7 @@ set(SOURCE_FILES
     "src/engine/components/Physics.cpp"
     "src/engine/drawables/Sprite.cpp"
     "src/engine/drawables/Shape.cpp"
+    "src/engine/drawables/RectangleShape.cpp"
     "src/engine/drawables/CircleShape.cpp"
 )
 
