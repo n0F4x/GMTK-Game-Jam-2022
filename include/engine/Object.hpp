@@ -28,6 +28,7 @@ namespace engine {
         void detach_child(Object* child);
         void attach_parent(Object* parent);
         void detach_parent();
+        Object* getParent();
 
 
         ////////////////

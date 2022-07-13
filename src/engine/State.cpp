@@ -67,6 +67,47 @@ void State::apply_physics() {
 	}
 
 	for (auto object : _objects) {
+		Collider* collider = object->getComponent<Collider>();
+		if (collider == nullptr) continue;
+		collider->clear_collisions();
+
+		sf::FloatRect rect = collider->getRect();
+		if (object->getComponent<Physics>() != nullptr) {
+			sf::Vector2f movementInFrame = object->getComponent<Physics>()->getVelocity() * deltaTime.asSeconds();
+			rect.left += movementInFrame.x;
+			rect.top += movementInFrame.y;
+		}
+
+		for (auto object2 : _objects) {
+			if (object == object2) continue;
+			Collider* collider2 = object2->getComponent<Collider>();
+			if (collider2 == nullptr) continue;
+			if (collider->getLayer() != collider2->getLayer() && collider->getLayer() != 0 && collider2->getLayer() != 0) continue;
+
+			sf::FloatRect rect2 = collider2->getRect();
+			if (object2->getComponent<Physics>() != nullptr) {
+				sf::Vector2f movementInFrame2 = object2->getComponent<Physics>()->getVelocity() * deltaTime.asSeconds();
+				rect2.left += movementInFrame2.x;
+				rect2.top += movementInFrame2.y;
+			}
+
+			if (rect.intersects(rect2)) {
+				collider->add_collision(collider2);
+
+				if (object->getComponent<Physics>() != nullptr && !collider->is_trigger() && !collider2->is_trigger() && object->getParent() == nullptr) {
+					//update object's physics
+					Physics *physics = object->getComponent<Physics>();
+					
+					sf::FloatRect rectCopy = rect;
+					rect.left -= 2 * physics->getVelocity().x * deltaTime.asSeconds();
+					if (rectCopy.intersects(rect2)) physics->setVelocity(sf::Vector2f(physics->getVelocity().x, -physics->getVelocity().y * physics->getBounciness()));
+					else physics->setVelocity(sf::Vector2f(-physics->getVelocity().x * physics->getBounciness(), physics->getVelocity().y));
+				}
+			}
+		}
+	}
+
+	for (auto object : _objects) {
 		if (auto physics = object->getComponent<Physics>(); physics != nullptr && physics->isEnabled()) {
 			physics->update(deltaTime);
 		}

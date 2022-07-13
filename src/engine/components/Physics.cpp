@@ -11,7 +11,7 @@ Physics::Physics(float mass, float friction, float bounciness, sf::Vector2f init
 
 
 void Physics::update(sf::Time deltaTime) {
-	if (!isEnabled() || _mass <= 0) return;
+	if (!isEnabled() || _mass <= 0 || object()->getParent() != nullptr) return;
 
 	_deltaTime = deltaTime;
 	apply_movement();
