@@ -49,6 +49,7 @@ int StateMachine::initialize() {
 void StateMachine::processChanges() {
 	if (!_currentState->isActive()) {
 		if (auto nextState = _states.find(_currentState->getNextState()); nextState != _states.end()) {
+			_currentState->deactivate();
 			_currentState = nextState->second.get();
 		}
 		else {

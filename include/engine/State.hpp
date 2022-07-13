@@ -28,11 +28,9 @@ namespace engine {
 		*/
 		virtual void handle_event(const sf::Event&) = 0;
 		/**
-		 * @brief	Override this function to update your object and state.
-		 *			You can also update the states of your inner state machine here.
-		 *			Use `update_objects()` for simple updates.
+		 * @brief	
 		*/
-		virtual void update() = 0;
+		void update();
 		/**
 		 * @brief	Overwrite this function for drawing.
 		 *			You can also draw stuff from inner state machines here.
@@ -65,6 +63,17 @@ namespace engine {
 		 * @return	0 ON SUCCESS
 		*/
 		virtual int setup() { return 0; }
+
+
+		////////////
+		// Update //
+		////////////
+		/**
+		 * @brief	Override this function to update your state.
+		 *			This will be called by `update()`.
+		 *			You can also update the states of your inner state machine(s) here.
+		*/
+		virtual void onUpdate() { /*empty by default*/ }
 
 
 		/////////////
@@ -118,6 +127,15 @@ namespace engine {
 
 
 	private:
+		/////////////
+		// Helpers //
+		/////////////
+
+		/**
+		 * @brief	Updates the physics component of each object.
+		*/
+		void apply_physics();
+
 		//////////////////
 		// StateMachine //
 		//////////////////
@@ -134,9 +152,13 @@ namespace engine {
 		void processChanges() const;
 
 		/**
-		 * @brief	Sets _isActive to true
+		 * @brief	Sets _isActive to true and restarts clocks
 		*/
 		void activate();
+		/**
+		 * @brief	Saves elapsed clock times
+		*/
+		void deactivate();
 		bool isActive() const;
 		const std::string& getNextState() const;
 
@@ -156,6 +178,11 @@ namespace engine {
 		Renderer _renderer;
 		Store _store;
 		Store* _globalStore;
+
+		sf::Clock _physicsClock;
+		sf::Time _physicsTime;
+		sf::Clock _animationsClock;
+		sf::Time _animationsTime;
 	};
 
 }

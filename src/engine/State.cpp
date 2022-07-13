@@ -6,6 +6,17 @@
 using namespace engine;
 
 
+void State::update() {
+	apply_physics();
+	update_objects();
+	onUpdate();
+}
+
+
+///////////////
+// Protected //
+///////////////
+
 void State::changeState(const std::string_view& nextState) {
 	_nextState = nextState;
 	_isActive = false;
@@ -17,7 +28,7 @@ void State::addObject(Object* object) {
 }
 
 void State::update_objects() const {
-	for (auto object : _objects) {
+	for (const auto& object : _objects) {
 		object->update();
 	}
 }
@@ -43,6 +54,24 @@ Store* State::globalStore() {
 }
 
 
+/////////////
+// Private //
+/////////////
+
+void State::apply_physics() {
+	sf::Time deltaTime = _physicsClock.restart();
+
+	if (_physicsTime != sf::Time::Zero) {
+		deltaTime += _physicsTime;
+		_physicsTime = sf::Time::Zero;
+	}
+
+	for (auto object : _objects) {
+		if (auto physics = object->getComponent<Physics>(); physics != nullptr && physics->isEnabled()) {
+			physics->update(deltaTime);
+		}
+	}
+}
 
 int State::initialize() {
 	if (setup() != 0) {
@@ -68,6 +97,14 @@ void State::processChanges() const {
 
 void State::activate() {
 	_isActive = true;
+
+	_physicsClock.restart();
+	_animationsClock.restart();
+}
+
+void State::deactivate() {
+	_physicsTime = _physicsClock.getElapsedTime();
+	_animationsTime = _animationsClock.getElapsedTime();
 }
 
 bool State::isActive() const {

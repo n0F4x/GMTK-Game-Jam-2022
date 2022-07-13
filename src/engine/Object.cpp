@@ -77,9 +77,7 @@ Physics* Object::getComponent() {
 }
 
 
-void Object::update() const { 
-	_physics->update();
-}
+void Object::update() const { /*currently empty*/ }
 
 
 ///////////////////

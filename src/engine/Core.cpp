@@ -2,7 +2,6 @@
 
 #include <sstream>
 #include <iomanip>
-#include "Timer.hpp"
 #include "Assets.hpp"
 #include "Window.hpp"
 
@@ -55,7 +54,6 @@ void Core::run() {
 	sf::Event event;
 	while (Window::isOpen()) {
         float t0 = clk.getElapsedTime().asSeconds();
-        Timer::restart();
 
 		// Switch between states
 		processChanges();

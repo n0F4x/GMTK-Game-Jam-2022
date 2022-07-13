@@ -33,7 +33,7 @@ public:
 
 	void handle_event(const sf::Event&) override { /*empty*/ }
 
-	void update() override {
+	void onUpdate() override {
 		if (*_restart == "true") {
 			_clock.restart();
 			*_restart = "false";
@@ -81,9 +81,9 @@ public:
 		_object.getComponent<engine::Animator>();
 
 		_sprite.setTexture(engine::Assets::getTexture("myState/ThumbsUp"));
-		_sprite.setScale(0.1f, 0.1f);
-		_sprite.setOrigin(_sprite.getSize() / 2.f);
+		_sprite.setOrigin(_sprite.getLocalBounds().width / 2, _sprite.getLocalBounds().height / 2);
 		_sprite.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 0.f, -200.f });
+		_sprite.scale(0.2f, 0.2f);
 
 		addStateMachine(&_machine);
 
@@ -96,7 +96,7 @@ public:
 
 	void handle_event(const sf::Event&) override { /*empty*/ }
 
-	void update() override {
+	void onUpdate() override {
 		_machine->update();
 
 		_sprite.rotate(-1);
