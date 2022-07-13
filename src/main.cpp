@@ -27,10 +27,11 @@ int main() {
 
 	// ADD MAIN STATES HERE:
 	machine.addState("Sample", std::make_unique<SampleState>());
+	machine.addState("Physics", std::make_unique<PhysicsSampleState>());
 
 
 	// SET INITIAL STATE
-	machine.setInitialState("<name of the first state>");
+	machine.setInitialState("Sample");
 
 //////////////////////////////////
 //		  END OF REGION			//

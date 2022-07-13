@@ -10,7 +10,7 @@ namespace engine {
 	/**
 	 * @brief	Circle segment without outline.
 	 *			Use this for simple circles too, as it is more lightweight than CircleShape.
-	 *			!!! THE ORIGIN OF THE ARC IS ITS CENTER BY DEFAULT !!!
+	 *			!!! THE ORIGIN OF THE ARC IS ITS FIRST/CENTER POINT BY DEFAULT !!!
 	*/
 	class Arc : public sf::Drawable, public Object {
 	public:
