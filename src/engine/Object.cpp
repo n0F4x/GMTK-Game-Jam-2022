@@ -44,6 +44,9 @@ void Object::detach_parent() {
 	}
 }
 
+Object* Object::getParent() {
+	return _parent;
+}
 
 ////////////////
 // Components //
