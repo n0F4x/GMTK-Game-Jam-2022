@@ -39,14 +39,14 @@ static const float PI = std::numbers::pi_v<float>;
 CircleShape::CircleShape(float radius, std::size_t pointCount) :
 	m_radius(radius),
 	m_pointCount(pointCount) {
-	update();
+	updatePoints();
 }
 
 
 ////////////////////////////////////////////////////////////
 void CircleShape::setRadius(float radius) {
 	m_radius = radius;
-	update();
+	updatePoints();
 }
 
 
@@ -59,7 +59,7 @@ float CircleShape::getRadius() const {
 ////////////////////////////////////////////////////////////
 void CircleShape::setPointCount(std::size_t count) {
 	m_pointCount = count;
-	update();
+	updatePoints();
 }
 
 ////////////////////////////////////////////////////////////

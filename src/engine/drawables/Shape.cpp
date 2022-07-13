@@ -110,7 +110,7 @@ const sf::Color& Shape::getOutlineColor() const {
 ////////////////////////////////////////////////////////////
 void Shape::setOutlineThickness(float thickness) {
 	m_outlineThickness = thickness;
-	calcPoints(); // recompute everything because the whole shape must be offset
+	updatePoints(); // recompute everything because the whole shape must be offset
 }
 
 
@@ -133,7 +133,7 @@ sf::FloatRect Shape::getGlobalBounds() const {
 
 
 ////////////////////////////////////////////////////////////
-void Shape::calcPoints() {
+void Shape::updatePoints() {
 	// Get the total number of points of the shape
 	std::size_t count = getPointCount();
 	if (count < 3) {
