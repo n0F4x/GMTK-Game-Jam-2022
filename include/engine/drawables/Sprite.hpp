@@ -61,9 +61,9 @@ namespace engine {
 		///////////////
 		// Variables //
 		///////////////
-		std::array<sf::Vertex, 4>   m_vertices; ///< Vertices defining the sprite's geometry
-		const sf::Texture*			m_texture = nullptr; ///< Texture of the sprite
-		sf::IntRect                 m_textureRect; ///< Rectangle defining the area of the source texture to display
+		std::array<sf::Vertex, 4>	m_vertices;				///< Vertices defining the sprite's geometry
+		const sf::Texture*			m_texture = nullptr;	///< Texture of the sprite
+		sf::IntRect                 m_textureRect;			///< Rectangle defining the area of the source texture to display
 	};
 
 }

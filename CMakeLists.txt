@@ -33,6 +33,8 @@ set(SOURCE_FILES
     "src/engine/components/Collider.cpp"
     "src/engine/components/Physics.cpp"
     "src/engine/drawables/Sprite.cpp"
+    "src/engine/drawables/Shape.cpp"
+    "src/engine/drawables/CircleShape.cpp"
 )
 
 set(SFML_DIR ./dependencies/SFML-2.5.1/lib/cmake/SFML)
