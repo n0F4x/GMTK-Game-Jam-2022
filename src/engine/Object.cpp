@@ -2,8 +2,6 @@
 
 #include <numbers>
 #include <cmath>
-#include <typeinfo>
-#include <iostream>
 
 using namespace engine;
 

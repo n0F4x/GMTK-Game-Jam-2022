@@ -54,7 +54,7 @@ namespace engine {
 	protected:
 		Shape() = default;
 
-		void updatePoints();
+		void updateVertices();
 
 	private:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

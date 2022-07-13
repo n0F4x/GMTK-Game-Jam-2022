@@ -38,7 +38,7 @@ RectangleShape::RectangleShape(const sf::Vector2f& size) {
 ////////////////////////////////////////////////////////////
 void RectangleShape::setSize(const sf::Vector2f& size) {
 	m_size = size;
-	updatePoints();
+	updateVertices();
 }
 
 

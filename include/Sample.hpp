@@ -7,6 +7,7 @@
 #include "engine/Object.hpp"
 #include "engine/drawables/Sprite.hpp"
 #include "engine/drawables/CircleShape.hpp"
+#include "engine/drawables/Arc.hpp"
 
 
 class SampleChildState : public engine::State {
@@ -91,7 +92,15 @@ public:
 		_circleShape.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
 		_circleShape.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 0.f, +200.f });
 		_circleShape.setRadius(100.f);
-		_circleShape.setOrigin(_circleShape.getLocalBounds().width / 2, _circleShape.getLocalBounds().height / 2);
+		_circleShape.setOutlineThickness(5);
+		_circleShape.setOutlineColor(sf::Color::White);
+		_circleShape.setOrigin(_circleShape.getRadius(), _circleShape.getRadius());
+
+		// Arc
+		_arc.setOrigin(0, 0);
+		_arc.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 400.f, 0.f });
+		_arc.setColor(sf::Color::Blue);
+		_arc.getPoint(0).color = sf::Color::Magenta;
 
 		addStateMachine(&_machine);
 
@@ -115,6 +124,7 @@ public:
 		_machine->draw();
 		engine::Window::draw(_sprite);
 		engine::Window::draw(_circleShape);
+		engine::Window::draw(_arc);
 	}
 
 
@@ -123,4 +133,5 @@ private:
 	engine::Sprite _sprite;
 	engine::CircleShape _circleShape;
 	engine::Object _object;
+	engine::Arc _arc{ 100.f, 360.f };
 };

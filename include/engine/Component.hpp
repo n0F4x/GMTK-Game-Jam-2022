@@ -5,13 +5,6 @@ namespace engine {
 
 	class Object;
 
-	enum class ComponentType {
-		ANIMATOR,
-		COLLIDER,
-		DRAWABLE,
-		PHYSICS
-	};
-
 	/**
 	 * @brief	Abstract class used by Object
 	*/
