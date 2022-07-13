@@ -6,6 +6,7 @@
 #include "engine/StateMachine.hpp"
 #include "engine/Object.hpp"
 #include "engine/drawables/Sprite.hpp"
+#include "engine/drawables/CircleShape.hpp"
 
 
 class SampleChildState : public engine::State {
@@ -21,7 +22,7 @@ public:
 		else if (side == "Right") {
 			_sprite.setOrigin(_sprite.getSize().x, _sprite.getSize().y / 2.f);
 		}
-		_sprite.setPosition(engine::Window::getSize() / 2.f + _sprite.getOrigin() - _sprite.getSize() / 2.f + sf::Vector2f{ 0, 100.f });
+		_sprite.setPosition(engine::Window::getSize() / 2.f + _sprite.getOrigin() - _sprite.getSize() / 2.f);
 	}
 
 	int setup() override {
@@ -80,10 +81,17 @@ public:
 		_object.setComponent(std::make_unique<engine::Animator>());
 		_object.getComponent<engine::Animator>();
 
+		// Sprite
 		_sprite.setTexture(engine::Assets::getTexture("myState/ThumbsUp"));
-		_sprite.setOrigin(_sprite.getLocalBounds().width / 2, _sprite.getLocalBounds().height / 2);
 		_sprite.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 0.f, -200.f });
 		_sprite.scale(0.2f, 0.2f);
+		_sprite.setOrigin(_sprite.getLocalBounds().width / 2, _sprite.getLocalBounds().height / 2);
+
+		// CircleShape
+		_circleShape.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
+		_circleShape.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 0.f, +200.f });
+		_circleShape.setRadius(100.f);
+		_circleShape.setOrigin(_circleShape.getLocalBounds().width / 2, _circleShape.getLocalBounds().height / 2);
 
 		addStateMachine(&_machine);
 
@@ -100,16 +108,19 @@ public:
 		_machine->update();
 
 		_sprite.rotate(-1);
+		_circleShape.rotate(1);
 	}
 
 	void draw() override {
 		_machine->draw();
 		engine::Window::draw(_sprite);
+		engine::Window::draw(_circleShape);
 	}
 
 
 private:
 	engine::StateMachine _machine;
 	engine::Sprite _sprite;
+	engine::CircleShape _circleShape;
 	engine::Object _object;
 };
