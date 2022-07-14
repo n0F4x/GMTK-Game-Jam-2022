@@ -5,6 +5,11 @@
 
 using namespace engine;
 
+inline sf::FloatRect move(sf::FloatRect rect, const sf::Vector2f& amount) {
+    rect.left += amount.x;
+    rect.top += amount.y;
+    return rect;
+}
 
 Collider::Collider(sf::FloatRect hitBox, bool trigger, int layer) : _hitBox(hitBox), _trigger(trigger), _collisionLayer(layer) {}
 
