@@ -6,17 +6,18 @@
 using namespace engine;
 
 
-Physics::Physics(float mass, float friction, float bounciness, sf::Vector2f initialVelocity) : 
+Physics::Physics(float mass, float friction, float bounciness, sf::Vector2f initialVelocity) :
 	_mass(mass), _friction(std::clamp(friction, 0.f, 1.f)), _bounciness(std::clamp(bounciness, 0.f, 1.f)), _velocity(initialVelocity) {};
 
 
 void Physics::update(sf::Time deltaTime) {
 	if (!isEnabled() || _mass <= 0 || object()->hasParent()) return;
 
+	if (!object()->getComponent<Collider>()->collided()) {
+		apply_movement();
+	}
+
 	_deltaTime = deltaTime;
-
-	apply_movement();
-
 	calc_velocity();
 }
 

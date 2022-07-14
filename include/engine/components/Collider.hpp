@@ -1,10 +1,15 @@
 #pragma once
 
-#include "engine/Component.hpp"
-#include "SFML/Graphics/Rect.hpp"
 #include <vector>
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/System/Time.hpp>
+#include "engine/Component.hpp"
+#include "engine/components/HitBox.hpp"
+
 
 namespace engine {
+
+	class State;
 
 	class Collider : public Component {
 	public:
@@ -22,10 +27,18 @@ namespace engine {
 		void setTrigger(bool isTrigger);
 
 		bool collided_with(const Collider *collider) const;
+		bool collided() const;
 		void add_collision(Collider* collider);
-		void clear_collisions();
 
 	private:
+		friend State;
+		void clear_collisions();
+		void resolve(Object* object2, sf::Time deltaTime, sf::FloatRect& newHitBox);
+
+
+		///////////////
+		// Variables //
+		///////////////
 		sf::FloatRect _hitBox;
 		bool _trigger;
 		int _collisionLayer;

@@ -198,7 +198,7 @@ namespace engine {
 		Renderer _renderer;
         sf::View _view;
 		Store _store;
-		Store* _globalStore{};
+		Store* _globalStore = nullptr;
 
 		sf::Clock _physicsClock;
 		sf::Time _physicsTime;
