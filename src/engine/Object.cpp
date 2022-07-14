@@ -42,9 +42,10 @@ void Object::detach_parent() {
 	}
 }
 
-Object* Object::getParent() {
-	return _parent;
+bool Object::hasParent() const {
+	return _parent != nullptr;
 }
+
 
 ////////////////
 // Components //

@@ -11,16 +11,20 @@ Physics::Physics(float mass, float friction, float bounciness, sf::Vector2f init
 
 
 void Physics::update(sf::Time deltaTime) {
-	if (!isEnabled() || _mass <= 0 || object()->getParent() != nullptr) return;
+	if (!isEnabled() || _mass <= 0 || object()->hasParent()) return;
 
 	_deltaTime = deltaTime;
-	apply_movement();
-	// For physics engine planning decisions
-	calc_acceleration();
+
 	calc_velocity();
+	apply_movement();
 }
 
-// Private methods used by update()
+void Physics::apply() {
+	calc_acceleration();
+}
+
+
+// Private methods used by `update()` & `apply()` //
 
 void Physics::calc_acceleration() {
 	_acceleration = _sumF / _mass;
@@ -31,10 +35,11 @@ void Physics::calc_velocity() {
 }
 
 void Physics::apply_movement() {
-	object()->move(_velocity * _deltaTime.asSeconds());
+	object()->move(_acceleration / 2.f * _deltaTime.asSeconds() * _deltaTime.asSeconds());
 }
 
-// Public methods used by the physics engine and at initialization
+
+// Public methods used by the physics engine and at initialization //
 
 void Physics::setMass(float mass) {
 	_mass = mass;
