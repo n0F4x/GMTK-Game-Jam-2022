@@ -15,8 +15,9 @@ void Physics::update(sf::Time deltaTime) {
 
 	_deltaTime = deltaTime;
 
-	calc_velocity();
 	apply_movement();
+
+	calc_velocity();
 }
 
 void Physics::apply() {
@@ -35,7 +36,7 @@ void Physics::calc_velocity() {
 }
 
 void Physics::apply_movement() {
-	object()->move(_acceleration / 2.f * _deltaTime.asSeconds() * _deltaTime.asSeconds());
+	object()->move(_acceleration / 2.f * _deltaTime.asSeconds() * _deltaTime.asSeconds() + _velocity * _deltaTime.asSeconds());
 }
 
 
