@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 #include <SFML/Graphics/Transformable.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include "components/Animator.hpp"
 #include "components/Collider.hpp"
 #include "components/Physics.hpp"
@@ -65,6 +66,15 @@ namespace engine {
         void scale(const sf::Vector2f& factor);
         const sf::Transform& getTransform() const;
         const sf::Transform& getInverseTransform() const;
+
+
+        /////////////
+        // Texture //
+        /////////////
+        virtual void setTexture(const sf::Texture*, bool resetRect = false) { /*empty*/ }
+        virtual const sf::Texture* getTexture() const { return nullptr; }
+
+        virtual ~Object() = default;
 
 
     private:

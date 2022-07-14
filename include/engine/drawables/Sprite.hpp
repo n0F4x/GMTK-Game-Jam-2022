@@ -10,7 +10,7 @@
 // including commercial applications, and to alter it and redistribute it freely,
 // subject to the following restrictions:
 //
-// 1. The origin of this software must not be misrepresented;
+// 1. The origin of this software must not be misrepresented,
 //    you must not claim that you wrote the original software.
 //    If you use this software in a product, an acknowledgment
 //    in the product documentation would be appreciated but is not required.
@@ -37,14 +37,14 @@ namespace engine {
 	class Sprite : public sf::Drawable, public Object {
 	public:
 		Sprite() = default;
-		explicit Sprite(const sf::Texture& texture);
-		Sprite(const sf::Texture& texture, const sf::IntRect& rectangle);
+		explicit Sprite(const sf::Texture* texture);
+		Sprite(const sf::Texture* texture, const sf::IntRect& rectangle);
 
-		void setTexture(const sf::Texture& texture, bool resetRect = false);
+		void setTexture(const sf::Texture* texture, bool resetRect = false) override;
 		void setTextureRect(const sf::IntRect& rectangle);
 		void setColor(const sf::Color& color);
 
-		const sf::Texture* getTexture() const;
+		const sf::Texture* getTexture() const override;
 		const sf::IntRect& getTextureRect() const;
 		const sf::Color& getColor() const;
 		sf::Vector2f getSize() const;

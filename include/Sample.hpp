@@ -84,7 +84,7 @@ public:
 		_object.getComponent<engine::Animator>();
 
 		// Sprite
-		_sprite.setTexture(engine::Assets::getTexture("myState/ThumbsUp"));
+		_sprite.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
 		_sprite.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 0.f, -200.f });
 		_sprite.scale(0.2f, 0.2f);
 		_sprite.setOrigin(_sprite.getLocalBounds().width / 2, _sprite.getLocalBounds().height / 2);
@@ -190,5 +190,5 @@ public:
 
 
 private:
-	engine::Sprite _sprite{ engine::Assets::getTexture("myState/ThumbsUp") };
+	engine::Sprite _sprite{ &engine::Assets::getTexture("myState/ThumbsUp") };
 };
