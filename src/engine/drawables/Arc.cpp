@@ -56,7 +56,7 @@ void Arc::updateVertices() {
 	_vertices.emplace_back();
 	for (size_t i = 0; i < _pointCount; i++) {
 		const float angle = (_angle - _spread / 2.f) + (static_cast<float>(i) * _spread) / static_cast<float>(_pointCount - 1);
-		_vertices.emplace_back(_radius * sf::Vector2f{ std::cosf(angle), std::sinf(angle) });
+		_vertices.emplace_back(_radius * sf::Vector2f{ std::cos(angle), std::sin(angle) });
 	}
 }
 
