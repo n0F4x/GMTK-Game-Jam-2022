@@ -94,10 +94,6 @@ namespace engine {
 		 * @param object 
 		*/
 		void addObject(Object* object);
-		/**
-		 * @brief	Calls `Object::update()` on all objects that you added via `addObject()`.
-		*/
-		void update_objects() const;
 
 
 		/////////////////////////
@@ -132,9 +128,19 @@ namespace engine {
 		/////////////
 
 		/**
-		 * @brief	Updates the physics component of each object.
+		 * @brief	Updates each object based on what happened during the time elapsed.
 		*/
-		void apply_physics();
+		void update_physics();
+		/**
+		 * @brief	Updates the physics of each object based on changes that happened during the State's update.
+		*/
+		void apply_physics() const;
+
+		/**
+		 * @brief	Calls `Object::update()` on all objects that you added via `addObject()`.
+		*/
+		void update_objects() const;
+
 
 		//////////////////
 		// StateMachine //

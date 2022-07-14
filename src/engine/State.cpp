@@ -8,8 +8,11 @@ using namespace engine;
 
 void State::update() {
 	apply_physics();
+
 	update_objects();
 	onUpdate();
+
+	update_physics();
 }
 
 
@@ -25,12 +28,6 @@ void State::changeState(const std::string_view& nextState) {
 
 void State::addObject(Object* object) {
 	_objects.push_back(object);
-}
-
-void State::update_objects() const {
-	for (const auto& object : _objects) {
-		object->update();
-	}
 }
 
 
@@ -58,7 +55,7 @@ Store* State::globalStore() {
 // Private //
 /////////////
 
-void State::apply_physics() {
+void State::update_physics() {
 	sf::Time deltaTime = _physicsClock.restart();
 
 	if (_physicsTime != sf::Time::Zero) {
@@ -66,47 +63,57 @@ void State::apply_physics() {
 		_physicsTime = sf::Time::Zero;
 	}
 
-	for (auto object : _objects) {
-		Collider* collider = object->getComponent<Collider>();
-		if (collider == nullptr) continue;
-		//clear list of collisions for frame
-		collider->clear_collisions();
+	// Resolve collisions
+	for (auto object1 : _objects) {
+		Collider* collider1 = object1->getComponent<Collider>();
+		if (collider1 == nullptr) continue;
 
-		//calculate the position of the first collider for the next frame
-		sf::FloatRect rect = collider->getRect();
-		Physics* physics = object->getComponent<Physics>();
-		if (physics != nullptr) {
-			sf::Vector2f movementInFrame = physics->getVelocity() * deltaTime.asSeconds();
-			rect.left += movementInFrame.x;
-			rect.top += movementInFrame.y;
+		// Clear list of collisions for frame
+		collider1->clear_collisions();
+
+		// Calculate the potential position of the first collider for the next frame
+		sf::FloatRect hitBox1 = collider1->getHitBox();
+		Physics* physics1 = object1->getComponent<Physics>();
+		if (physics1 != nullptr) {
+			sf::Vector2f movementInFrame = physics1->getVelocity() * deltaTime.asSeconds();
+			hitBox1.left += movementInFrame.x;
+			hitBox1.top += movementInFrame.y;
 		}
 
+		// Check for collisions
 		for (auto object2 : _objects) {
-			if (object == object2) continue;
+			if (object1 == object2) continue;
 			Collider* collider2 = object2->getComponent<Collider>();
 			if (collider2 == nullptr) continue;
-			//skip collision check if colliders are not on the same layer and neither is on the global collision layer
-			if (collider->getLayer() != collider2->getLayer() && collider->getLayer() != 0 && collider2->getLayer() != 0) continue;
 
-			//calculate the position of the second collider for the next frame
-			sf::FloatRect rect2 = collider2->getRect();
-			if (object2->getComponent<Physics>() != nullptr) {
-				sf::Vector2f movementInFrame2 = object2->getComponent<Physics>()->getVelocity() * deltaTime.asSeconds();
-				rect2.left += movementInFrame2.x;
-				rect2.top += movementInFrame2.y;
+			// Skip collision check if colliders are not on the same layer and neither is on the global collision layer
+			if (collider1->getLayer() != collider2->getLayer() && collider1->getLayer() != 0 && collider2->getLayer() != 0) continue;
+
+			// Calculate the potential position of the second collider for the next frame
+			sf::FloatRect hitBox2 = collider2->getHitBox();
+			if (const Physics* physics2 = object2->getComponent<Physics>(); physics2 != nullptr) {
+				sf::Vector2f movementInFrame2 = physics2->getVelocity() * deltaTime.asSeconds();
+				hitBox2.left += movementInFrame2.x;
+				hitBox2.top += movementInFrame2.y;
 			}
 
-			//if collision is happened, resolve
-			if (rect.intersects(rect2)) {
-				//add collider to collision list
-				collider->add_collision(collider2);
-				//if both objects are physical and the first object is not a child update physics parameters
-				if (object->getComponent<Physics>() != nullptr && !collider->is_trigger() && !collider2->is_trigger() && object->getParent() == nullptr) {
-					sf::FloatRect rectCopy = rect;
-					rect.left -= 2 * physics->getVelocity().x * deltaTime.asSeconds();
-					//if collision is not avoidable if the x axis is reverted, then reverse y axis, else reverse x axis so no collision will happen
-					if (rectCopy.intersects(rect2)) physics->setVelocity(sf::Vector2f(physics->getVelocity().x, -physics->getVelocity().y * physics->getBounciness()));
-					else physics->setVelocity(sf::Vector2f(-physics->getVelocity().x * physics->getBounciness(), physics->getVelocity().y));
+			// Resolve collision
+			if (hitBox1.intersects(hitBox2)) {
+				// Add collider to collision list
+				collider1->add_collision(collider2);
+
+				// If both objects are physical and the first object has no parent, update physics parameters
+				if (physics1 != nullptr && !collider1->isTrigger() && !collider2->isTrigger() && !object1->hasParent()) {
+					sf::FloatRect rectCopy = hitBox1;
+					hitBox1.left -= 2 * physics1->getVelocity().x * deltaTime.asSeconds();
+
+					// If collision is not avoidable when the x axis is reverted, reverse y axis. Otheriwise, reverse x axis so no collision will happen.
+					if (rectCopy.intersects(hitBox2)) {
+						physics1->setVelocity(sf::Vector2f(physics1->getVelocity().x, -physics1->getVelocity().y * physics1->getBounciness()));
+					}
+					else {
+						physics1->setVelocity(sf::Vector2f(-physics1->getVelocity().x * physics1->getBounciness(), physics1->getVelocity().y));
+					}
 				}
 			}
 
@@ -120,6 +127,22 @@ void State::apply_physics() {
 		}
 	}
 }
+
+void State::apply_physics() const {
+	for (auto object : _objects) {
+		if (auto physics = object->getComponent<Physics>(); physics != nullptr && physics->isEnabled()) {
+			physics->apply();
+		}
+	}
+}
+
+
+void State::update_objects() const {
+	for (const auto& object : _objects) {
+		object->update();
+	}
+}
+
 
 int State::initialize() {
 	if (setup() != 0) {

@@ -1,21 +1,26 @@
-#include <engine/components/Collider.hpp>
+#include "engine/components/Collider.hpp"
+
+#include <ranges>
 #include "engine/Object.hpp"
 
 using namespace engine;
 
 
-Collider::Collider(sf::FloatRect rect, bool trigger, int layer) : _rectangle(rect), _isTrigger(trigger), _collisionLayer(layer) {}
+Collider::Collider(sf::FloatRect hitBox, bool trigger, int layer) : _hitBox(hitBox), _trigger(trigger), _collisionLayer(layer) {}
 
 
-sf::FloatRect Collider::getRect() {
-	sf::FloatRect rectWithPosition = _rectangle;
-	rectWithPosition.left += object()->getPosition().x;
-	rectWithPosition.top += object()->getPosition().y;
+sf::FloatRect Collider::getHitBox() {
+	sf::FloatRect rectWithPosition = _hitBox;
+	sf::Vector2f offset = object()->getPosition() - object()->getOrigin();
+
+	rectWithPosition.left += offset.x;
+	rectWithPosition.top += offset.y;
+
 	return rectWithPosition;
 }
 
-void Collider::setRect(sf::FloatRect rect) {
-	_rectangle = rect;
+void Collider::setHitBox(sf::FloatRect hitBox) {
+	_hitBox = hitBox;
 }
 
 int Collider::getLayer() const {
@@ -26,18 +31,15 @@ void Collider::setLayer(int layer) {
 	_collisionLayer = layer;
 }
 
-bool Collider::is_trigger() const {
-	return _isTrigger;
+bool Collider::isTrigger() const {
+	return _trigger;
 }
-void Collider::setIsTrigger(bool isTrigger) {
-	_isTrigger = isTrigger;
+void Collider::setTrigger(bool isTrigger) {
+	_trigger = isTrigger;
 }
 
 bool Collider::collided_with(const Collider *collider) const {
-	if (std::count(_collisions.begin(), _collisions.end(), collider)) {
-		return true;
-	}
-	return false;
+	return std::ranges::count(_collisions.begin(), _collisions.end(), collider) > 0;
 }
 
 void Collider::add_collision(Collider* collider) {

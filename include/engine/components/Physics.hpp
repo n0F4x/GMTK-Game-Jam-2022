@@ -38,6 +38,7 @@ namespace engine {
 	private:
 		friend State;
 		void update(sf::Time deltaTime);
+		void apply();
 
 
 		///////////////
