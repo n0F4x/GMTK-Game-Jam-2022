@@ -11,8 +11,9 @@ State::State() {
 
 void State::update() {
     update_objects();
-    onUpdate();
+	on_update();
 
+	update_animations();
     update_physics();
 }
 
@@ -67,6 +68,12 @@ Store* State::globalStore() {
 // Private //
 /////////////
 
+void State::update_objects() const {
+	for (const auto& object : _objects) {
+		object->update();
+	}
+}
+
 void State::update_physics() {
 	sf::Time deltaTime = _physicsClock.restart();
 
@@ -103,10 +110,18 @@ void State::update_physics() {
 	}
 }
 
+void State::update_animations() {
+	sf::Time deltaTime = _animationsClock.restart();
 
-void State::update_objects() const {
-	for (const auto& object : _objects) {
-		object->update();
+	if (_animationsTime != sf::Time::Zero) {
+		deltaTime += _animationsTime;
+		_animationsTime = sf::Time::Zero;
+	}
+
+	for (auto object : _objects) {
+		if (auto animator = object->getComponent<Animator>(); animator != nullptr && animator->isEnabled()) {
+			animator->animate(deltaTime);
+		}
 	}
 }
 

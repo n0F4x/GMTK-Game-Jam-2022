@@ -30,6 +30,7 @@ set(SOURCE_FILES
     "src/engine/Object.cpp"
     "src/engine/Component.cpp"
     "src/engine/components/Animator.cpp"
+    "src/engine/components/Bezier.cpp"
     "src/engine/components/Collider.cpp"
     "src/engine/components/Physics.cpp"
     "src/engine/drawables/Sprite.cpp"
@@ -37,6 +38,7 @@ set(SOURCE_FILES
     "src/engine/drawables/RectangleShape.cpp"
     "src/engine/drawables/CircleShape.cpp"
     "src/engine/drawables/Arc.cpp"
+    "src/animations/Bezier.cpp"
 )
 
 set(SFML_DIR ./dependencies/SFML-2.5.1/lib/cmake/SFML)

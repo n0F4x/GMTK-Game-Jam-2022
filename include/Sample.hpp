@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include "engine/Assets.hpp"
 #include "engine/Window.hpp"
 #include "engine/State.hpp"
@@ -9,6 +10,7 @@
 #include "engine/drawables/RectangleShape.hpp"
 #include "engine/drawables/CircleShape.hpp"
 #include "engine/drawables/Arc.hpp"
+#include "animations/Bezier.hpp"
 
 
 class SampleChildState : public engine::State {
@@ -36,7 +38,7 @@ public:
 
 	void handle_event(const sf::Event&) override { /*empty*/ }
 
-	void onUpdate() override {
+	void on_update() override {
 		if (*_restart == "true") {
 			_clock.restart();
 			*_restart = "false";
@@ -132,9 +134,12 @@ public:
 
 	void handle_event(const sf::Event&) override { /*empty*/ }
 
-	void onUpdate() override {
+	void on_update() override {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 			changeState("Physics");
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			changeState("Animations");
 		}
 
 		_machine->update();
@@ -165,6 +170,7 @@ private:
 	engine::Arc _flashLight{ 120.f, 60.f, 8 };
 	engine::Arc _triangle{ 160.f, 60.f, 2 };
 };
+
 
 class PhysicsSampleState : public engine::State {
 public:
@@ -197,13 +203,26 @@ public:
 		_wallObject.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(0, 0, _wallShape.getSize().x, _wallShape.getSize().y)));
 		_wallObject.setPosition(900, 600);
 
+		_bottomWall.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(0, 0, _bottomWall.getSize().x, _bottomWall.getSize().y)));
+		_bottomWall.setPosition(0.f, engine::Window::getSize().y);
+		_leftWall.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(0, 0, _leftWall.getSize().x, _leftWall.getSize().y)));
+		_leftWall.setPosition(-50.f, 0.f);
+		_topWall.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(0, 0, _topWall.getSize().x, _topWall.getSize().y)));
+		_topWall.setPosition(0.f, -50.f);
+		_rightWall.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(0, 0, _rightWall.getSize().x, _rightWall.getSize().y)));
+		_rightWall.setPosition(engine::Window::getSize().y, 0.f);
+
 		addObject(&_sprite);
 		addObject(&_wallObject);
+		addObject(&_bottomWall);
+		addObject(&_leftWall);
+		addObject(&_topWall);
+		addObject(&_rightWall);
 	}
 
 	void handle_event(const sf::Event&) override { /*empty*/ }
 
-	void onUpdate() override {
+	void on_update() override {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			changeState("Sample");
 		}
@@ -226,4 +245,56 @@ private:
 
 	engine::Object _wallObject;
 	engine::RectangleShape _wallShape;
+
+	engine::RectangleShape _bottomWall{ { engine::Window::getSize().x / 2.f, 50.f } };
+	engine::RectangleShape _leftWall{ { 50.f, engine::Window::getSize().y / 2.f } };
+	engine::RectangleShape _topWall{ { engine::Window::getSize().x / 2.f, 50.f } };
+	engine::RectangleShape _rightWall{ { 50.f, engine::Window::getSize().y / 2.f } };
+};
+
+
+class AnimationsSampleState : public engine::State {
+public:
+	AnimationsSampleState() {
+		_shape.setOrigin(_shape.getSize() / 2.f);
+		_shape.setPosition(engine::Window::getSize() / 2.f - sf::Vector2f{ 200.f, 0.f });
+		_shape.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
+		addObject(&_shape);
+	}
+
+	int setup() override {
+		auto animator = _shape.setComponent(std::make_unique<engine::Animator>());
+		animator->addAnimation("Ease", std::make_unique<animations::Ease>());
+		if (_animation = animator->findAnimation("Ease"); _animation == nullptr) {
+			std::cerr << "\nAnimationsSampleState: _animation is nullptr\n";
+			return 1;
+		}
+		_animation->setDistance({ -400.f, 0.f });
+		_animation->setTime(sf::seconds(1));
+		return 0;
+	}
+
+	void handle_event(const sf::Event&) override { /*empty*/ }
+
+	void on_update() override {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+			changeState("Sample");
+		}
+
+		if (_clock.getElapsedTime() >= sf::seconds(2)) {
+			_clock.restart();
+			_animation->start();
+			_animation->setDistance(_animation->getDistance() * -1.f);
+		}
+	}
+
+	void on_draw() override {
+		engine::Window::draw(_shape);
+	}
+
+
+private:
+	sf::Clock _clock;
+	engine::RectangleShape _shape{ { 200.f, 200.f } };
+	engine::Animation* _animation = nullptr;
 };

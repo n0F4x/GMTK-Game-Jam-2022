@@ -35,9 +35,9 @@ namespace engine {
         ////////////////
         // Components //
         ////////////////
-        void setComponent(std::unique_ptr<Animator> component);
-        void setComponent(std::unique_ptr<Collider> component);
-        void setComponent(std::unique_ptr<Physics> component);
+        Animator* setComponent(std::unique_ptr<Animator> component);
+        Collider* setComponent(std::unique_ptr<Collider> component);
+        Physics* setComponent(std::unique_ptr<Physics> component);
 
         template<typename COMPONENT>
         COMPONENT* getComponent();
@@ -71,7 +71,7 @@ namespace engine {
         /////////////
         // Texture //
         /////////////
-        virtual void setTexture(const sf::Texture*, bool resetRect = false) { /*empty*/ }
+        virtual void setTexture(const sf::Texture*, bool resetRect) { /*empty*/ }
         virtual const sf::Texture* getTexture() const { return nullptr; }
 
         virtual ~Object() = default;
