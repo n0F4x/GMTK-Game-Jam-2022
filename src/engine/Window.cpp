@@ -14,13 +14,13 @@ sf::String Window::_title = "Title";
 sf::ContextSettings Window::_settings{
 	/*depthBits*/			24,
 	/*stencilBits*/			8,
-	/*antialiasingLevel*/	0,
+	/*antialiasingLevel*/	8,
 	/*majorVersion*/		1,
 	/*minorVersion*/		1,
 	/*attributeFlags*/		sf::ContextSettings::Attribute::Default,
 	/*sRgbCapable*/			true
 };
-sf::Uint32 Window::_style = sf::Style::Default;
+sf::Uint32 Window::_style = sf::Style::Titlebar | sf::Style::Close;
 std::stack<sf::View> Window::_prevViews;
 int Window::_FPSLimit = 120;
 bool Window::_vSyncEnabled = true;
