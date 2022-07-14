@@ -1,7 +1,6 @@
 #include "Window.hpp"
 
 #include <SFML/System.hpp>
-#include "Assets.hpp"
 
 using namespace engine;
 
@@ -10,7 +9,7 @@ using namespace engine;
 // Settings //
 //////////////
 sf::RenderWindow Window::_window;
-sf::VideoMode Window::_VideoMode = sf::VideoMode(1600, 900);
+sf::VideoMode Window::_videoMode = sf::VideoMode(1600, 900);
 sf::String Window::_title = "Title";
 sf::ContextSettings Window::_settings{
 	/*depthBits*/			24,
@@ -22,21 +21,37 @@ sf::ContextSettings Window::_settings{
 	/*sRgbCapable*/			true
 };
 sf::Uint32 Window::_style = sf::Style::Default;
+std::stack<sf::View> Window::_prevViews;
 int Window::_FPSLimit = 120;
 bool Window::_vSyncEnabled = true;
 static const bool keyRepeatEnabled = false;
 
 
-const sf::RenderWindow& engine::Window::window() {
+Window::Window() {
+    _prevViews.push(_window.getDefaultView());
+}
+
+
+const sf::RenderWindow& Window::get() {
 	return _window;
 }
 
 sf::Vector2f Window::getSize() {
-	return sf::Vector2f{ sf::Vector2u{ _VideoMode.width, _VideoMode.height } };
+	return sf::Vector2f{ sf::Vector2u{ _videoMode.width, _videoMode.height } };
 }
 
 sf::FloatRect Window::getBounds() {
-	return sf::FloatRect{ 0.f, 0.f, getSize().x, getSize().y };
+	return sf::FloatRect{ { 0, 0 }, getSize() };
+}
+
+void Window::setView(sf::View view) {
+    _prevViews.push(_window.getView());
+    _window.setView(view);
+}
+
+void Window::resetToPreviousView() {
+    _window.setView(_prevViews.top());
+    _prevViews.pop();
 }
 
 
@@ -82,7 +97,7 @@ void Window::close() { _window.close(); }
 
 void Window::open() {
 	if (!_window.isOpen()) {
-		_window.create(_VideoMode, _title, _style, _settings);
+		_window.create(_videoMode, _title, _style, _settings);
 
 		_window.setVerticalSyncEnabled(_vSyncEnabled);
 		_window.setKeyRepeatEnabled(keyRepeatEnabled);

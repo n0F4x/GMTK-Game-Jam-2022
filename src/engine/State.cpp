@@ -1,24 +1,34 @@
 #include "State.hpp"
 
 #include "StateMachine.hpp"
-#include "engine/Window.hpp"
+#include "Window.hpp"
 
 using namespace engine;
 
+State::State() {
+    _view.reset(Window::getBounds());
+}
 
 void State::update() {
-	apply_physics();
+    apply_physics();
 
-	update_objects();
-	onUpdate();
+    update_objects();
+    onUpdate();
 
-	update_physics();
+    update_physics();
+}
+
+void State::draw() {
+    Window::setView(_view);
+    on_draw();
+    Window::resetToPreviousView();
 }
 
 
 ///////////////
 // Protected //
 ///////////////
+
 
 void State::changeState(const std::string_view& nextState) {
 	_nextState = nextState;
@@ -33,6 +43,10 @@ void State::addObject(Object* object) {
 
 Renderer& State::renderer() {
 	return _renderer;
+}
+
+sf::View& State::camera() {
+    return _view;
 }
 
 

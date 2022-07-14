@@ -18,6 +18,8 @@ namespace engine {
 	*/
 	class State {
 	public:
+        State();
+
 		///////////////
 		// Game loop //
 		///////////////
@@ -27,17 +29,17 @@ namespace engine {
 		 * @param	sf::Event from 'main.cpp'
 		*/
 		virtual void handle_event(const sf::Event&) = 0;
+
 		/**
 		 * @brief	
 		*/
 		void update();
-		/**
-		 * @brief	Overwrite this function for drawing.
-		 *			You can also draw stuff from inner state machines here.
-		 *			Use `renderer().render()' if you want.
-		*/
-		virtual void draw() = 0;
 
+        /**
+         * @brief	Call this function for instructing the state to draw it's own stuff.
+         * This will call the state's on_draw function.
+        */
+        void draw();
 
 		// Virtual destructor //
 		virtual ~State() = default;
@@ -79,11 +81,25 @@ namespace engine {
 		/////////////
 		// Drawing //
 		/////////////
+        /**
+         * @brief	Overwrite this function for drawing, it will be called by `draw()`.
+         *			You can also draw stuff from inner state machines here.
+         *			Use `renderer().render()' if you want.
+        */
+        virtual void on_draw() = 0;
+
 		/**
 		 * @brief	Call this to render within the state.
 		 * @return	The state's renderer
 		*/
 		Renderer& renderer();
+
+
+        ////////////
+        // Camera //
+        ////////////
+
+        sf::View &camera();
 
 
 		////////////////////
@@ -168,8 +184,6 @@ namespace engine {
 		bool isActive() const;
 		const std::string& getNextState() const;
 
-
-
 		///////////////
 		// Variables //
 		///////////////
@@ -182,8 +196,9 @@ namespace engine {
 		std::vector<StateMachine*> _stateMachines;
 
 		Renderer _renderer;
+        sf::View _view;
 		Store _store;
-		Store* _globalStore;
+		Store* _globalStore{};
 
 		sf::Clock _physicsClock;
 		sf::Time _physicsTime;

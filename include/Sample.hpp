@@ -61,7 +61,7 @@ public:
 		}
 	}
 
-	void draw() override {
+	void on_draw() override {
 		renderer().render();
 	}
 
@@ -144,7 +144,7 @@ public:
 		_circleShape.rotate(1);
 	}
 
-	void draw() override {
+	void on_draw() override {
 		_machine->draw();
 		engine::Window::draw(_sprite);
 		engine::Window::draw(_rectangleShape);
@@ -184,7 +184,7 @@ public:
 		}
 	}
 
-	void draw() override { 
+	void on_draw() override {
 		renderer().render();
 	}
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <stack>
 #include <SFML/Graphics.hpp>
 
 namespace engine {
@@ -12,6 +13,8 @@ namespace engine {
 	*/
 	class Window {
 	public:
+        Window();
+
 		/////////
 		// API //
 		/////////
@@ -19,7 +22,7 @@ namespace engine {
 		 * @brief	Getter for inner window. Some SFML functions require window access
 		 * @return	Inner static window
 		*/
-		static const sf::RenderWindow& window();
+		static const sf::RenderWindow& get();
 		/**
 		 * @brief	Getter for the size of the window
 		 * @return	The size of the window
@@ -30,6 +33,14 @@ namespace engine {
 		 * @return	The bounds of the window
 		*/
 		static sf::FloatRect getBounds();
+
+        ////////////
+        // Camera //
+        ////////////
+
+        static void setView(sf::View view);
+
+        static void resetToPreviousView();
 
 
 		/////////////
@@ -99,10 +110,11 @@ namespace engine {
 		// Variables //
 		///////////////
 		static sf::RenderWindow _window;
-		static sf::VideoMode _VideoMode;
+		static sf::VideoMode _videoMode;
 		static sf::String _title;
 		static sf::ContextSettings _settings;
 		static sf::Uint32 _style;
+        static std::stack<sf::View> _prevViews;
 		static int _FPSLimit;
         static bool _vSyncEnabled;
 	};
