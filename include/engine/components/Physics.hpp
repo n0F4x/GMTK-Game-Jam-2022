@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Time.hpp>
 #include "engine/Component.hpp"
 
