@@ -30,26 +30,31 @@ using namespace engine;
 
 
 ////////////////////////////////////////////////////////////
-Sprite::Sprite(const sf::Texture& texture) {
+Sprite::Sprite(const sf::Texture* texture) {
 	setTexture(texture);
 }
 
 
 ////////////////////////////////////////////////////////////
-Sprite::Sprite(const sf::Texture& texture, const sf::IntRect& rectangle) {
+Sprite::Sprite(const sf::Texture* texture, const sf::IntRect& rectangle) {
 	setTexture(texture);
 	setTextureRect(rectangle);
 }
 
 
 ////////////////////////////////////////////////////////////
-void Sprite::setTexture(const sf::Texture& texture, bool resetRect) {
+void Sprite::setTexture(const sf::Texture* texture, bool resetRect) {
 	// Recompute the texture area if requested, or if there was no valid texture & rect before
-	if (resetRect || (!m_texture && (m_textureRect == sf::IntRect())))
-		setTextureRect(sf::IntRect(0, 0, texture.getSize().x, texture.getSize().y));
+	if (texture != nullptr
+			&& (resetRect 
+				|| (!m_texture 
+					&& (m_textureRect == sf::IntRect())))
+		) {
+		setTextureRect(sf::IntRect(0, 0, texture->getSize().x, texture->getSize().y));
+	}
 
 	// Assign the new texture
-	m_texture = &texture;
+	m_texture = texture;
 }
 
 
