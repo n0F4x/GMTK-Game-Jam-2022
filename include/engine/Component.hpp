@@ -6,7 +6,7 @@ namespace engine {
 	class Object;
 
 	/**
-	 * @brief	Abstract class used by Object
+	 * @brief	Base class used by Object
 	*/
 	class Component {
 	public:

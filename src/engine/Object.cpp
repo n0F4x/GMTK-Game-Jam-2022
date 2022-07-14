@@ -51,17 +51,20 @@ bool Object::hasParent() const {
 // Components //
 ////////////////
 
-void Object::setComponent(std::unique_ptr<Animator> component) {
+Animator* Object::setComponent(std::unique_ptr<Animator> component) {
 	_animator = std::move(component);
 	static_cast<Component*>(_animator.get())->_object = this;
+	return _animator.get();
 }
-void Object::setComponent(std::unique_ptr<Collider> component) {
+Collider* Object::setComponent(std::unique_ptr<Collider> component) {
 	_collider = std::move(component);
 	static_cast<Component*>(_collider.get())->_object = this;
+	return _collider.get();
 }
-void Object::setComponent(std::unique_ptr<Physics> component) {
+Physics* Object::setComponent(std::unique_ptr<Physics> component) {
 	_physics = std::move(component);
 	static_cast<Component*>(_physics.get())->_object = this;
+	return _physics.get();
 }
 
 template<typename COMPONENT>

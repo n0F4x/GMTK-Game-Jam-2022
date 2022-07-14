@@ -75,7 +75,7 @@ namespace engine {
 		 *			This will be called by `update()`.
 		 *			You can also update the states of your inner state machine(s) here.
 		*/
-		virtual void onUpdate() { /*empty by default*/ }
+		virtual void on_update() { /*empty by default*/ }
 
 
 		/////////////
@@ -144,14 +144,19 @@ namespace engine {
 		/////////////
 
 		/**
+		 * @brief	Calls `Object::update()` on all objects that you added via `addObject()`.
+		*/
+		void update_objects() const;
+
+		/**
 		 * @brief	Updates each object based on what happened during the time elapsed.
 		*/
 		void update_physics();
 
 		/**
-		 * @brief	Calls `Object::update()` on all objects that you added via `addObject()`.
+		 * @brief	Make progress with each object's animation(s).
 		*/
-		void update_objects() const;
+		void update_animations();
 
 
 		//////////////////
