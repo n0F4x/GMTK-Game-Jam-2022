@@ -4,8 +4,6 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Time.hpp>
 #include "engine/Component.hpp"
-#include "engine/components/HitBox.hpp"
-
 
 namespace engine {
 
@@ -46,3 +44,11 @@ namespace engine {
 	};
 
 }
+
+/**
+ * @brief Utility function to move the coordinates of a FloatRect by a Vector
+ * @param rect The sf::FloatRect being moved
+ * @param amount sf::Vector2f amount to move the rect
+ * @return the moved FloatRect
+ */
+inline sf::FloatRect move(sf::FloatRect rect, const sf::Vector2f& amount);
