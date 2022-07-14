@@ -10,8 +10,6 @@ State::State() {
 }
 
 void State::update() {
-    apply_physics();
-
     update_objects();
     onUpdate();
 
@@ -101,14 +99,6 @@ void State::update_physics() {
 	for (auto object : _objects) {
 		if (auto physics = object->getComponent<Physics>(); physics != nullptr && physics->isEnabled()) {
 			physics->update(deltaTime);
-		}
-	}
-}
-
-void State::apply_physics() const {
-	for (auto object : _objects) {
-		if (auto physics = object->getComponent<Physics>(); physics != nullptr && physics->isEnabled()) {
-			physics->apply();
 		}
 	}
 }

@@ -11,7 +11,7 @@ Collider::Collider(sf::FloatRect hitBox, bool trigger, int layer) : _hitBox(hitB
 
 sf::FloatRect Collider::getHitBox() {
 	sf::FloatRect rectWithPosition = _hitBox;
-	sf::Vector2f offset = object()->getPosition() - object()->getOrigin();
+	sf::Vector2f offset = object()->getPosition();
 
 	rectWithPosition.left += offset.x;
 	rectWithPosition.top += offset.y;
@@ -79,14 +79,14 @@ void Collider::resolve(Object* object2, sf::Time deltaTime, sf::FloatRect& newHi
 		// If both objects are physical and the first object has no parent, update physics parameters
 		if (physics1 != nullptr && !isTrigger() && !collider2->isTrigger() && !object()->hasParent()) {
 			sf::FloatRect rectCopy = newHitBox;
-			newHitBox.left -= 2 * physics1->getVelocity().x * deltaTime.asSeconds();
+			rectCopy.left -= 2 * physics1->getVelocity().x * deltaTime.asSeconds();
 
 			// If collision is not avoidable when the x axis is reverted, reverse y axis. Otheriwise, reverse x axis so no collision will happen.
 			if (rectCopy.intersects(hitBox2)) {
-				physics1->setVelocity(sf::Vector2f(physics1->getVelocity().x, -physics1->getVelocity().y * physics1->getBounciness()));
+				physics1->setVelocity(sf::Vector2f(physics1->getVelocity().x * physics1->getBounciness(), -physics1->getVelocity().y * physics1->getBounciness()));
 			}
 			else {
-				physics1->setVelocity(sf::Vector2f(-physics1->getVelocity().x * physics1->getBounciness(), physics1->getVelocity().y));
+				physics1->setVelocity(sf::Vector2f(-physics1->getVelocity().x * physics1->getBounciness(), physics1->getVelocity().y * physics1->getBounciness()));
 			}
 		}
 	}

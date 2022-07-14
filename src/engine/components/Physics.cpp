@@ -12,19 +12,13 @@ Physics::Physics(float mass, float friction, float bounciness, sf::Vector2f init
 
 void Physics::update(sf::Time deltaTime) {
 	if (!isEnabled() || _mass <= 0 || object()->hasParent()) return;
-
-	if (!object()->getComponent<Collider>()->collided()) {
-		apply_movement();
-	}
+	
+	apply_movement();
 
 	_deltaTime = deltaTime;
+	calc_acceleration();
 	calc_velocity();
 }
-
-void Physics::apply() {
-	calc_acceleration();
-}
-
 
 // Private methods used by `update()` & `apply()` //
 

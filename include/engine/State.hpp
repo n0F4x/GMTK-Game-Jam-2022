@@ -147,10 +147,6 @@ namespace engine {
 		 * @brief	Updates each object based on what happened during the time elapsed.
 		*/
 		void update_physics();
-		/**
-		 * @brief	Updates the physics of each object based on changes that happened during the State's update.
-		*/
-		void apply_physics() const;
 
 		/**
 		 * @brief	Calls `Object::update()` on all objects that you added via `addObject()`.
