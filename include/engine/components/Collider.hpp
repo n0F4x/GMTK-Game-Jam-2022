@@ -15,6 +15,7 @@ namespace engine {
 	public:
 		// If collisionLayer is 0 collides with everything, else collides with own layer (trigger does not affect physics/movement)
 		// Position of rect must be relative to object's position (if no offset needed: top = left = 0)
+		// If you want to live another day you don't set the object's origin if it has a collider.
 		Collider(sf::FloatRect hitBox, bool trigger = false, int layer = 0);
 
 		sf::FloatRect getHitBox();

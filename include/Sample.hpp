@@ -166,14 +166,39 @@ private:
 	engine::Arc _triangle{ 160.f, 60.f, 2 };
 };
 
-
 class PhysicsSampleState : public engine::State {
 public:
 	PhysicsSampleState() {
 		renderer().add_static(&_sprite);
+		renderer().add_static(&_shape);
 
-		_sprite.setOrigin(-500, -500);
+		renderer().add_static(&_wallShape);
+		_wallShape.setOutlineThickness(5);
+		_wallShape.setFillColor(sf::Color(0, 0, 0, 0));
+		_wallShape.setOutlineColor(sf::Color::Red);
+		_wallShape.setSize(sf::Vector2f(100, 800));
+
+
+		_shape.setOutlineThickness(5);
+		_shape.setFillColor(sf::Color(0, 0, 0, 0));
+		_shape.setOutlineColor(sf::Color::Red);
+
 		_sprite.scale(0.2f, 0.2f);
+
+		_sprite.setComponent(std::make_unique<engine::Physics>());
+		_sprite.setPosition(300, 100);
+
+		_sprite.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(_sprite.getSize().x / 4.f, _sprite.getSize().y / 4.f, _sprite.getSize().x / 2.f, _sprite.getSize().y / 2.f)));
+
+		engine::Physics *physicsComponent = _sprite.getComponent<engine::Physics>();
+		physicsComponent->setVelocity(sf::Vector2f(80, 80));
+		physicsComponent->apply_force(sf::Vector2f(0, 0));
+
+		_wallObject.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(0, 0, _wallShape.getSize().x, _wallShape.getSize().y)));
+		_wallObject.setPosition(900, 600);
+
+		addObject(&_sprite);
+		addObject(&_wallObject);
 	}
 
 	void handle_event(const sf::Event&) override { /*empty*/ }
@@ -182,6 +207,12 @@ public:
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			changeState("Sample");
 		}
+
+		_shape.setPosition(sf::Vector2f(_sprite.getComponent<engine::Collider>()->getHitBox().left, _sprite.getComponent<engine::Collider>()->getHitBox().top));
+		_shape.setSize(sf::Vector2f(_sprite.getComponent<engine::Collider>()->getHitBox().width, _sprite.getComponent<engine::Collider>()->getHitBox().height));
+
+		_wallShape.setPosition(sf::Vector2f(_wallObject.getComponent<engine::Collider>()->getHitBox().left, _wallObject.getComponent<engine::Collider>()->getHitBox().top));
+		_wallShape.setSize(sf::Vector2f(_wallObject.getComponent<engine::Collider>()->getHitBox().width, _wallObject.getComponent<engine::Collider>()->getHitBox().height));
 	}
 
 	void on_draw() override {
@@ -191,4 +222,8 @@ public:
 
 private:
 	engine::Sprite _sprite{ &engine::Assets::getTexture("myState/ThumbsUp") };
+	engine::RectangleShape _shape;
+
+	engine::Object _wallObject;
+	engine::RectangleShape _wallShape;
 };

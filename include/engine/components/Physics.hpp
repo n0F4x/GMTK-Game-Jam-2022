@@ -8,6 +8,7 @@
 namespace engine {
 
 	class State;
+	class Object;
 
 	class Physics : public Component {
 	public:
@@ -15,7 +16,7 @@ namespace engine {
 		Physics(
 			float mass = 1.f,
 			float friction = 0.f,
-			float bounciness = 0.f,
+			float bounciness = 1.f,
 			sf::Vector2f initialVelocity = { 0.f,0.f }
 		);
 
@@ -38,8 +39,8 @@ namespace engine {
 	private:
 		friend State;
 		void update(sf::Time deltaTime);
-		void apply();
 
+		friend Object;
 
 		///////////////
 		// Variables //
