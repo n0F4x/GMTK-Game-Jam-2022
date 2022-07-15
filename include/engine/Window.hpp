@@ -37,7 +37,6 @@ namespace engine {
         ////////////
         // Camera //
         ////////////
-
         /**
          * @brief Sets the window's view (camera). Everything drawn after setting the view
          * will be drawn using this view. To revert to the previous view, use `resetToPreviousView()`.
@@ -72,7 +71,6 @@ namespace engine {
         ////////////////////
         // Video settings //
         ////////////////////
-
         static bool getVSyncEnabled();
 
         static void setVSyncEnabled(bool enabled);

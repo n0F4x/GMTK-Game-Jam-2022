@@ -77,7 +77,7 @@ namespace engine {
 		const sf::Vector2f& getOrigin() const;
 		float getRotation() const;
 		float getScale() const;
-		std::vector<const sf::Texture*>& textures();
+		std::vector<const sf::Texture*>& getTextures();
 		sf::Time getTextureTime() const;
 
 

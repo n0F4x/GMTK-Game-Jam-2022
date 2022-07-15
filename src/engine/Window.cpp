@@ -32,6 +32,9 @@ Window::Window() {
 }
 
 
+/////////
+// API //
+/////////
 const sf::RenderWindow& Window::get() {
 	return _window;
 }
@@ -44,6 +47,10 @@ sf::FloatRect Window::getBounds() {
 	return sf::FloatRect{ { 0, 0 }, getSize() };
 }
 
+
+////////////
+// Camera //
+////////////
 void Window::setView(sf::View view) {
     _prevViews.push(_window.getView());
     _window.setView(view);
@@ -61,11 +68,17 @@ void Window::resetToPreviousView() {
 }
 
 
+/////////////
+// Drawing //
+/////////////
 void Window::draw(const sf::Drawable& drawable, const sf::RenderStates& states) {
 	_window.draw(drawable, states);
 }
 
 
+////////////////////
+// Video settings //
+////////////////////
 bool Window::getVSyncEnabled() {
     return _vSyncEnabled;
 }
@@ -98,9 +111,15 @@ void Window::setFPSLimit(int limit) {
 }
 
 
+/////////////
+// EXITING //
+/////////////
 void Window::close() { _window.close(); }
 
 
+//////////
+// Core //
+//////////
 void Window::open() {
 	if (!_window.isOpen()) {
 		_window.create(_videoMode, _title, _style, _settings);

@@ -23,7 +23,7 @@ Core::Core() {
 
 
 int Core::setup() const {
-	// Open window before loading assets duo to SFML bug: https://en.sfml-dev.org/forums/index.php?topic=25907.0
+	// Open window before loading assets due to SFML bug: https://en.sfml-dev.org/forums/index.php?topic=25907.0
 	Window::open();
 
 	// Show a "Loading" sign until assets are being loaded
@@ -124,13 +124,10 @@ void Core::run() {
             //text << "Window clear: " << ta3 / SAMPLE_RATE * 1000 << " ms" << std::endl;
             text << "State draw: " << ta4 / SAMPLE_RATE * 1000 << " ms" << std::endl;
             text << "Window display: " << ta5 / SAMPLE_RATE * 1000 << " ms" << std::endl;
-#endif
-            fpsText.setString(text.str());
-
-            counter = 0;
-#ifdef ENGINE_DEBUG
             ta0 = 0; ta1 = 0; ta2 = 0; ta3 = 0; ta4 = 0; ta5 = 0;
 #endif
+            fpsText.setString(text.str());
+            counter = 0;
             frameTimeAcc = 0;
         }
 	}

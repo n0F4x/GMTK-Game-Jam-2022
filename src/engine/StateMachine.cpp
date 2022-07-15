@@ -67,6 +67,9 @@ State* StateMachine::operator->() {
 }
 
 
+//////////////////
+// Data sharing //
+//////////////////
 void StateMachine::addStore(Store* store) {
 	_store = store;
 }

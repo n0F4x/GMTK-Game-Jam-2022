@@ -66,15 +66,19 @@ namespace engine {
 		*/
 		virtual int setup() { return 0; }
 
+
+        //////////////////////
+        // Switching states //
+        //////////////////////
         /**
          * @brief	Gets called each time the state becomes active
         */
-        virtual void resume() { /*empty by default*/ };
+        virtual void on_resume() { /*empty by default*/ };
 
         /**
          * @brief	Gets called each time the state becomes inactive.
         */
-        virtual void pause() { /*empty by default*/ };
+        virtual void on_pause() { /*empty by default*/ };
 
 
 		////////////
@@ -192,6 +196,7 @@ namespace engine {
 		 * @brief	Saves elapsed clock times
 		*/
 		void deactivate();
+
 		bool isActive() const;
 		const std::string& getNextState() const;
 
