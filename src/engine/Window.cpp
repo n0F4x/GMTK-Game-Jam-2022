@@ -49,6 +49,11 @@ void Window::setView(sf::View view) {
     _window.setView(view);
 }
 
+void Window::setDefaultView() {
+    _prevViews.push(_window.getView());
+    _window.setView(_window.getDefaultView());
+}
+
 void Window::resetToPreviousView() {
     _window.setView(_prevViews.top());
     _prevViews.pop();
@@ -100,6 +105,7 @@ void Window::open() {
 		_window.create(_videoMode, _title, _style, _settings);
 
 		_window.setVerticalSyncEnabled(_vSyncEnabled);
+        if (!_vSyncEnabled) _window.setFramerateLimit(_FPSLimit);
 		_window.setKeyRepeatEnabled(keyRepeatEnabled);
 	}
 }

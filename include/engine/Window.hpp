@@ -40,6 +40,8 @@ namespace engine {
 
         static void setView(sf::View view);
 
+        static void setDefaultView();
+
         static void resetToPreviousView();
 
 
