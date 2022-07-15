@@ -38,10 +38,23 @@ namespace engine {
         // Camera //
         ////////////
 
+        /**
+         * @brief Sets the window's view (camera). Everything drawn after setting the view
+         * will be drawn using this view. To revert to the previous view, use `resetToPreviousView()`.
+         */
         static void setView(sf::View view);
 
+        /**
+         * @brief Sets the window's view (camera) to the window's default view (fill entire window).
+         * To revert to the previous view, use `resetToPreviousView()`.
+         */
         static void setDefaultView();
 
+        /**
+         * @brief Reverts the window's view (camera) to the previously used one.
+         * This can be called as many times as the `setView`/`setDefaultView` functions have been called,
+         * stepping to the previous view with each call.
+         */
         static void resetToPreviousView();
 
 

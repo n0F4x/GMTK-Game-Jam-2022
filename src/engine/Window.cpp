@@ -56,7 +56,8 @@ void Window::setDefaultView() {
 
 void Window::resetToPreviousView() {
     _window.setView(_prevViews.top());
-    _prevViews.pop();
+    if (_prevViews.size() > 1)
+        _prevViews.pop();
 }
 
 
