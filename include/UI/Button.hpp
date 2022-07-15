@@ -7,6 +7,7 @@
 #include <utility>
 
 namespace UI {
+
     class Button : public engine::Sprite {
     public:
         Button() = default;
@@ -15,12 +16,12 @@ namespace UI {
         /**
          * @brief sets the callback fuction of the button
          */
-        void set_callback(std::function<void()> callback);
+        void setCallback(std::function<void()> callback);
 
         /**
          * @brief returns true if the button is pressed / held down
          */
-        bool is_pressed() const;
+        bool isPressed() const;
 
         /**
          * @brief updates the button's internal state, calls the callback fuction if valid button press occurs

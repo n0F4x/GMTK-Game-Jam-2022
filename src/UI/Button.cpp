@@ -6,9 +6,9 @@
 
 using namespace UI;
 
-bool Button::is_pressed() const { return _isPressed; }
+bool Button::isPressed() const { return _isPressed; }
 
-void Button::set_callback(std::function<void()> callback) {
+void Button::setCallback(std::function<void()> callback) {
     _callback = std::move(callback);
 }
 
