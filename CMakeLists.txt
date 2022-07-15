@@ -40,6 +40,7 @@ set(SOURCE_FILES
     "src/engine/components/Animation.cpp"
     "src/animations/Bezier.cpp"
     "src/engine/components/Bezier.cpp"
+    "src/UI/Button.cpp"
 )
 
 set(SFML_DIR ./dependencies/SFML-2.5.1/lib/cmake/SFML)

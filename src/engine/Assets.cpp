@@ -9,7 +9,7 @@ using namespace engine;
 /**
  * @brief	Relative path from executable to assets folder
 */
-const std::string Assets::ASSETS_PATH = "../../../assets/";
+const std::string Assets::ASSETS_PATH = "../assets/";
 
 
 

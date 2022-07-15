@@ -41,7 +41,7 @@ namespace engine {
         template<typename COMPONENT>
         COMPONENT* getComponent();
 
-        void update() const;
+        virtual void update();
 
 
         ///////////////////

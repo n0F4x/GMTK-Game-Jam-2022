@@ -87,7 +87,7 @@ Physics* Object::getComponent() {
 }
 
 
-void Object::update() const { /*currently empty*/ }
+void Object::update() { /*currently empty*/ }
 
 
 ///////////////////
