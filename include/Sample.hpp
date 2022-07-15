@@ -11,6 +11,7 @@
 #include "engine/drawables/CircleShape.hpp"
 #include "engine/drawables/Arc.hpp"
 #include "animations/Bezier.hpp"
+#include "UI/Button.hpp"
 
 
 class SampleChildState : public engine::State {
@@ -91,6 +92,13 @@ public:
 		_sprite.scale(0.2f, 0.2f);
 		_sprite.setOrigin(_sprite.getLocalBounds().width / 2, _sprite.getLocalBounds().height / 2);
 
+        // Button
+        _button.setTexture(&engine::Assets::getTexture("UI/Button"));
+        _button.scale(sf::Vector2f{0.5f, 0.5f});
+        _button.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ -350.f, 500.f });
+        _button.setOrigin(_sprite.getLocalBounds().width / 2, _sprite.getLocalBounds().height / 2);
+        _button.set_callback([this]{ changeState("Physics"); });
+
 		// RectangleShape
 		_rectangleShape.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
 		_rectangleShape.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ -400.f, 0.f });
@@ -142,6 +150,7 @@ public:
 		_machine->update();
 
 		_sprite.rotate(-1);
+        _button.update();
 		_rectangleShape.rotate(1);
 		_circleShape.rotate(1);
 	}
@@ -154,6 +163,7 @@ public:
 		engine::Window::draw(_ball);
 		engine::Window::draw(_flashLight);
 		engine::Window::draw(_triangle);
+        engine::Window::draw(_button);
 	}
 
 
@@ -166,6 +176,7 @@ private:
 	engine::Arc _ball{ 80.f, 360.f };
 	engine::Arc _flashLight{ 120.f, 60.f, 8 };
 	engine::Arc _triangle{ 160.f, 60.f, 2 };
+    UI::Button _button;
 };
 
 
