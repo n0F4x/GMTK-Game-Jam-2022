@@ -305,6 +305,10 @@ private:
 class MinimapSampleState : public engine::State {
 public:
     MinimapSampleState() {
+        music.openFromFile(engine::Assets::ASSETS_PATH + "/music/calmbgm.ogg");
+        music.setLoop(true);
+        music.setVolume(50);
+
         _player.setRadius(25);
         _player.setOrigin(25, 25);
         _player.setPosition(engine::Window::getSize() / 2.f);
@@ -335,6 +339,14 @@ public:
         _minimapCamera = sf::View({0, 0, 300, 300});
         _minimapCamera.setViewport({ (engine::Window::getSize().x - 270.f) / engine::Window::getSize().x, 20.f / engine::Window::getSize().y, 250.f / engine::Window::getSize().x, 250.f / engine::Window::getSize().y });
         _minimapCamera.zoom(10.f);
+    }
+
+    void resume() override {
+        music.play();
+    }
+
+    void pause() override {
+        music.pause();
     }
 
     void handle_event(const sf::Event& event) override {
@@ -368,6 +380,8 @@ public:
     }
 
 private:
+    sf::Music music;
+
     sf::Texture _mapTexture;
     engine::Sprite _mapSprite;
 
