@@ -28,7 +28,7 @@ namespace engine {
 		 *			You can also handle events from inner state machines here.
 		 * @param	sf::Event from 'main.cpp'
 		*/
-		virtual void handle_event(const sf::Event&) = 0;
+		virtual void handle_event(const sf::Event&) {};
 
 		/**
 		 * @brief	
