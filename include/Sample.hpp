@@ -295,20 +295,31 @@ public:
     }
 
 	void on_update() override {
-		if (_clock.getElapsedTime() >= sf::seconds(2)) {
+		if (_tempTime + _clock.getElapsedTime() >= sf::seconds(1)) {
 			_clock.restart();
 			_animation->start();
 			_animation->setDistance(_animation->getDistance() * -1.f);
+			_tempTime = sf::Time::Zero;
 		}
+
 	}
 
 	void on_draw() override {
 		engine::Window::draw(_shape);
 	}
 
+	void on_activate() override {
+		_clock.restart();
+	}
+
+	void on_deactivate() override {
+		_tempTime += _clock.getElapsedTime();
+	}
+
 
 private:
 	sf::Clock _clock;
+	sf::Time _tempTime;
 	engine::RectangleShape _shape{ { 200.f, 200.f } };
 	engine::Animation* _animation = nullptr;
 };
@@ -352,11 +363,11 @@ public:
         _minimapCamera.zoom(10.f);
     }
 
-    void on_resume() override {
+    void on_activate() override {
         music.play();
     }
 
-    void on_pause() override {
+    void on_deactivate() override {
         music.pause();
     }
 

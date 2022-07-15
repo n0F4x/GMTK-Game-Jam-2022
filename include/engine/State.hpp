@@ -73,12 +73,12 @@ namespace engine {
         /**
          * @brief	Gets called each time the state becomes active
         */
-        virtual void on_resume() { /*empty by default*/ };
+        virtual void on_activate() { /*empty by default*/ };
 
         /**
          * @brief	Gets called each time the state becomes inactive.
         */
-        virtual void on_pause() { /*empty by default*/ };
+        virtual void on_deactivate() { /*empty by default*/ };
 
 
 		////////////
@@ -130,7 +130,7 @@ namespace engine {
 		// Inner StateMachines //	Each State will initialize its own machines BY DEFAULT.
 		/////////////////////////
 		/**
-		 * @brief	CALL THIS FUNCTION ONLY INSIDE YOUR STATES CONSTRUCTOR.
+		 * @brief	CALL THIS FUNCTION ONLY INSIDE YOUR STATE'S CONSTRUCTOR.
 		 *			This will set the State <-> StateMachine
 		 * @param machine 
 		*/

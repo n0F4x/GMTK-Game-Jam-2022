@@ -8,6 +8,9 @@ using namespace animations;
 void Ease::update(sf::Time deltaTime) {
 	_timePassed += deltaTime;
 
+	if (isPaused()) {
+		return;
+	}
 	if (_timePassed >= getTime()) {
 		object()->move(getDistance() - _distanceTraveled);
 		stop();
