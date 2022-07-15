@@ -153,11 +153,15 @@ void State::activate() {
 
 	_physicsClock.restart();
 	_animationsClock.restart();
+
+    resume();
 }
 
 void State::deactivate() {
 	_physicsTime = _physicsClock.getElapsedTime();
 	_animationsTime = _animationsClock.getElapsedTime();
+
+    pause();
 }
 
 bool State::isActive() const {

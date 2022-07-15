@@ -66,6 +66,16 @@ namespace engine {
 		*/
 		virtual int setup() { return 0; }
 
+        /**
+         * @brief	Gets called each time the state becomes active
+        */
+        virtual void resume() { /*empty by default*/ };
+
+        /**
+         * @brief	Gets called each time the state becomes inactive.
+        */
+        virtual void pause() { /*empty by default*/ };
+
 
 		////////////
 		// Update //
