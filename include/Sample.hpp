@@ -132,16 +132,13 @@ public:
 		store().add("restart", "true");
 	}
 
-	void handle_event(const sf::Event&) override { /*empty*/ }
+	void handle_event(const sf::Event& event) override {
+        if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::Right) changeState("Physics");
+        }
+    }
 
 	void on_update() override {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-			changeState("Physics");
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-			changeState("Animations");
-		}
-
 		_machine->update();
 
 		_sprite.rotate(-1);
@@ -178,7 +175,7 @@ public:
 		renderer().add_static(&_sprite);
 		renderer().add_static(&_shape);
 
-		renderer().add_static(&_wallShape);
+		//renderer().add_static(&_wallShape);
 		_wallShape.setOutlineThickness(5);
 		_wallShape.setFillColor(sf::Color(0, 0, 0, 0));
 		_wallShape.setOutlineColor(sf::Color::Red);
@@ -189,15 +186,15 @@ public:
 		_shape.setFillColor(sf::Color(0, 0, 0, 0));
 		_shape.setOutlineColor(sf::Color::Red);
 
-		_sprite.scale(0.2f, 0.2f);
+		_sprite.scale(0.1f, 0.1f);
 
 		_sprite.setComponent(std::make_unique<engine::Physics>());
 		_sprite.setPosition(300, 100);
 
-		_sprite.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(_sprite.getSize().x / 4.f, _sprite.getSize().y / 4.f, _sprite.getSize().x / 2.f, _sprite.getSize().y / 2.f)));
+		_sprite.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(0, _sprite.getSize().y / 4.f, _sprite.getSize().x, _sprite.getSize().y / 2.f)));
 
-		engine::Physics *physicsComponent = _sprite.getComponent<engine::Physics>();
-		physicsComponent->setVelocity(sf::Vector2f(80, 80));
+		auto *physicsComponent = _sprite.getComponent<engine::Physics>();
+		physicsComponent->setVelocity(sf::Vector2f(160, 160));
 		physicsComponent->apply_force(sf::Vector2f(0, 0));
 
 		_wallObject.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(0, 0, _wallShape.getSize().x, _wallShape.getSize().y)));
@@ -210,29 +207,34 @@ public:
 		_topWall.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(0, 0, _topWall.getSize().x, _topWall.getSize().y)));
 		_topWall.setPosition(0.f, -50.f);
 		_rightWall.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(0, 0, _rightWall.getSize().x, _rightWall.getSize().y)));
-		_rightWall.setPosition(engine::Window::getSize().y, 0.f);
+		_rightWall.setPosition(engine::Window::getSize().x, 0.f);
 
 		addObject(&_sprite);
-		addObject(&_wallObject);
+		//addObject(&_wallObject);
 		addObject(&_bottomWall);
 		addObject(&_leftWall);
 		addObject(&_topWall);
 		addObject(&_rightWall);
 	}
 
-	void handle_event(const sf::Event&) override { /*empty*/ }
+	void handle_event(const sf::Event& event) override {
+        if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::Right) changeState("Animations");
+            else if (event.key.code == sf::Keyboard::Left) changeState("Sample");
+        }
+    }
 
 	void on_update() override {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-			changeState("Sample");
-		}
-
 		_shape.setPosition(sf::Vector2f(_sprite.getComponent<engine::Collider>()->getHitBox().left, _sprite.getComponent<engine::Collider>()->getHitBox().top));
 		_shape.setSize(sf::Vector2f(_sprite.getComponent<engine::Collider>()->getHitBox().width, _sprite.getComponent<engine::Collider>()->getHitBox().height));
 
 		_wallShape.setPosition(sf::Vector2f(_wallObject.getComponent<engine::Collider>()->getHitBox().left, _wallObject.getComponent<engine::Collider>()->getHitBox().top));
 		_wallShape.setSize(sf::Vector2f(_wallObject.getComponent<engine::Collider>()->getHitBox().width, _wallObject.getComponent<engine::Collider>()->getHitBox().height));
-	}
+
+        if (_sprite.getComponent<engine::Collider>()->collided()) {
+            _sprite.setColor(sf::Color(rand() % 155 + 100, rand() % 155 + 100, rand() % 155 + 100, 255));
+        }
+    }
 
 	void on_draw() override {
 		renderer().render();
@@ -240,16 +242,16 @@ public:
 
 
 private:
-	engine::Sprite _sprite{ &engine::Assets::getTexture("myState/ThumbsUp") };
+	engine::Sprite _sprite{ &engine::Assets::getTexture("dvd-logo") };
 	engine::RectangleShape _shape;
 
 	engine::Object _wallObject;
 	engine::RectangleShape _wallShape;
 
-	engine::RectangleShape _bottomWall{ { engine::Window::getSize().x / 2.f, 50.f } };
-	engine::RectangleShape _leftWall{ { 50.f, engine::Window::getSize().y / 2.f } };
-	engine::RectangleShape _topWall{ { engine::Window::getSize().x / 2.f, 50.f } };
-	engine::RectangleShape _rightWall{ { 50.f, engine::Window::getSize().y / 2.f } };
+	engine::RectangleShape _bottomWall{ { engine::Window::getSize().x, 50.f } };
+	engine::RectangleShape _leftWall{ { 50.f, engine::Window::getSize().y } };
+	engine::RectangleShape _topWall{ { engine::Window::getSize().x, 50.f } };
+	engine::RectangleShape _rightWall{ { 50.f, engine::Window::getSize().y } };
 };
 
 
@@ -274,13 +276,14 @@ public:
 		return 0;
 	}
 
-	void handle_event(const sf::Event&) override { /*empty*/ }
+	void handle_event(const sf::Event& event) override {
+        if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::Right) changeState("Minimap");
+            else if (event.key.code == sf::Keyboard::Left) changeState("Physics");
+        }
+    }
 
 	void on_update() override {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-			changeState("Sample");
-		}
-
 		if (_clock.getElapsedTime() >= sf::seconds(2)) {
 			_clock.restart();
 			_animation->start();
@@ -297,4 +300,80 @@ private:
 	sf::Clock _clock;
 	engine::RectangleShape _shape{ { 200.f, 200.f } };
 	engine::Animation* _animation = nullptr;
+};
+
+class MinimapSampleState : public engine::State {
+public:
+    MinimapSampleState() {
+        _player.setRadius(25);
+        _player.setOrigin(25, 25);
+        _player.setPosition(engine::Window::getSize() / 2.f);
+        _player.setFillColor(sf::Color(50, 220, 240, 255));
+        _player.setComponent(std::make_unique<engine::Physics>());
+        _player.getComponent<engine::Physics>()->setVelocity({ 50, 20});
+
+        _minimapPlayer.setRadius(25);
+        //_minimapPlayer.setOrigin(25, 25);
+        _minimapPlayer.scale(5);
+        _minimapPlayer.setPosition({ engine::Window::getSize().x / 2.f - 25.f, engine::Window::getSize().y / 2.f - 25.f });
+        _minimapPlayer.setFillColor(sf::Color(250, 40, 40, 255));
+        _minimapPlayer.setComponent(std::make_unique<engine::Physics>());
+        _minimapPlayer.getComponent<engine::Physics>()->setVelocity({ 50, 100});
+
+        _mapTexture = engine::Assets::getTexture("middlewallupdated");
+        _mapSprite.setTexture(&_mapTexture);
+        _mapSprite.scale(5);
+
+        _minimapBorder.setSize({250, 250});
+        _minimapBorder.setPosition(engine::Window::getSize().x - 270.f, 20.f);
+        _minimapBorder.setFillColor(sf::Color(0, 0, 0, 100));
+        _minimapBorder.setOutlineThickness(5);
+        _minimapBorder.setOutlineColor(sf::Color(10, 10, 10, 255));
+
+        addObject(&_player);
+
+        _minimapCamera = sf::View({0, 0, 300, 300});
+        _minimapCamera.setViewport({ (engine::Window::getSize().x - 270.f) / engine::Window::getSize().x, 20.f / engine::Window::getSize().y, 250.f / engine::Window::getSize().x, 250.f / engine::Window::getSize().y });
+        _minimapCamera.zoom(10.f);
+    }
+
+    void handle_event(const sf::Event& event) override {
+        if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::Left) changeState("Animations");
+        }
+    }
+
+    void on_update() override {
+        camera().setCenter(_player.getPosition());
+        _minimapPlayer.setPosition(_player.getPosition());
+        _minimapCamera.setCenter(_minimapPlayer.getPosition());
+    }
+
+    void on_draw() override {
+        engine::Window::draw(_mapSprite);
+        engine::Window::draw(_player);
+
+        engine::Window::setDefaultView();
+        engine::Window::draw(_minimapBorder);
+        engine::Window::resetToPreviousView();
+
+        engine::Window::setView(_minimapCamera);
+        _mapSprite.setColor(sf::Color(255, 255, 255, 200));
+        _mapTexture.setSmooth(true);
+        engine::Window::draw(_mapSprite);
+        _mapSprite.setColor(sf::Color::White);
+        _mapTexture.setSmooth(false);
+        engine::Window::draw(_minimapPlayer);
+        engine::Window::resetToPreviousView();
+    }
+
+private:
+    sf::Texture _mapTexture;
+    engine::Sprite _mapSprite;
+
+    engine::CircleShape _player;
+
+    engine::CircleShape _minimapPlayer;
+    sf::View _minimapCamera;
+    engine::RectangleShape _minimapBorder;
 };

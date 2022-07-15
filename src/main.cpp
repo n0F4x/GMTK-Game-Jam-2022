@@ -29,6 +29,7 @@ int main() {
 	machine.addState("Sample", std::make_unique<SampleState>());
 	machine.addState("Physics", std::make_unique<PhysicsSampleState>());
 	machine.addState("Animations", std::make_unique<AnimationsSampleState>());
+    machine.addState("Minimap", std::make_unique<MinimapSampleState>());
 
 
 	// SET INITIAL STATE
