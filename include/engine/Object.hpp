@@ -51,6 +51,7 @@ namespace engine {
         void setPosition(float x, float y);
         void setPosition(const sf::Vector2f& position);
         void setRotation(float angle);
+        void setScale(float factor);
         void setScale(float factorX, float factorY);
         void setScale(const sf::Vector2f& factors);
         void setOrigin(float x, float y);
@@ -62,6 +63,7 @@ namespace engine {
         void move(float offsetX, float offsetY);
         void move(const sf::Vector2f& offset);
         void rotate(float angle);
+        void scale(float factor);
         void scale(float factorX, float factorY);
         void scale(const sf::Vector2f& factor);
         const sf::Transform& getTransform() const;

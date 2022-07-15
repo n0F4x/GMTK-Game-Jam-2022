@@ -113,6 +113,10 @@ void Object::setRotation(float angle) {
 	rotate(angle - getRotation());
 }
 
+void Object::setScale(float factor) {
+    scale(factor);
+}
+
 void Object::setScale(float factorX, float factorY) {
 	scale(factorX / getScale().x, factorY / getScale().y);
 }
@@ -175,6 +179,10 @@ void Object::rotate(float angle) {
 		offset.y = newY;
 		child->move(offset);
 	}
+}
+
+void Object::scale(float factor) {
+    scale(factor, factor);
 }
 
 void Object::scale(float factorX, float factorY) {
