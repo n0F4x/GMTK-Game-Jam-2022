@@ -1,17 +1,16 @@
 #pragma once
 
+#include <functional>
 #include "engine/drawables/Sprite.hpp"
 #include "engine/Assets.hpp"
 
-#include <functional>
-#include <utility>
 
 namespace UI {
 
     class Button : public engine::Sprite {
     public:
         Button() = default;
-        explicit Button(std::function<void()> callback) : _callback(std::move(callback)) {}
+        explicit Button(std::function<void()> callback);
 
         /**
          * @brief sets the callback fuction of the button
@@ -29,7 +28,7 @@ namespace UI {
         void update() override;
 
     private:
-        bool _isPressed = false;
+        bool _pressed = false;
         bool _wasMouseButtonPressedLastFrame = false;
         std::function<void()> _callback;
     };

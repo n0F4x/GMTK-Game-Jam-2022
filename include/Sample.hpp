@@ -97,7 +97,7 @@ public:
         _button.scale(sf::Vector2f{0.5f, 0.5f});
         _button.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ -350.f, 500.f });
         _button.setOrigin(_sprite.getLocalBounds().width / 2, _sprite.getLocalBounds().height / 2);
-        _button.set_callback([this]{ changeState("Physics"); });
+        _button.setCallback([this]{ changeState("Physics"); });
 
 		// RectangleShape
 		_rectangleShape.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
