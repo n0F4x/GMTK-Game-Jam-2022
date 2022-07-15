@@ -8,14 +8,13 @@
 #include "components/Collider.hpp"
 #include "components/Physics.hpp"
 
-
 namespace engine {
 
     /**
      * @brief   Abstract utility class for having object hierarchy for transformations based on sf::Transformable
      *          Calling transform functions will also apply changes to lower levels of the hierarchy.
      *          This class is built to work with components - see 'Component.hpp'.
-     *          Supported components: Animator, Collider, Drawable, Physics
+     *          Supported components: Animator, Collider, Physics
     */
     class Object {
     public:
@@ -56,16 +55,19 @@ namespace engine {
         void setScale(const sf::Vector2f& factors);
         void setOrigin(float x, float y);
         void setOrigin(const sf::Vector2f& origin);
+
         const sf::Vector2f& getPosition() const;
         float getRotation() const;
         const sf::Vector2f& getScale() const;
         const sf::Vector2f& getOrigin() const;
+
         void move(float offsetX, float offsetY);
         void move(const sf::Vector2f& offset);
         void rotate(float angle);
         void scale(float factor);
         void scale(float factorX, float factorY);
         void scale(const sf::Vector2f& factor);
+
         const sf::Transform& getTransform() const;
         const sf::Transform& getInverseTransform() const;
 

@@ -8,6 +8,9 @@ using namespace engine;
 static const float PI = std::numbers::pi_v<float>;
 
 
+///////////////
+// Hierarchy //
+///////////////
 void Object::attach_child(Object* child) {
 	if (child == this || child == _parent || child->_parent == this) {
 		return;
@@ -50,7 +53,6 @@ bool Object::hasParent() const {
 ////////////////
 // Components //
 ////////////////
-
 Animator* Object::setComponent(std::unique_ptr<Animator> component) {
 	_animator = std::move(component);
 	static_cast<Component*>(_animator.get())->_object = this;
@@ -91,7 +93,6 @@ void Object::update() const { /*currently empty*/ }
 ///////////////////
 // Transformable //
 ///////////////////
-
 void Object::setPosition(float x, float y) {
 	auto newPos = sf::Vector2f{ x, y };
 	_transformable.move(newPos - getPosition());
@@ -133,6 +134,7 @@ void Object::setOrigin(const sf::Vector2f& origin) {
 	_transformable.setOrigin(origin);
 }
 
+
 const sf::Vector2f& Object::getPosition() const {
 	return _transformable.getPosition();
 }
@@ -148,6 +150,7 @@ const sf::Vector2f& Object::getScale() const {
 const sf::Vector2f& Object::getOrigin() const {
 	return _transformable.getOrigin();
 }
+
 
 void Object::move(float offsetX, float offsetY) {
 	_transformable.move(offsetX, offsetY);
@@ -212,6 +215,7 @@ void Object::scale(const sf::Vector2f& factor) {
 		sprite->move(distance);
 	}
 }
+
 
 const sf::Transform& Object::getTransform() const {
 	return _transformable.getTransform();

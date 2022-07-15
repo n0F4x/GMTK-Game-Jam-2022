@@ -9,6 +9,9 @@ State::State() {
     _view.reset(Window::getBounds());
 }
 
+///////////////
+// Game loop //
+///////////////
 void State::update() {
     update_objects();
 	on_update();
@@ -27,34 +30,51 @@ void State::draw() {
 ///////////////
 // Protected //
 ///////////////
-
-
+//////////////////
+// StateMachine //
+//////////////////
 void State::changeState(const std::string_view& nextState) {
 	_nextState = nextState;
 	_isActive = false;
 }
 
 
-void State::addObject(Object* object) {
-	_objects.push_back(object);
-}
-
-
+/////////////
+// Drawing //
+/////////////
 Renderer& State::renderer() {
 	return _renderer;
 }
 
+
+////////////
+// Camera //
+////////////
 sf::View& State::camera() {
     return _view;
 }
 
 
+////////////////////
+// Object Support //
+////////////////////
+void State::addObject(Object* object) {
+    _objects.push_back(object);
+}
+
+
+/////////////////////////
+// Inner StateMachines //
+/////////////////////////
 void State::addStateMachine(StateMachine* machine) {
 	machine->addStore(&_store);
 	_stateMachines.push_back(machine);
 }
 
 
+//////////////////
+// Data sharing //
+//////////////////
 Store& State::store() {
 	return _store;
 }
@@ -126,6 +146,9 @@ void State::update_animations() {
 }
 
 
+//////////////////
+// StateMachine //
+//////////////////
 int State::initialize() {
 	if (setup() != 0) {
 		return 1;
@@ -154,14 +177,14 @@ void State::activate() {
 	_physicsClock.restart();
 	_animationsClock.restart();
 
-    resume();
+    on_resume();
 }
 
 void State::deactivate() {
 	_physicsTime = _physicsClock.getElapsedTime();
 	_animationsTime = _animationsClock.getElapsedTime();
 
-    pause();
+    on_pause();
 }
 
 bool State::isActive() const {

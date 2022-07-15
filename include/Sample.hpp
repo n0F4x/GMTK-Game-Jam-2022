@@ -341,11 +341,11 @@ public:
         _minimapCamera.zoom(10.f);
     }
 
-    void resume() override {
+    void on_resume() override {
         music.play();
     }
 
-    void pause() override {
+    void on_pause() override {
         music.pause();
     }
 

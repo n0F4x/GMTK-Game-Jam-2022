@@ -5,14 +5,7 @@
 
 using namespace engine;
 
-inline sf::FloatRect move(sf::FloatRect rect, const sf::Vector2f& amount) {
-    rect.left += amount.x;
-    rect.top += amount.y;
-    return rect;
-}
-
 Collider::Collider(sf::FloatRect hitBox, bool trigger, int layer) : _hitBox(hitBox), _trigger(trigger), _collisionLayer(layer) {}
-
 
 sf::FloatRect Collider::getHitBox() {
 	sf::FloatRect rectWithPosition = _hitBox;
@@ -39,6 +32,7 @@ void Collider::setLayer(int layer) {
 bool Collider::isTrigger() const {
 	return _trigger;
 }
+
 void Collider::setTrigger(bool isTrigger) {
 	_trigger = isTrigger;
 }
@@ -95,4 +89,10 @@ void Collider::resolve(Object* object2, sf::Time deltaTime, sf::FloatRect& newHi
 			}
 		}
 	}
+}
+
+inline sf::FloatRect move(sf::FloatRect rect, const sf::Vector2f& amount) {
+    rect.left += amount.x;
+    rect.top += amount.y;
+    return rect;
 }

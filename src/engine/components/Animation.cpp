@@ -86,7 +86,7 @@ float Animation::getScale() const {
 	return _scale;
 }
 
-std::vector<const sf::Texture*>& Animation::textures() {
+std::vector<const sf::Texture*>& Animation::getTextures() {
 	return _textures;
 }
 
