@@ -27,10 +27,13 @@ namespace UI {
          */
         void update() override;
 
+
     private:
         bool _pressed = false;
-        bool _wasMouseButtonPressedLastFrame = false;
+        bool _wasButtonPressedLastFrame = false;
         std::function<void()> _callback;
+        const sf::Texture* _texture = &engine::Assets::getTexture("UI/Button");
+        const sf::Texture* _pressedTexture = &engine::Assets::getTexture("UI/ButtonPressed");
     };
 
 }

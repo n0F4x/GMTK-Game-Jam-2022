@@ -13,11 +13,12 @@ State::State() {
 // Game loop //
 ///////////////
 void State::update() {
-    update_objects();
+    update_physics();
+	update_animations();
+
 	on_update();
 
-	update_animations();
-    update_physics();
+    update_objects();
 }
 
 void State::draw() {
