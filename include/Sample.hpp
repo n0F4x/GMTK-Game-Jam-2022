@@ -242,7 +242,7 @@ public:
 
 
 private:
-	engine::Sprite _sprite{ &engine::Assets::getTexture("dvd-logo") };
+	engine::Sprite _sprite{ &engine::Assets::getTexture("surprise") };
 	engine::RectangleShape _shape;
 
 	engine::Object _wallObject;
