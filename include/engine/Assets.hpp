@@ -20,6 +20,8 @@ namespace engine {
 	*/
 	class Assets {
 	public:
+        static const std::string ASSETS_PATH;
+
 		/**
 		 * @brief	Getter for fonts. Returns reference to first font stored inside the class if one with the given name doesn't exist.
 		 * @param name	Name of the font
@@ -37,7 +39,7 @@ namespace engine {
 		 * @param name	Name of the texture
 		 * @return	Reference to texture
 		*/
-		static const sf::Texture& getTexture(const std::string_view& name);
+		static sf::Texture& getTexture(const std::string_view& name);
 
 
 	private:
@@ -61,11 +63,10 @@ namespace engine {
 		///////////////
 		// Variables //
 		///////////////
-		static const std::string ASSETS_PATH;
 
 		static std::map<const std::string, const sf::Font, std::less<>> _fonts;
 		static std::map<const std::string, const sf::SoundBuffer, std::less<>> _soundBuffers;
-		static std::map<const std::string, const sf::Texture, std::less<>> _textures;
+		static std::map<const std::string, sf::Texture, std::less<>> _textures;
 	};
 
 }

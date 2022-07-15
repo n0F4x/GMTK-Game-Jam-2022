@@ -16,7 +16,7 @@ const std::string Assets::ASSETS_PATH = "../../../assets/";
 // Class static variables //
 std::map<const std::string, const sf::Font, std::less<>> Assets::_fonts;
 std::map<const std::string, const sf::SoundBuffer, std::less<>> Assets::_soundBuffers;
-std::map<const std::string, const sf::Texture, std::less<>> Assets::_textures;
+std::map<const std::string, sf::Texture, std::less<>> Assets::_textures;
 
 
 
@@ -39,7 +39,7 @@ sf::Sound Assets::getSound(const std::string_view& name) {
 	return sf::Sound{};
 }
 
-const sf::Texture& Assets::getTexture(const std::string_view& name) {
+sf::Texture& Assets::getTexture(const std::string_view& name) {
 	if (auto it = _textures.find(name); it != _textures.end()) {
 		return it->second;
 	}
