@@ -295,13 +295,11 @@ public:
     }
 
 	void on_update() override {
-		if (_tempTime + _clock.getElapsedTime() >= sf::seconds(1)) {
+		if (_tempTime + _clock.getElapsedTime() >= sf::seconds(1) && _animation->start()) {
 			_clock.restart();
-			_animation->start();
 			_animation->setDistance(_animation->getDistance() * -1.f);
 			_tempTime = sf::Time::Zero;
 		}
-
 	}
 
 	void on_draw() override {
