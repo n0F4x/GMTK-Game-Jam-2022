@@ -37,6 +37,7 @@ set(SOURCE_FILES
     "src/engine/drawables/RectangleShape.cpp"
     "src/engine/drawables/CircleShape.cpp"
     "src/engine/drawables/Arc.cpp"
+    "src/engine/drawables/Text.cpp"
     "src/engine/components/Animation.cpp"
     "src/animations/Bezier.cpp"
     "src/engine/components/Bezier.cpp"
