@@ -72,7 +72,7 @@ const sf::Color& Text::getFillColor() const {
 }
 
 const sf::Color& Text::getOutlineColor() const {
-	_text.getOutlineColor();
+	return _text.getOutlineColor();
 }
 
 float Text::getOutlineThickness() const {
