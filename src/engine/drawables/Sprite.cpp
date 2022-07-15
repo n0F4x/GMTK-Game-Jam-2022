@@ -77,6 +77,22 @@ void Sprite::setColor(const sf::Color& color) {
 	m_vertices[3].color = color;
 }
 
+////////////////////////////////////////////////////////////
+void Sprite::scaleToSize(float sizeX, float sizeY) {
+    setScale(sizeX / getLocalBounds().width, sizeY / getLocalBounds().height);
+}
+
+void Sprite::scaleToSize(const sf::Vector2f& size) {
+    setScale(size.x / getLocalBounds().width, size.y / getLocalBounds().height);
+}
+
+void Sprite::scaleToSizeX(float sizeX) {
+	setScale(sizeX / getLocalBounds().width);
+}
+
+void Sprite::scaleToSizeY(float sizeY) {
+	setScale(sizeY / getLocalBounds().height);
+}
 
 ////////////////////////////////////////////////////////////
 const sf::Texture* Sprite::getTexture() const {

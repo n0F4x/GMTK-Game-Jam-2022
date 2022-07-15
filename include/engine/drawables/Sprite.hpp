@@ -43,7 +43,10 @@ namespace engine {
 		void setTexture(const sf::Texture* texture, bool resetRect = false) override;
 		void setTextureRect(const sf::IntRect& rectangle);
 		void setColor(const sf::Color& color);
-
+        void scaleToSize(float sizeX, float sizeY);
+        void scaleToSize(const sf::Vector2f& size);
+        void scaleToSizeX(float sizeX);
+        void scaleToSizeY(float sizeY);
 		const sf::Texture* getTexture() const override;
 		const sf::IntRect& getTextureRect() const;
 		const sf::Color& getColor() const;
