@@ -2,6 +2,7 @@
 
 #include "engine/drawables/RectangleShape.hpp"
 
+
 namespace UI {
 
     class ProgressBar : public engine::Object, public sf::Drawable {
@@ -33,17 +34,21 @@ namespace UI {
          */
         void setSecondaryColor(const sf::Color color);
 
+        /**
+         * @brief   Set the maximum size of the bar
+        */
         void setSize(const sf::Vector2f& size);
 
-        void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
-
     private:
+        void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+        void updateBar();
+
+
         engine::RectangleShape _bar;
         sf::Vector2f _originalSize;
         float _progress = 1.0f;
         sf::Color _primaryColor = sf::Color::White;
         sf::Color _secondaryColor = sf::Color::White;
-        void updateBar();
     };
 
 }

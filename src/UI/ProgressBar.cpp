@@ -2,6 +2,7 @@
 
 using namespace UI;
 
+
 ProgressBar::ProgressBar(const sf::Vector2f& size) : _bar(size), _originalSize(size) {
     _bar.setFillColor(_primaryColor);
 }
