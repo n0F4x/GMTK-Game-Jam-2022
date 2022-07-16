@@ -156,6 +156,17 @@ public:
 		_scaler.setOrigin(960, 540);
 		_scaler.attach_child(&_floor);
 		_scaler.attach_child(&_table);
+		_scaler.setScale(3, 3);
+
+		Animator* scaleAnimator = _scaler.setComponent(std::make_unique<engine::Animator>());
+		_scaler.getComponent<engine::Animator>()->addAnimation("zoomOut", std::make_unique<animations::EaseScale>());
+		scaleAnimator->findAnimation("zoomOut")->setScale({-2.f, -2.f});
+		scaleAnimator->findAnimation("zoomOut")->setTime(sf::seconds(3));
+		
+		addObject(&_scaler);
+
+		_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
+
 
 		_boy.setTexture(&engine::Assets::getTexture("Environment/blue_player"));
 		_boy.setPosition(360 - 500, 120 - 500);
@@ -178,7 +189,7 @@ public:
 		animator->findAnimation("in")->setTime(sf::seconds(3.5f));
 
 		_grandpa.setTexture(&engine::Assets::getTexture("Environment/red_player"));
-		_grandpa.setPosition(1270 + 500, 630 + 500);
+		_grandpa.setPosition(1290 + 500, 650 + 500);
 		_grandpa.scale(12.f, 12.f);
 		addObject(&_grandpa);
 		renderer().push_background(&_grandpa);
@@ -271,7 +282,7 @@ public:
 		_grandpaBar.setPosition(1866, 1026 + 500);
 
 		// START ANIMATIONS
-		/*
+		
 		_boy.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_girl.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_grandpa.getComponent<engine::Animator>()->findAnimation("in")->start();
@@ -281,7 +292,7 @@ public:
 		_girlBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_gradpaBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_dogBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
-		*/
+		
 	}
 
 	void handle_event(const sf::Event& event) override {
