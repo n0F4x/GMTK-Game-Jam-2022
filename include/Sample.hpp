@@ -95,7 +95,6 @@ public:
 		_sprite.setOrigin(_sprite.getLocalBounds().width / 2, _sprite.getLocalBounds().height / 2);
 
 		// Button
-		_button.setTexture(&engine::Assets::getTexture("UI/Button"));
 		_button.scale(sf::Vector2f{ 0.5f, 0.5f });
 		_button.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ -350.f, 500.f });
 		_button.setOrigin(_sprite.getLocalBounds().width / 2, _sprite.getLocalBounds().height / 2);
@@ -190,7 +189,7 @@ private:
 	engine::Arc _ball{ 80.f, 360.f };
 	engine::Arc _flashLight{ 120.f, 60.f, 8 };
 	engine::Arc _triangle{ 160.f, 60.f, 2 };
-	UI::Button _button;
+	UI::Button _button{ &engine::Assets::getTexture("UI/Button"), &engine::Assets::getTexture("UI/ButtonHover")};
 	sf::Clock _progressClock;
 	UI::ProgressBar _progressbar{ {400.f, 20.f} };
 };
