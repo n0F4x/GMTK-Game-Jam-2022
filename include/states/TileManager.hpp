@@ -18,6 +18,7 @@ public:
         _lastTile->_next = std::make_unique<Tile>(type);
         _lastTile->_dirToNext = dir;
         _lastTile->_next->_dirFromPrev = dir;
+        _lastTile->_next->_tileIndex = _lastTile->_tileIndex + 1;
 
         switch (dir) {
             case LEFT:
@@ -38,6 +39,14 @@ public:
 
         _lastTile = _lastTile->_next.get();
         attach_child(_lastTile);
+    }
+
+    Tile* getFirstTile() {
+        return _firstTile.get();
+    }
+
+    Tile* getLastTile() {
+        return _lastTile;
     }
 
 protected:

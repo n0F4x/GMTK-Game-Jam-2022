@@ -1,5 +1,7 @@
 #include "states/Character.hpp"
 
+#include <utility>
+
 const int Character::MAX_HAPPINESS = 100;
 
 Character::Character(  const sf::Texture* texture, int happinessLoss,
@@ -7,12 +9,14 @@ Character::Character(  const sf::Texture* texture, int happinessLoss,
                        int hatedNumber, int hatedNumberHappinessChange,
                        TileType favoriteTile, int favoriteTileHappinessChange,
                        TileType hatedTile, int hatedTileHappinessChange,
+                       std::string specialDescription,
                        std::function<int()> specialCallback, std::function<void()> loseCallback)
                     : Sprite(texture), _happinessLoss(happinessLoss),
                       _favoriteNumber(favoriteNumber), _favoriteNumberHappinessChange(favoriteNumberHappinessChange),
                       _hatedNumber(hatedNumber), _hatedNumberHappinessChange(hatedNumberHappinessChange),
                       _favoriteTile(favoriteTile), _favoriteTileHappinessChange(favoriteTileHappinessChange),
                       _hatedTile(hatedTile), _hatedTileHappinessChange(hatedTileHappinessChange),
+                      _specialDescription(std::move(specialDescription)),
                       _specialCallback(std::move(specialCallback)), _loseCallback(std::move(loseCallback)) {}
 
 void Character::setHappiness(const int amount) {
@@ -63,10 +67,15 @@ void Character::calculateHappinessAfterTurn(Character *activeCharacter, int dice
 
 void Character::setCurrentTile(Tile *tile) {
     _currentTile = tile;
+    setPosition(tile->getPosition());
 }
 
 Tile *Character::getCurrentTile() {
     return _currentTile;
+}
+
+void Character::move(int offset) {
+    setCurrentTile(getCurrentTile()->getRelativeTile(offset));
 }
 
 void Character::setSpecialCallback(const std::function<int()> callback) {
@@ -75,4 +84,8 @@ void Character::setSpecialCallback(const std::function<int()> callback) {
 
 void Character::setLoseCallback(const std::function<void()> callback) {
     _loseCallback = callback;
+}
+
+std::string Character::getSpecialDescription() {
+    return _specialDescription;
 }
