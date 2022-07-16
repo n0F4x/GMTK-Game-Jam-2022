@@ -23,6 +23,7 @@ set(SOURCE_FILES
     "src/engine/Assets.cpp"
     "src/engine/Window.cpp"
     "src/engine/Core.cpp"
+    "src/engine/Settings.cpp"
     "src/engine/StateMachine.cpp"
     "src/engine/State.cpp"
     "src/engine/Renderer.cpp"
