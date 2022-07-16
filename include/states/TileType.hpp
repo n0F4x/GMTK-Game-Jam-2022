@@ -13,13 +13,13 @@ enum TileType {
 };
 
 static const std::string tileTypeTextures[] = {
-        "start",
-        "finish",
-        "normal",
-        "plus_3",
-        "minus_5",
-        "swap_places",
-        "repeat_move"
+        "Tiles/basic_tile",
+        "Tiles/end_tile",
+        "Tiles/basic_tile",
+        "Tiles/plus_tile",
+        "Tiles/minus_tile",
+        "Tiles/changer_tile",
+        "Tiles/doubler_tile"
 };
 
 inline std::string tileTypeToString(TileType type) {

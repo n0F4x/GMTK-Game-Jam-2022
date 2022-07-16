@@ -9,37 +9,37 @@ using namespace engine;
 
 class TileManager;
 
-class Tile : private Sprite {
+class Tile : public Sprite {
 public:
     Tile(TileType type) {
-        this->type = type;
+        this->_type = type;
         Sprite::setTexture(&Assets::getTexture(tileTypeToString(type)));
     }
 
-    Tile* prevTile() {
-        return prev;
+    std::unique_ptr<Tile>& nextTile() {
+        return _next;
     }
 
-    std::unique_ptr<Tile>& nextTile() {
-        return next;
+    Tile* prevTile() {
+        return _prev;
     }
 
     TileType getType() {
-        return type;
+        return _type;
     }
 
     TileDirection getDirFromPrev() {
-        return dirFromPrev;
+        return _dirFromPrev;
     }
 
     TileDirection getDirToNext() {
-        return dirToNext;
+        return _dirToNext;
     }
 private:
     friend TileManager;
 
-    TileType type;
-    TileDirection dirFromPrev = NONE, dirToNext = NONE;
-    std::unique_ptr<Tile> next = nullptr;
-    Tile* prev = nullptr;
+    TileType _type;
+    TileDirection _dirFromPrev = NONE, _dirToNext = NONE;
+    std::unique_ptr<Tile> _next = nullptr;
+    Tile* _prev = nullptr;
 };
