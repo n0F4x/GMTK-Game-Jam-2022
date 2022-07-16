@@ -54,9 +54,10 @@ namespace engine {
 		sf::FloatRect getLocalBounds() const;
 		sf::FloatRect getGlobalBounds() const;
 
-	private:
+    protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
+    private:
 		void updatePositions();
 		void updateTexCoords();
 
