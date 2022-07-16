@@ -9,11 +9,10 @@ namespace UI {
 
     class Button : public engine::Sprite {
     public:
-        Button() = default;
-        explicit Button(std::function<void()> callback);
+        Button(const sf::Texture* texture, const sf::Texture* hoverTexture, std::function<void()> callback = std::function<void()>());
 
         /**
-         * @brief sets the callback fuction of the button
+         * @brief sets the callback function of the button
          */
         void setCallback(std::function<void()> callback);
 
@@ -23,7 +22,7 @@ namespace UI {
         bool isPressed() const;
 
         /**
-         * @brief updates the button's internal state, calls the callback fuction if valid button press occurs
+         * @brief updates the button's internal state, calls the callback function if valid button press occurs
          */
         void update() override;
 
@@ -32,8 +31,8 @@ namespace UI {
         bool _pressed = false;
         bool _wasButtonPressedLastFrame = false;
         std::function<void()> _callback;
-        const sf::Texture* _texture = &engine::Assets::getTexture("UI/Button");
-        const sf::Texture* _pressedTexture = &engine::Assets::getTexture("UI/ButtonPressed");
+        const sf::Texture* _texture;
+        const sf::Texture* _hoverTexture;
     };
 
 }
