@@ -1,4 +1,4 @@
-#include "Component.hpp"
+#include "engine/Component.hpp"
 
 using namespace engine;
 

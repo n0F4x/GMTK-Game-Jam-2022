@@ -4,9 +4,9 @@
 #include <vector>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include "components/Animator.hpp"
-#include "components/Collider.hpp"
-#include "components/Physics.hpp"
+#include "engine/components/Animator.hpp"
+#include "engine/components/Collider.hpp"
+#include "engine/components/Physics.hpp"
 
 namespace engine {
 
