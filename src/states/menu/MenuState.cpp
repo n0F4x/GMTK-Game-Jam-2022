@@ -28,9 +28,6 @@ MenuState::MenuState() {
 	_title.setTexture(&engine::Assets::getTexture("UI/title"));
 	_title.setPosition(935, 480);
 	_title.scale(7.5f / 5.f, 7.5f / 5.f);
-	//engine::Animation* animation = _title.setComponent(std::make_unique<engine::Animator>())->addAnimation("out", std::make_unique<animations::BezierColor>());
-	//animation->setTime(sf::seconds(3));
-	//animation->setColor(sf::Color::Black * -1);
 	renderer().push_background(&_title);
 
 	_plant.setTexture(&engine::Assets::getTexture("Environment/plant"));
@@ -57,6 +54,13 @@ MenuState::MenuState() {
 	_scaler.getComponent<engine::Animator>()->addAnimation("zoomOut", std::make_unique<animations::EaseScale>());
 	scaleAnimator->findAnimation("zoomOut")->setScale({ -4.f, -4.f });
 	scaleAnimator->findAnimation("zoomOut")->setTime(sf::seconds(3));
+
+	//TODO - test
+	engine::Animator* testAnimator = _croissant.setComponent(std::make_unique<engine::Animator>());
+	_croissant.getComponent<engine::Animator>()->addAnimation("out", std::make_unique<animations::Ease>());
+	testAnimator->findAnimation("out")->setDistance({ -400.f, -600.f });
+	testAnimator->findAnimation("out")->setTime(sf::seconds(3));
+	addObject(&_croissant);
 
 	addObject(&_scaler);
 
@@ -90,8 +94,9 @@ void MenuState::on_activate() {
 void MenuState::on_update() {
 	if (_startGame) {
 		_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
+		_croissant.getComponent<engine::Animator>()->findAnimation("out")->start();
 		if (_clock.getElapsedTime() >= sf::seconds(3)) {
-			changeState("Game");
+			//changeState("Game");
 		}
 	}
 }
