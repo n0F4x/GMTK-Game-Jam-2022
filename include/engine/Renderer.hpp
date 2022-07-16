@@ -18,16 +18,20 @@ namespace engine {
 		*/
 		void render();
 
-		// Static drawing - drawn first
-		void add_static(const sf::Drawable* object);
-		void remove_static(const sf::Drawable* object);
-		void flush_static();
+		// Drawn first
+		void push_background(const sf::Drawable* drawable);
+		void remove_background(const sf::Drawable* drawable);
+		void flush_background();
 
-		// Dynamic drawing (gets flushed after each frame)
-		// Basic - drawn after static
-		// Priority - drawn after basic
-		void push_basic(const sf::Drawable* object);
-		void push_priority(const sf::Drawable* object);
+		// Basic - drawn on top of background
+		void push_basic(const sf::Drawable* drawable);
+		void remove_basic(const sf::Drawable* drawable);
+		void flush_basic();
+
+		// Priority - drawn on top of basic
+		void push_priority(const sf::Drawable* drawable);
+		void remove_priority(const sf::Drawable* drawable);
+		void flush_priority();
 
 
 	private:
