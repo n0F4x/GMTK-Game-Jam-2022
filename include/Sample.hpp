@@ -116,11 +116,39 @@ public:
 		_circleShape.setOutlineColor(sf::Color::White);
 		_circleShape.setOrigin(_circleShape.getRadius(), _circleShape.getRadius());
 
+		// Ball
+		_ball.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 450.f, -200.f });
+		_ball.setColor(sf::Color::Black);
+		_ball.getPoint(0).color = sf::Color::Blue;
+
+		// FlashLight
+		_flashLight.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 400.f, 0.f });
+		_flashLight.setColor(sf::Color::Black);
+		_flashLight.getPoint(0).color = sf::Color{ 200, 230, 0, 255 };
+
+		// Triangle
+		_triangle.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 400.f, 200.f });
+		_triangle.getPoint(0).color = sf::Color::Red;
+		_triangle.getPoint(1).color = sf::Color::Yellow;
+		_triangle.getPoint(2).color = sf::Color::Blue;
+
 		// Progressbar
 		_progressbar.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 100.f, 370.f });
 		_progressbar.setProgress(0.f);
 		_progressbar.setPrimaryColor(sf::Color::Green);
 		_progressbar.setSecondaryColor(sf::Color::Red);
+
+        _topLeft.setSize({20, 20});
+        _topLeft.setFillColor(sf::Color::Blue);
+
+        _bottomRight.setSize({20, 20});
+        _bottomRight.setFillColor(sf::Color::Blue);
+        _bottomRight.setPosition({engine::Window::getSize().x - 20, engine::Window::getSize().y - 20});
+
+        _mapTexture = engine::Assets::getTexture("sample/middlewallupdated");
+        _mapSprite.setTexture(&_mapTexture);
+        _mapSprite.scale(5);
+        _mapSprite.setPosition({-300, -300});
 
 		addStateMachine(&_machine);
 
@@ -129,32 +157,6 @@ public:
 		_machine.setInitialState("Child1");	// this is the default
 
 		store().add("restart", "true");
-		
-		// Environment
-		_table.setTexture(&engine::Assets::getTexture("Environment/table"));
-		_table.setPosition(480, 270);
-		_table.scale(6.f, 6.f);
-		renderer().push_background(&_table);
-
-		_boy.setTexture(&engine::Assets::getTexture("Environment/blue_player"));
-		_boy.setPosition(360, 120);
-		_boy.scale(8.f, 8.f);
-		renderer().push_background(&_boy);
-
-		_girl.setTexture(&engine::Assets::getTexture("Environment/green_player"));
-		_girl.setPosition(sf::Vector2f(1320, 120));
-		_girl.scale(10.f, 10.f);
-		renderer().push_background(&_girl);
-
-		_grandpa.setTexture(&engine::Assets::getTexture("Environment/red_player"));
-		_grandpa.setPosition(1270, 630);
-		_grandpa.scale(12.f, 12.f);
-		renderer().push_background(&_grandpa);
-
-		_dog.setTexture(&engine::Assets::getTexture("Environment/yellow_player"));
-		_dog.setPosition(sf::Vector2f(350, 700));
-		_dog.scale(8.f, 8.f);
-		renderer().push_background(&_dog);
 	}
 
 	void handle_event(const sf::Event& event) override {
@@ -179,15 +181,18 @@ public:
 
 	void on_draw() override {
 		_machine->draw();
-
-		renderer().render();
-
+        engine::Window::draw(_mapSprite);
 		engine::Window::draw(_sprite);
 		engine::Window::draw(_rectangleShape);
 		engine::Window::draw(_circleShape);
+		engine::Window::draw(_ball);
+		engine::Window::draw(_flashLight);
+		engine::Window::draw(_triangle);
 		engine::Window::draw(_button);
 		engine::Window::draw(_progressbar);
         engine::Window::draw(_button);
+        engine::Window::draw(_topLeft);
+        engine::Window::draw(_bottomRight);
 	}
 
 
@@ -197,11 +202,17 @@ private:
 	engine::RectangleShape _rectangleShape;
 	engine::CircleShape _circleShape;
 	engine::Object _object;
+	engine::Arc _ball{ 80.f, 360.f };
+	engine::Arc _flashLight{ 120.f, 60.f, 8 };
+	engine::Arc _triangle{ 160.f, 60.f, 2 };
 	UI::Button _button{ &engine::Assets::getTexture("sample/Button"), &engine::Assets::getTexture("sample/ButtonHover")};
 	sf::Clock _progressClock;
 	UI::ProgressBar _progressbar{ {400.f, 20.f} };
 
-	engine::Sprite _table, _boy, _girl, _grandpa, _dog;
+    sf::Texture _mapTexture;
+    engine::Sprite _mapSprite;
+
+    engine::RectangleShape _topLeft, _bottomRight;
 };
 
 
