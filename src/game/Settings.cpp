@@ -1,4 +1,4 @@
-#include "Settings.hpp"
+#include "game/Settings.hpp"
 
 
 bool Settings::soundOn = true;
