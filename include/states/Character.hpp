@@ -9,13 +9,13 @@ class Character : public engine::Sprite {
 public:
     static const int MAX_HAPPINESS;
 
-    Character( const sf::Texture* texture,
+    Character( const sf::Texture* texture, int happinessLoss,
                const int favoriteNumber, int favoriteNumberHappinessChange,
                int hatedNumber, int hatedNumberHappinessChange,
                TileType favoriteTile, int favoriteTileHappinessChange,
                TileType hatedTile, int hatedTileHappinessChange,
                std::function<int()> specialCallback, std::function<void()> gameOverCallback)
-                : Sprite(texture),
+                : Sprite(texture), _happinessLoss(happinessLoss),
                 _favoriteNumber(favoriteNumber), _favoriteNumberHappinessChange(favoriteNumberHappinessChange),
                 _hatedNumber(hatedNumber), _hatedNumberHappinessChange(hatedNumberHappinessChange),
                 _favoriteTile(favoriteTile), _favoriteTileHappinessChange(favoriteTileHappinessChange),
@@ -42,10 +42,19 @@ public:
      */
     float getHappinessNormed() const;
 
+    /**
+     * @brief calculate happiness after this character's turn
+     */
+    void calculateHappinessAfterOwnTurn(int diceNumber, TileType tile);
 
+    /**
+     * @brief calculate happiness after other character's turn
+     */
+    void calculateHappinessAfterOthersTurn();
 
 private:
     int _happiness = MAX_HAPPINESS;
+    int _happinessLoss;
 
     int _favoriteNumber;
     int _favoriteNumberHappinessChange;
