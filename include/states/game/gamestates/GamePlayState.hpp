@@ -4,9 +4,9 @@
 #include "engine/StateMachine.hpp"
 
 
-class GameState : public engine::State {
+class GamePlayState : public engine::State {
 public:
-	GameState();
+	GamePlayState();
 
 private:
 	void on_draw() override;
