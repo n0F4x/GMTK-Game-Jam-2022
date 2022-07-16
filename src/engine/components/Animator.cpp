@@ -3,9 +3,12 @@
 using namespace engine;
 
 
-bool Animator::addAnimation(const std::string& name, std::unique_ptr<Animation> animation) {
+Animation* Animator::addAnimation(const std::string& name, std::unique_ptr<Animation> animation) {
 	animation->_object = object();
-	return _animations.try_emplace(name, std::move(animation)).second;
+	if (auto [it, success] = _animations.try_emplace(name, std::move(animation)); success) {
+		return it->second.get();
+	}
+	return nullptr;
 }
 
 Animation* Animator::findAnimation(const std::string_view& name) {
