@@ -15,7 +15,16 @@ endif()
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/animations
     ${CMAKE_CURRENT_SOURCE_DIR}/include/engine
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/engine/components
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/engine/drawables
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/UI
+
+    # Application
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/states
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/states/game
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/states/menu
 )
 
 set(SOURCE_FILES
@@ -23,7 +32,6 @@ set(SOURCE_FILES
     "src/engine/Assets.cpp"
     "src/engine/Window.cpp"
     "src/engine/Core.cpp"
-    "src/Settings.cpp"
     "src/engine/StateMachine.cpp"
     "src/engine/State.cpp"
     "src/engine/Renderer.cpp"
@@ -44,6 +52,9 @@ set(SOURCE_FILES
     "src/engine/components/Bezier.cpp"
     "src/UI/Button.cpp"
     "src/UI/ProgressBar.cpp"
+
+    # Application
+    "src/states/Settings.cpp"
 )
 
 set(SFML_DIR ./dependencies/SFML-2.5.1/lib/cmake/SFML)
