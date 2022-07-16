@@ -5,10 +5,6 @@
 
 using namespace engine;
 
-State::State() {
-    _view.reset(Window::getBounds());
-}
-
 ///////////////
 // Game loop //
 ///////////////
@@ -22,9 +18,7 @@ void State::update() {
 }
 
 void State::draw() {
-    Window::setView(_view);
     on_draw();
-    Window::resetToPreviousView();
 }
 
 
@@ -45,14 +39,6 @@ void State::changeState(const std::string_view& nextState) {
 /////////////
 Renderer& State::renderer() {
 	return _renderer;
-}
-
-
-////////////
-// Camera //
-////////////
-sf::View& State::camera() {
-    return _view;
 }
 
 

@@ -48,7 +48,8 @@ void Core::run() {
 #endif
     static float frameTimeAcc = 0;
     const int SAMPLE_RATE = 30;
-    static sf::Text fpsText{ "FPS: ", Assets::getFont("CourierNewBold"), 15 };
+    static sf::Text fpsText{ "FPS: ", Assets::getFont("CourierNewBold"), 30 };
+    fpsText.scale(.5f, .5f);
 
 	// Game loop
 	sf::Event event;

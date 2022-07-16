@@ -18,8 +18,6 @@ namespace engine {
 	*/
 	class State {
 	public:
-        State();
-
 		///////////////
 		// Game loop //
 		///////////////
@@ -107,13 +105,6 @@ namespace engine {
 		 * @return	The state's renderer
 		*/
 		Renderer& renderer();
-
-
-        ////////////
-        // Camera //
-        ////////////
-
-        sf::View &camera();
 
 
 		////////////////////
@@ -212,7 +203,6 @@ namespace engine {
 		std::vector<StateMachine*> _stateMachines;
 
 		Renderer _renderer;
-        sf::View _view;
 		Store _store;
 		Store* _globalStore = nullptr;
 
