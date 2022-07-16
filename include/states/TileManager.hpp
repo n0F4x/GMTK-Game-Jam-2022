@@ -2,7 +2,7 @@
 
 #include <memory>
 #include "engine/drawables/Sprite.hpp"
-#include "game/TileType.hpp"
+#include "states/TileType.hpp"
 
 using namespace engine;
 
