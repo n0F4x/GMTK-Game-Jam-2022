@@ -6,8 +6,8 @@
 using namespace UI;
 
 
-Button::Button(const sf::Texture *texture, const sf::Texture *hoverTexture, std::function<void()> callback)
-    : _callback(std::move(callback)), _texture(texture), _hoverTexture(hoverTexture) {}
+Button::Button(const sf::Texture* texture, const sf::Texture* hoverTexture, std::function<void()> callback)
+    : Sprite{texture}, _callback(std::move(callback)), _texture(texture), _hoverTexture(hoverTexture) {}
 
 
 void Button::setCallback(std::function<void()> callback) {

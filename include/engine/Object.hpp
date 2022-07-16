@@ -30,6 +30,10 @@ namespace engine {
         void detach_parent();
         bool hasParent() const;
 
+        std::size_t getChildrenCount() const;
+
+        Object* getChild(size_t index) const;
+
 
         ////////////////
         // Components //

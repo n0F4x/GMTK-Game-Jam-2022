@@ -56,9 +56,9 @@ namespace engine {
 
 		void updateVertices();
 
-	private:
-		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
+	private:
 		void updateFillColors();
 		void updateTexCoords();
 		void updateOutline();

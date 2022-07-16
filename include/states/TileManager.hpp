@@ -6,39 +6,49 @@
 
 using namespace engine;
 
-class TileManager : Sprite {
+class TileManager : public Sprite {
 public:
     TileManager() {
-        attach_child(firstTile.get());
-        firstTile->setPosition(getPosition());
+        attach_child(_firstTile.get());
+        _firstTile->setPosition(getPosition());
+        _lastTile = _firstTile.get();
     }
 
     void addTile(TileType type, TileDirection dir) {
-        lastTile->next = std::make_unique<Tile>(type);
-        lastTile->dirToNext = dir;
-        lastTile->next->dirFromPrev = dir;
+        _lastTile->_next = std::make_unique<Tile>(type);
+        _lastTile->_dirToNext = dir;
+        _lastTile->_next->_dirFromPrev = dir;
 
         switch (dir) {
             case LEFT:
-                lastTile->next->setPosition({lastTile->getPosition().x - lastTile->getSize().x, lastTile->getPosition().y});
+                _lastTile->_next->setPosition({_lastTile->getPosition().x - _lastTile->getSize().x + 1, _lastTile->getPosition().y});
                 break;
             case RIGHT:
-                lastTile->next->setPosition({lastTile->getPosition().x + lastTile->getSize().x, lastTile->getPosition().y});
+                _lastTile->_next->setPosition({_lastTile->getPosition().x + _lastTile->getSize().x - 1, _lastTile->getPosition().y});
                 break;
             case UP:
-                lastTile->next->setPosition({lastTile->getPosition().x, lastTile->getPosition().y - lastTile->getSize().y});
+                _lastTile->_next->setPosition({_lastTile->getPosition().x, _lastTile->getPosition().y - _lastTile->getSize().y + 1});
                 break;
             case DOWN:
-                lastTile->next->setPosition({lastTile->getPosition().x, lastTile->getPosition().y + lastTile->getSize().y});
+                _lastTile->_next->setPosition({_lastTile->getPosition().x, _lastTile->getPosition().y + _lastTile->getSize().y - 1});
                 break;
             case NONE:
                 break;
         }
 
-        lastTile = lastTile->next.get();
-        attach_child(lastTile);
+        _lastTile = _lastTile->_next.get();
+        attach_child(_lastTile);
     }
+
+protected:
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override {
+        Sprite::draw(target, states);
+        for (int i = 0; i < getChildrenCount(); ++i) {
+            target.draw(*dynamic_cast<Sprite*>(getChild(i)), states);
+        }
+    }
+
 private:
-    std::unique_ptr<Tile> firstTile = std::make_unique<Tile>(START);
-    Tile* lastTile = firstTile.get();
+    std::unique_ptr<Tile> _firstTile = std::make_unique<Tile>(START);
+    Tile* _lastTile = nullptr;
 };

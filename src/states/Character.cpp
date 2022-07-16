@@ -2,6 +2,19 @@
 
 const int Character::MAX_HAPPINESS = 100;
 
+Character::Character(  const sf::Texture* texture, int happinessLoss,
+                       const int favoriteNumber, int favoriteNumberHappinessChange,
+                       int hatedNumber, int hatedNumberHappinessChange,
+                       TileType favoriteTile, int favoriteTileHappinessChange,
+                       TileType hatedTile, int hatedTileHappinessChange,
+                       std::function<int()> specialCallback, std::function<void()> gameOverCallback)
+                    : Sprite(texture), _happinessLoss(happinessLoss),
+                      _favoriteNumber(favoriteNumber), _favoriteNumberHappinessChange(favoriteNumberHappinessChange),
+                      _hatedNumber(hatedNumber), _hatedNumberHappinessChange(hatedNumberHappinessChange),
+                      _favoriteTile(favoriteTile), _favoriteTileHappinessChange(favoriteTileHappinessChange),
+                      _hatedTile(hatedTile), _hatedTileHappinessChange(hatedTileHappinessChange),
+                      _specialCallback(std::move(specialCallback)), _gameOverCallback(std::move(gameOverCallback)) {}
+
 void Character::setHappiness(const int amount) {
     _happiness = amount;
     if (_happiness > MAX_HAPPINESS)
