@@ -40,6 +40,7 @@ set(SOURCE_FILES
     "src/engine/components/Animation.cpp"
     "src/animations/Bezier.cpp"
     "src/animations/BezierScale.cpp"
+    "src/animations/BezierColor.cpp"
     "src/engine/components/Bezier.cpp"
     "src/UI/Button.cpp"
     "src/UI/ProgressBar.cpp"
