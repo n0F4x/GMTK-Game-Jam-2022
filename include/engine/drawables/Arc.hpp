@@ -37,7 +37,8 @@ namespace engine {
 		/**
 		 * @brief	Sets the color of all vertices.
 		*/
-		void setColor(const sf::Color& color);
+		void setColor(const sf::Color& color) override;
+		const sf::Color* getColor() const override;
 
 	private:
 		void updateVertices();

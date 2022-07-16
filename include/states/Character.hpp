@@ -48,6 +48,8 @@ public:
 
     Tile* getCurrentTile();
 
+    void move(int offset);
+
     void setSpecialCallback(const std::function<int()> callback);
     void setLoseCallback(const std::function<void()> callback);
 

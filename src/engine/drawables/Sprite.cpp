@@ -107,8 +107,8 @@ const sf::IntRect& Sprite::getTextureRect() const {
 
 
 ////////////////////////////////////////////////////////////
-const sf::Color& Sprite::getColor() const {
-	return m_vertices[0].color;
+const sf::Color* Sprite::getColor() const {
+	return &m_vertices[0].color;
 }
 
 

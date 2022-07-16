@@ -19,9 +19,9 @@ namespace engine {
 	class Animator : public Component {
 	public:
 		/**
-		 * @return	True if inseriton is successful, false if there is already an animation with the same name.
+		 * @return	Pointer to Animation if inseriton is successful, nullptr if there is already an animation with the same name.
 		*/
-		bool addAnimation(const std::string& name, std::unique_ptr<Animation> animation);
+		Animation* addAnimation(const std::string& name, std::unique_ptr<Animation> animation);
 		/**
 		 * @return	!!! nullptr if not found !!!
 		*/

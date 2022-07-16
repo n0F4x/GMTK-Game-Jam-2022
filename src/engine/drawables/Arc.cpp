@@ -50,6 +50,10 @@ void Arc::setColor(const sf::Color& color) {
 	}
 }
 
+const sf::Color* engine::Arc::getColor() const {
+	return &_vertices[0].color;
+}
+
 
 void Arc::updateVertices() {
 	_vertices.clear();

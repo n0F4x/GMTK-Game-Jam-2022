@@ -16,7 +16,7 @@ namespace engine {
 		/**
 		 * @brief	Draws currently added objects to Window
 		*/
-		void render();
+		void render() const;
 
 		// Drawn first
 		void push_background(const sf::Drawable* drawable);
