@@ -1,11 +1,12 @@
 #pragma once
 
+#include <SFML/Graphics/Drawable.hpp>
 #include "engine/Object.hpp"
 
 
 namespace engine {
 
-	class Text : public Object {
+	class Text : public sf::Drawable, public Object {
 	public:
         Text() = default;
         Text(const sf::String& string, const sf::Font& font, unsigned int characterSize = 30);
@@ -38,7 +39,7 @@ namespace engine {
         sf::FloatRect getGlobalBounds() const;
 
     private:
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 
         sf::Text _text;
