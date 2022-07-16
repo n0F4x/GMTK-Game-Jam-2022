@@ -12,6 +12,7 @@
 #include "engine/drawables/CircleShape.hpp"
 #include "engine/drawables/Arc.hpp"
 #include "animations/Bezier.hpp"
+#include "animations/BezierScale.hpp"
 #include "UI/Button.hpp"
 #include "UI/ProgressBar.hpp"
 #include "states/Settings.hpp"
@@ -351,6 +352,15 @@ public:
 		}
 		_animation->setDistance({ -400.f, 0.f });
 		_animation->setTime(sf::seconds(1));
+
+		if (_animationScale = animator->findAnimation("Ease"); _animationScale == nullptr) {
+			std::cerr << "\nAnimationsSampleState: _animationScale is nullptr\n";
+			return 1;
+		}
+		animator->addAnimation("EaseScale", std::make_unique<animations::EaseScale>());
+		_animationScale->setScale({ -1, -1.f });
+		_animationScale->setTime(sf::seconds(1));
+
 		return 0;
 	}
 
@@ -364,6 +374,7 @@ public:
 		if (_tempTime + _clock.getElapsedTime() >= sf::seconds(1) && _animation->start()) {
 			_clock.restart();
 			_animation->setDistance(_animation->getDistance() * -1.f);
+			_animationScale->setScale(_animation->getScale() * -1.f);
 			_tempTime = sf::Time::Zero;
 		}
 	}
@@ -386,4 +397,5 @@ private:
 	sf::Time _tempTime;
 	engine::RectangleShape _shape{ { 200.f, 200.f } };
 	engine::Animation* _animation = nullptr;
+	engine::Animation* _animationScale = nullptr;
 };

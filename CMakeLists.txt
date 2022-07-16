@@ -39,6 +39,7 @@ set(SOURCE_FILES
     "src/engine/drawables/Text.cpp"
     "src/engine/components/Animation.cpp"
     "src/animations/Bezier.cpp"
+    "src/animations/BezierScale.cpp"
     "src/engine/components/Bezier.cpp"
     "src/UI/Button.cpp"
     "src/UI/ProgressBar.cpp"
