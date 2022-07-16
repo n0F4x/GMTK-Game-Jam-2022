@@ -97,7 +97,7 @@ public:
 
 		store().add("restart", "true");
 
-		// Environment
+		// MAIN MENU
 		_floor.setTexture(&engine::Assets::getTexture("Environment/floor"));
 		_floor.scale(6.f, 6.f);
 		renderer().push_background(&_floor);
@@ -107,21 +107,48 @@ public:
 		_table.scale(6.f, 6.f);
 		renderer().push_background(&_table);
 
+		_croissant.setTexture(&engine::Assets::getTexture("Environment/croissant2"));
+		_croissant.setPosition(800, 480);
+		_croissant.scale(4.f, 4.f);
+		renderer().push_background(&_croissant);
+
+		_title.setTexture(&engine::Assets::getTexture("UI/title"));
+		_title.setPosition(935, 480);
+		_title.scale(7.5f / 5.f, 7.5f / 5.f);
+		renderer().push_background(&_title);
+
+		_plant.setTexture(&engine::Assets::getTexture("Environment/plant"));
+		_plant.setPosition(1050, 350);
+		_plant.scale(4.f, 4.f);
+		renderer().push_background(&_plant);
+
+		_coffee.setTexture(&engine::Assets::getTexture("Environment/coffee"));
+		_coffee.setPosition(1050, 550);
+		_coffee.scale(4.f, 4.f);
+		renderer().push_background(&_coffee);
+
 		_scaler.setPosition(960, 540);
 		_scaler.setOrigin(960, 540);
 		_scaler.attach_child(&_floor);
 		_scaler.attach_child(&_table);
-		_scaler.setScale(3, 3);
+		_scaler.attach_child(&_croissant);
+		_scaler.attach_child(&_plant);
+		_scaler.attach_child(&_title);
+		_scaler.attach_child(&_coffee);
+		_scaler.setScale(5, 5);
 
 		Animator* scaleAnimator = _scaler.setComponent(std::make_unique<engine::Animator>());
 		_scaler.getComponent<engine::Animator>()->addAnimation("zoomOut", std::make_unique<animations::EaseScale>());
-		scaleAnimator->findAnimation("zoomOut")->setScale({-2.f, -2.f});
+		scaleAnimator->findAnimation("zoomOut")->setScale({-4.f, -4.f});
 		scaleAnimator->findAnimation("zoomOut")->setTime(sf::seconds(3));
 
 		addObject(&_scaler);
 
-		_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
+		//_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
+		//TODO - (click to start game) text on bottom center of screen
+		//TODO - take items off table animation, main title, click text fadeOut while zooming out
 
+		// END OF MENU
 
 		_boy.setTexture(&engine::Assets::getTexture("Environment/blue_player"));
 		_boy.setPosition(360 - 500, 120 - 500);
@@ -237,7 +264,7 @@ public:
 		_grandpaBar.setPosition(1866, 1026 + 500);
 
 		// START ANIMATIONS
-
+		/*
 		_boy.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_girl.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_grandpa.getComponent<engine::Animator>()->findAnimation("in")->start();
@@ -247,7 +274,8 @@ public:
 		_girlBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_gradpaBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_dogBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
-
+		*/
+		
 	}
 
 	void handle_event(const sf::Event& event) override {
@@ -280,6 +308,12 @@ private:
 
 	UI::ProgressBar _boyBar { {392.f, 32.f} }, _girlBar{ {392.f, 32.f} }, _grandpaBar{ {392.f, 32.f} }, _dogBar{ {392.f, 32.f} };
 
+	//Tabletop
+	engine::Sprite _title;
+	engine::Sprite _croissant, _plant, _coffee;
+
+	TileManager _tileMgr;
+	engine::RectangleShape _tilesBg;
     BoardGameManager _boardGameMgr;
 };
 
