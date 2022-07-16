@@ -81,6 +81,8 @@ namespace engine {
         /////////////
         virtual void setTexture(const sf::Texture*, bool) { /*empty*/ }
         virtual const sf::Texture* getTexture() const { return nullptr; }
+        virtual void setColor(const sf::Color&) { /*emtpy*/ }
+        virtual const sf::Color* getColor() const { return nullptr; }
 
         virtual ~Object() = default;
 
