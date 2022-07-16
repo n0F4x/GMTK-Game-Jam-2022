@@ -15,7 +15,8 @@ public:
                int hatedNumber, int hatedNumberHappinessChange,
                TileType favoriteTile, int favoriteTileHappinessChange,
                TileType hatedTile, int hatedTileHappinessChange,
-               std::function<int()> specialCallback, std::function<void()> gameOverCallback);
+               std::function<int()> specialCallback = std::function<int()>(),
+               std::function<void()> loseCallback = std::function<void()>());
 
     /**
      * @brief set happiness of character between 0 and MAX_HAPPINESS
@@ -46,6 +47,9 @@ public:
 
     Tile* getCurrentTile();
 
+    void setSpecialCallback(const std::function<int()> callback);
+    void setLoseCallback(const std::function<void()> callback);
+
 private:
     int _happiness = MAX_HAPPINESS;
     int _happinessLoss;
@@ -63,7 +67,7 @@ private:
     int _hatedTileHappinessChange;
 
     std::function<int()> _specialCallback;
-    std::function<void()> _gameOverCallback;
+    std::function<void()> _loseCallback;
 
     Tile* _currentTile = nullptr;
 };
