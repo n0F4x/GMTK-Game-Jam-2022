@@ -14,7 +14,7 @@
 #include "animations/Bezier.hpp"
 #include "UI/Button.hpp"
 #include "UI/ProgressBar.hpp"
-
+#include "Settings.hpp"
 
 class SampleChildState : public engine::State {
 public:
@@ -256,7 +256,7 @@ public:
 	}
 
     void on_activate() override {
-        music.play();
+        if(Settings::soundOn) music.play();
     }
 
     void on_deactivate() override {
