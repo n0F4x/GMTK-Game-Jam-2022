@@ -1,6 +1,6 @@
 #include "engine/components/Bezier.hpp"
 
-#include <math.h>
+#include <cmath>
 
 constexpr int NEWTON_ITERATIONS = 4;
 constexpr float NEWTON_MIN_SLOPE = 0.001f;

@@ -4,9 +4,9 @@
 #include <vector>
 #include <functional>
 #include <SFML/Graphics.hpp>
-#include "Object.hpp"
-#include "Renderer.hpp"
-#include "Store.hpp"
+#include "engine/Object.hpp"
+#include "engine/Renderer.hpp"
+#include "engine/Store.hpp"
 
 
 namespace engine {

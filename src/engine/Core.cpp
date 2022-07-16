@@ -1,9 +1,9 @@
-#include "Core.hpp"
+#include "engine/Core.hpp"
 
 #include <sstream>
 #include <iomanip>
-#include "Assets.hpp"
-#include "Window.hpp"
+#include "engine/Assets.hpp"
+#include "engine/Window.hpp"
 
 using namespace engine;
 

@@ -1,9 +1,10 @@
-#include "State.hpp"
+#include "engine/State.hpp"
 
-#include "StateMachine.hpp"
-#include "Window.hpp"
+#include "engine/StateMachine.hpp"
+#include "engine/Window.hpp"
 
 using namespace engine;
+
 
 ///////////////
 // Game loop //
