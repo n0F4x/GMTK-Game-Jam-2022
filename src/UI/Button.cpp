@@ -14,13 +14,12 @@ void Button::setCallback(std::function<void()> callback) {
     _callback = std::move(callback);
 }
 
-bool Button::isPressed() const { 
+bool Button::isPressed() const {
     return _pressed;
 }
 
-
 void Button::update() {
-    bool isAboveButton = getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(engine::Window::get())));
+    bool isAboveButton = getGlobalBounds().contains(engine::Window::getMousePosition());
     bool isMousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 
     // if mouse is above the button
