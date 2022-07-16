@@ -7,6 +7,9 @@
 
 
 GameState::GameState() {
+	store().add("init", "false");
+
+	addStateMachine(&_stateMachine);
 	_stateMachine.addState("Init", std::make_unique<GameInitState>());
 	_stateMachine.addState("Play", std::make_unique<GamePlayState>());
 	_stateMachine.addState("Paused", std::make_unique<GamePausedState>());
@@ -16,4 +19,19 @@ GameState::GameState() {
 }
 
 
-void GameState::on_draw() { /*TODO*/ }
+void GameState::on_activate() {
+	*store().get("init") = "true";
+}
+
+
+void GameState::handle_event(const sf::Event& event) {
+	_stateMachine->handle_event(event);
+}
+
+void GameState::on_update() {
+	_stateMachine->update();
+}
+
+void GameState::on_draw() {
+	_stateMachine->draw();
+}

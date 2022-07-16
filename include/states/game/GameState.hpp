@@ -8,10 +8,15 @@ class GameState : public engine::State {
 public:
 	GameState();
 
-private:
+protected:
+	void on_activate() override;
+
+	void handle_event(const sf::Event& event) override;
+	void on_update() override;
 	void on_draw() override;
 
 
+private:
 	///////////////
 	// Variables //
 	///////////////
