@@ -43,7 +43,7 @@ public:
 protected:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override {
         Sprite::draw(target, states);
-        for (int i = 0; i < getChildrenCount(); ++i) {
+        for (size_t i = 0; i < getChildrenCount(); ++i) {
             target.draw(*dynamic_cast<Sprite*>(getChild(i)), states);
         }
     }

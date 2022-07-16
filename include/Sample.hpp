@@ -87,36 +87,51 @@ private:
 class SampleState : public engine::State {
 public:
 	SampleState() {
-		_object.setComponent(std::make_unique<engine::Animator>());
-		_object.getComponent<engine::Animator>();
+        _tilesBg.setSize({ (21 * 11 + 1) * 3.f + 12, (21 * 7 + 1) * 3.f + 12 });
+        _tilesBg.setPosition(Window::getSize().x / 2.f - (21 * 11 + 1) / 2.f * 3.f - 6, Window::getSize().y / 2.f - (21 * 7 + 1) / 2.f * 3.f - 6);
+        _tilesBg.setFillColor(sf::Color(255, 255, 255, 255));
+        _tilesBg.setOutlineColor(sf::Color(150, 150, 150, 255));
+        _tilesBg.setOutlineThickness(6);
+        renderer().push_basic(&_tilesBg);
 
-		// Sprite
-		_sprite.setTexture(&engine::Assets::getTexture("sample/ThumbsUp"));
-		_sprite.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 0.f, -200.f });
-		_sprite.scale(0.2f, 0.2f);
-		_sprite.setOrigin(_sprite.getLocalBounds().width / 2, _sprite.getLocalBounds().height / 2);
-
-		// Button
-		_button.scale(sf::Vector2f{ 0.5f, 0.5f });
-		_button.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ -350.f, 500.f });
-		_button.setOrigin(_sprite.getLocalBounds().width / 2, _sprite.getLocalBounds().height / 2);
-		_button.setCallback([this] { changeState("Physics"); });
-
-		// RectangleShape
-		_rectangleShape.setTexture(&engine::Assets::getTexture("sample/ThumbsUp"));
-		_rectangleShape.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ -400.f, 0.f });
-		_rectangleShape.setSize({ 200.f, 200.f });
-		_rectangleShape.setOutlineThickness(5);
-		_rectangleShape.setOutlineColor(sf::Color::White);
-		_rectangleShape.setOrigin(_rectangleShape.getSize() / 2.f);
-
-		// CircleShape
-		_circleShape.setTexture(&engine::Assets::getTexture("sample/ThumbsUp"));
-		_circleShape.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 0.f, +200.f });
-		_circleShape.setRadius(100.f);
-		_circleShape.setOutlineThickness(5);
-		_circleShape.setOutlineColor(sf::Color::White);
-		_circleShape.setOrigin(_circleShape.getRadius(), _circleShape.getRadius());
+        _tileMgr.addTile(TileType::NORMAL, RIGHT);
+        _tileMgr.addTile(TileType::NORMAL, RIGHT);
+        _tileMgr.addTile(TileType::NORMAL, RIGHT);
+        _tileMgr.addTile(TileType::NORMAL, RIGHT);
+        _tileMgr.addTile(TileType::NORMAL, RIGHT);
+        _tileMgr.addTile(TileType::NORMAL, RIGHT);
+        _tileMgr.addTile(TileType::NORMAL, RIGHT);
+        _tileMgr.addTile(TileType::NORMAL, RIGHT);
+        _tileMgr.addTile(TileType::NORMAL, RIGHT);
+        _tileMgr.addTile(TileType::NORMAL, RIGHT);
+        _tileMgr.addTile(TileType::NORMAL, DOWN);
+        _tileMgr.addTile(TileType::NORMAL, DOWN);
+        _tileMgr.addTile(TileType::NORMAL, DOWN);
+        _tileMgr.addTile(TileType::NORMAL, DOWN);
+        _tileMgr.addTile(TileType::NORMAL, DOWN);
+        _tileMgr.addTile(TileType::NORMAL, DOWN);
+        _tileMgr.addTile(TileType::NORMAL, LEFT);
+        _tileMgr.addTile(TileType::NORMAL, LEFT);
+        _tileMgr.addTile(TileType::NORMAL, LEFT);
+        _tileMgr.addTile(TileType::NORMAL, LEFT);
+        _tileMgr.addTile(TileType::NORMAL, LEFT);
+        _tileMgr.addTile(TileType::NORMAL, UP);
+        _tileMgr.addTile(TileType::NORMAL, UP);
+        _tileMgr.addTile(TileType::NORMAL, LEFT);
+        _tileMgr.addTile(TileType::NORMAL, LEFT);
+        _tileMgr.addTile(TileType::NORMAL, LEFT);
+        _tileMgr.addTile(TileType::NORMAL, DOWN);
+        _tileMgr.addTile(TileType::NORMAL, DOWN);
+        _tileMgr.addTile(TileType::NORMAL, LEFT);
+        _tileMgr.addTile(TileType::NORMAL, LEFT);
+        _tileMgr.addTile(TileType::NORMAL, UP);
+        _tileMgr.addTile(TileType::NORMAL, UP);
+        _tileMgr.addTile(TileType::NORMAL, UP);
+        _tileMgr.addTile(TileType::NORMAL, UP);
+        _tileMgr.addTile(TileType::FINISH, UP);
+        _tileMgr.setPosition(Window::getSize().x / 2.f - (21 * 11 + 1) / 2.f * 3.f, Window::getSize().y / 2.f - (21 * 7 + 1) / 2.f * 3.f);
+        _tileMgr.setScale(3.f);
+        renderer().push_basic(&_tileMgr);
 
 		// Progressbar
 		_progressbar.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 100.f, 370.f });
@@ -182,6 +197,8 @@ public:
 		animator->findAnimation("in")->setDistance({ 500.f, -500.f });
 		animator->findAnimation("in")->setTime(sf::seconds(4.5f));
 
+		// Happinesses
+
 		//TODO - remove
 		_boy.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_girl.getComponent<engine::Animator>()->findAnimation("in")->start();
@@ -199,11 +216,6 @@ public:
 	void on_update() override {
 		_machine->update();
 
-		_sprite.rotate(-1.f);
-		_button.update();
-		_rectangleShape.rotate(1.f);
-		_circleShape.rotate(1.f);
-
 		if (_progressClock.getElapsedTime() > sf::seconds(2)) {
 			_progressbar.setSize({ 500.f, 40.f });
 		}
@@ -215,25 +227,19 @@ public:
 
 		renderer().render();
 
-		engine::Window::draw(_sprite);
-		engine::Window::draw(_rectangleShape);
-		engine::Window::draw(_circleShape);
-		engine::Window::draw(_button);
 		engine::Window::draw(_progressbar);
 	}
 
 
 private:
 	engine::StateMachine _machine;
-	engine::Sprite _sprite;
-	engine::RectangleShape _rectangleShape;
-	engine::CircleShape _circleShape;
-	engine::Object _object;
-	UI::Button _button{ &engine::Assets::getTexture("sample/Button"), &engine::Assets::getTexture("sample/ButtonHover")};
 	sf::Clock _progressClock;
 	UI::ProgressBar _progressbar{ {400.f, 20.f} };
 
 	engine::Sprite _floor, _table, _boy, _girl, _grandpa, _dog;
+
+    TileManager _tileMgr;
+    engine::RectangleShape _tilesBg;
 };
 
 
