@@ -50,6 +50,7 @@ set(SOURCE_FILES
     "src/states/game/GameState.cpp"
     "src/states/game/gamestates/GameInitState.cpp"
     "src/states/game/gamestates/GamePlayState.cpp"
+    "src/states/game/gamestates/GamePausedState.cpp"
     "src/states/game/gamestates/GameOverState.cpp"
     "src/states/game/gamestates/gameplaystates/GamePlayLookaroundState.cpp"
     "src/states/game/gamestates/gameplaystates/GamePlaySelectState.cpp"

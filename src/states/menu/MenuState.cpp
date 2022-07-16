@@ -1,7 +1,6 @@
 #include "states/menu/MenuState.hpp"
 
 #include "engine/Window.hpp"
-#include <iostream>
 
 
 MenuState::MenuState() {
