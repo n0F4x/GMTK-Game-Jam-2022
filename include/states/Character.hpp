@@ -17,7 +17,7 @@ public:
                std::function<int()> specialCallback, std::function<void()> gameOverCallback)
                 : Sprite(texture),
                 _favoriteNumber(favoriteNumber), _favoriteNumberHappinessChange(favoriteNumberHappinessChange),
-                _hatedNumber(hatedNumber), _hatedNumberHappinessChange(hatedTileHappinessChange),
+                _hatedNumber(hatedNumber), _hatedNumberHappinessChange(hatedNumberHappinessChange),
                 _favoriteTile(favoriteTile), _favoriteTileHappinessChange(favoriteTileHappinessChange),
                 _hatedTile(hatedTile), _hatedTileHappinessChange(hatedTileHappinessChange),
                 _specialCallback(std::move(specialCallback)), _gameOverCallback(std::move(gameOverCallback)) {}
