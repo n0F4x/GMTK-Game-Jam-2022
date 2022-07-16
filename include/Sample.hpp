@@ -15,7 +15,8 @@
 #include "UI/Button.hpp"
 #include "UI/ProgressBar.hpp"
 #include "game/Settings.hpp"
-
+#include "game/Tile.hpp"
+#include "game/TileManager.hpp"
 
 class SampleChildState : public engine::State {
 public:
@@ -181,8 +182,8 @@ public:
 	}
 
 	void on_draw() override {
-		_machine->draw();
         engine::Window::draw(_mapSprite);
+		_machine->draw();
 		engine::Window::draw(_sprite);
 		engine::Window::draw(_rectangleShape);
 		engine::Window::draw(_circleShape);
