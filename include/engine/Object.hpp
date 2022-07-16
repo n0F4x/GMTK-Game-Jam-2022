@@ -75,7 +75,7 @@ namespace engine {
         /////////////
         // Texture //
         /////////////
-        virtual void setTexture(const sf::Texture*, bool resetRect) { /*empty*/ }
+        virtual void setTexture(const sf::Texture*, bool) { /*empty*/ }
         virtual const sf::Texture* getTexture() const { return nullptr; }
 
         virtual ~Object() = default;
