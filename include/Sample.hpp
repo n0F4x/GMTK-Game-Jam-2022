@@ -14,7 +14,8 @@
 #include "animations/Bezier.hpp"
 #include "UI/Button.hpp"
 #include "UI/ProgressBar.hpp"
-#include "Settings.hpp"
+#include "game/Settings.hpp"
+
 
 class SampleChildState : public engine::State {
 public:
