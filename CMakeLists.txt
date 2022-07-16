@@ -54,6 +54,7 @@ set(SOURCE_FILES
     "src/states/game/gamestates/GameOverState.cpp"
     "src/states/game/gamestates/gameplaystates/GamePlayLookaroundState.cpp"
     "src/states/game/gamestates/gameplaystates/GamePlaySelectState.cpp"
+    "src/states/description/DescriptionState.cpp"
 )
 
 set(SFML_DIR ./dependencies/SFML-2.5.1/lib/cmake/SFML)
