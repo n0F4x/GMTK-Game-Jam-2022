@@ -80,7 +80,7 @@ void Collider::resolve(Object* object2, sf::Time deltaTime, sf::FloatRect& newHi
 			sf::FloatRect rectCopy = newHitBox;
 			rectCopy.left -= 2 * physics1->getVelocity().x * deltaTime.asSeconds();
 
-			// If collision is not avoidable when the x axis is reverted, reverse y axis. Otheriwise, reverse x axis so no collision will happen.
+			// If collision is not avoidable when the x-axis is reverted, reverse y-axis. Otherwise, reverse x-axis so no collision will happen.
 			if (rectCopy.intersects(hitBox2)) {
 				physics1->setVelocity(sf::Vector2f(physics1->getVelocity().x * physics1->getBounciness(), -physics1->getVelocity().y * physics1->getBounciness()));
 			}

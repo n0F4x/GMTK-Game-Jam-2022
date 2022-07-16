@@ -52,4 +52,4 @@ namespace engine {
  * @param amount sf::Vector2f amount to move the rect
  * @return the moved FloatRect
  */
-inline sf::FloatRect move(sf::FloatRect rect, const sf::Vector2f& amount);
+sf::FloatRect move(sf::FloatRect rect, const sf::Vector2f& amount);
