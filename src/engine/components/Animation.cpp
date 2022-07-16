@@ -44,15 +44,11 @@ void Animation::setDistance(const sf::Vector2f& distance) {
 	_distance = distance;
 }
 
-void Animation::setOrigin(const sf::Vector2f& origin) {
-	_origin = origin;
-}
-
 void Animation::setRotation(float rotation) {
 	_rotation = rotation;
 }
 
-void Animation::setScale(float scale) {
+void Animation::setScale(const sf::Vector2f& scale) {
 	_scale = scale;
 }
 
@@ -74,15 +70,11 @@ const sf::Vector2f& Animation::getDistance() const {
 	return _distance;
 }
 
-const sf::Vector2f& Animation::getOrigin() const {
-	return _origin;
-}
-
 float Animation::getRotation() const {
 	return _rotation;
 }
 
-float Animation::getScale() const {
+const sf::Vector2f& Animation::getScale() const {
 	return _scale;
 }
 

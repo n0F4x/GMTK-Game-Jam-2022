@@ -18,10 +18,12 @@ namespace animations {
 		void on_start() override;
 
 	private:
-		sf::Time _timePassed;
-		sf::Vector2f _distanceTraveled;
 		BezierEasing _bezier;
 		const BezierEasing _bezierCopy;
+
+		sf::Time _timePassed;
+		
+		sf::Vector2f _distanceTraveled;
 	};
 
 
