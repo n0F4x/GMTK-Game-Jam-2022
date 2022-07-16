@@ -88,51 +88,51 @@ private:
 class SampleState : public engine::State {
 public:
 	SampleState() {
-        _tilesBg.setSize({ (21 * 11 + 1) * 3.f + 12, (21 * 7 + 1) * 3.f + 12 });
-        _tilesBg.setPosition(Window::getSize().x / 2.f - (21 * 11 + 1) / 2.f * 3.f - 6, Window::getSize().y / 2.f - (21 * 7 + 1) / 2.f * 3.f - 6);
-        _tilesBg.setFillColor(sf::Color(255, 255, 255, 255));
-        _tilesBg.setOutlineColor(sf::Color(150, 150, 150, 255));
-        _tilesBg.setOutlineThickness(6);
-        renderer().push_basic(&_tilesBg);
+		_tilesBg.setSize({ (21 * 11 + 1) * 3.f + 12, (21 * 7 + 1) * 3.f + 12 });
+		_tilesBg.setPosition(Window::getSize().x / 2.f - (21 * 11 + 1) / 2.f * 3.f - 6, Window::getSize().y / 2.f - (21 * 7 + 1) / 2.f * 3.f - 6);
+		_tilesBg.setFillColor(sf::Color(255, 255, 255, 255));
+		_tilesBg.setOutlineColor(sf::Color(150, 150, 150, 255));
+		_tilesBg.setOutlineThickness(6);
+		renderer().push_basic(&_tilesBg);
 
-        _tileMgr.addTile(TileType::NORMAL, RIGHT);
-        _tileMgr.addTile(TileType::NORMAL, RIGHT);
-        _tileMgr.addTile(TileType::NORMAL, RIGHT);
-        _tileMgr.addTile(TileType::NORMAL, RIGHT);
-        _tileMgr.addTile(TileType::NORMAL, RIGHT);
-        _tileMgr.addTile(TileType::NORMAL, RIGHT);
-        _tileMgr.addTile(TileType::NORMAL, RIGHT);
-        _tileMgr.addTile(TileType::NORMAL, RIGHT);
-        _tileMgr.addTile(TileType::NORMAL, RIGHT);
-        _tileMgr.addTile(TileType::NORMAL, RIGHT);
-        _tileMgr.addTile(TileType::NORMAL, DOWN);
-        _tileMgr.addTile(TileType::NORMAL, DOWN);
-        _tileMgr.addTile(TileType::NORMAL, DOWN);
-        _tileMgr.addTile(TileType::NORMAL, DOWN);
-        _tileMgr.addTile(TileType::NORMAL, DOWN);
-        _tileMgr.addTile(TileType::NORMAL, DOWN);
-        _tileMgr.addTile(TileType::NORMAL, LEFT);
-        _tileMgr.addTile(TileType::NORMAL, LEFT);
-        _tileMgr.addTile(TileType::NORMAL, LEFT);
-        _tileMgr.addTile(TileType::NORMAL, LEFT);
-        _tileMgr.addTile(TileType::NORMAL, LEFT);
-        _tileMgr.addTile(TileType::NORMAL, UP);
-        _tileMgr.addTile(TileType::NORMAL, UP);
-        _tileMgr.addTile(TileType::NORMAL, LEFT);
-        _tileMgr.addTile(TileType::NORMAL, LEFT);
-        _tileMgr.addTile(TileType::NORMAL, LEFT);
-        _tileMgr.addTile(TileType::NORMAL, DOWN);
-        _tileMgr.addTile(TileType::NORMAL, DOWN);
-        _tileMgr.addTile(TileType::NORMAL, LEFT);
-        _tileMgr.addTile(TileType::NORMAL, LEFT);
-        _tileMgr.addTile(TileType::NORMAL, UP);
-        _tileMgr.addTile(TileType::NORMAL, UP);
-        _tileMgr.addTile(TileType::NORMAL, UP);
-        _tileMgr.addTile(TileType::NORMAL, UP);
-        _tileMgr.addTile(TileType::FINISH, UP);
-        _tileMgr.setPosition(Window::getSize().x / 2.f - (21 * 11 + 1) / 2.f * 3.f, Window::getSize().y / 2.f - (21 * 7 + 1) / 2.f * 3.f);
-        _tileMgr.setScale(3.f);
-        renderer().push_basic(&_tileMgr);
+		_tileMgr.addTile(TileType::NORMAL, RIGHT);
+		_tileMgr.addTile(TileType::NORMAL, RIGHT);
+		_tileMgr.addTile(TileType::NORMAL, RIGHT);
+		_tileMgr.addTile(TileType::NORMAL, RIGHT);
+		_tileMgr.addTile(TileType::NORMAL, RIGHT);
+		_tileMgr.addTile(TileType::NORMAL, RIGHT);
+		_tileMgr.addTile(TileType::NORMAL, RIGHT);
+		_tileMgr.addTile(TileType::NORMAL, RIGHT);
+		_tileMgr.addTile(TileType::NORMAL, RIGHT);
+		_tileMgr.addTile(TileType::NORMAL, RIGHT);
+		_tileMgr.addTile(TileType::NORMAL, DOWN);
+		_tileMgr.addTile(TileType::NORMAL, DOWN);
+		_tileMgr.addTile(TileType::NORMAL, DOWN);
+		_tileMgr.addTile(TileType::NORMAL, DOWN);
+		_tileMgr.addTile(TileType::NORMAL, DOWN);
+		_tileMgr.addTile(TileType::NORMAL, DOWN);
+		_tileMgr.addTile(TileType::NORMAL, LEFT);
+		_tileMgr.addTile(TileType::NORMAL, LEFT);
+		_tileMgr.addTile(TileType::NORMAL, LEFT);
+		_tileMgr.addTile(TileType::NORMAL, LEFT);
+		_tileMgr.addTile(TileType::NORMAL, LEFT);
+		_tileMgr.addTile(TileType::NORMAL, UP);
+		_tileMgr.addTile(TileType::NORMAL, UP);
+		_tileMgr.addTile(TileType::NORMAL, LEFT);
+		_tileMgr.addTile(TileType::NORMAL, LEFT);
+		_tileMgr.addTile(TileType::NORMAL, LEFT);
+		_tileMgr.addTile(TileType::NORMAL, DOWN);
+		_tileMgr.addTile(TileType::NORMAL, DOWN);
+		_tileMgr.addTile(TileType::NORMAL, LEFT);
+		_tileMgr.addTile(TileType::NORMAL, LEFT);
+		_tileMgr.addTile(TileType::NORMAL, UP);
+		_tileMgr.addTile(TileType::NORMAL, UP);
+		_tileMgr.addTile(TileType::NORMAL, UP);
+		_tileMgr.addTile(TileType::NORMAL, UP);
+		_tileMgr.addTile(TileType::FINISH, UP);
+		_tileMgr.setPosition(Window::getSize().x / 2.f - (21 * 11 + 1) / 2.f * 3.f, Window::getSize().y / 2.f - (21 * 7 + 1) / 2.f * 3.f);
+		_tileMgr.setScale(3.f);
+		renderer().push_basic(&_tileMgr);
 
 		// Progressbar
 		_progressbar.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 100.f, 370.f });
@@ -147,7 +147,7 @@ public:
 		_machine.setInitialState("Child1");	// this is the default
 
 		store().add("restart", "true");
-		
+
 		// Environment
 		_floor.setTexture(&engine::Assets::getTexture("Environment/floor"));
 		_floor.scale(6.f, 6.f);
@@ -208,11 +208,11 @@ public:
 	}
 
 	void handle_event(const sf::Event& event) override {
-        if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::Right) changeState("Physics");
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == sf::Keyboard::Right) changeState("Physics");
 			if (event.key.code == sf::Keyboard::Enter) changeState("Menu");
-        }
-    }
+		}
+	}
 
 	void on_update() override {
 		_machine->update();
@@ -239,8 +239,8 @@ private:
 
 	engine::Sprite _floor, _table, _boy, _girl, _grandpa, _dog;
 
-    TileManager _tileMgr;
-    engine::RectangleShape _tilesBg;
+	TileManager _tileMgr;
+	engine::RectangleShape _tilesBg;
 };
 
 
@@ -249,8 +249,8 @@ public:
 	PhysicsSampleState() {
 		renderer().push_background(&_sprite);
 		renderer().push_background(&_shape);
-        music.openFromFile(engine::Assets::ASSETS_PATH + "/music/sample/calmbgm.ogg");
-        music.setLoop(true);
+		music.openFromFile(engine::Assets::ASSETS_PATH + "/music/sample/calmbgm.ogg");
+		music.setLoop(true);
 
 		_shape.setOutlineThickness(5);
 		_shape.setFillColor(sf::Color(0, 0, 0, 0));
@@ -283,20 +283,20 @@ public:
 		addObject(&_rightWall);
 	}
 
-    void on_activate() override {
-        if(Settings::soundOn) music.play();
-    }
+	void on_activate() override {
+		if (Settings::soundOn) music.play();
+	}
 
-    void on_deactivate() override {
-        music.pause();
-    }
+	void on_deactivate() override {
+		music.pause();
+	}
 
 	void handle_event(const sf::Event& event) override {
-        if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::Right) changeState("Animations");
-            else if (event.key.code == sf::Keyboard::Left) changeState("Sample");
-        }
-    }
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == sf::Keyboard::Right) changeState("Animations");
+			else if (event.key.code == sf::Keyboard::Left) changeState("Sample");
+		}
+	}
 
 	void on_update() override {
 		_shape.setPosition(sf::Vector2f(_sprite.getComponent<engine::Collider>()->getHitBox().left, _sprite.getComponent<engine::Collider>()->getHitBox().top));
@@ -330,7 +330,7 @@ private:
 
 	std::mt19937 _randomEngine{ std::random_device{}() };
 
-    sf::Music music;
+	sf::Music music;
 };
 
 
@@ -353,11 +353,11 @@ public:
 		_animation->setDistance({ -400.f, 0.f });
 		_animation->setTime(sf::seconds(1));
 
-		if (_animationScale = animator->findAnimation("Ease"); _animationScale == nullptr) {
+		animator->addAnimation("EaseScale", std::make_unique<animations::EaseScale>());
+		if (_animationScale = animator->findAnimation("EaseScale"); _animationScale == nullptr) {
 			std::cerr << "\nAnimationsSampleState: _animationScale is nullptr\n";
 			return 1;
 		}
-		animator->addAnimation("EaseScale", std::make_unique<animations::EaseScale>());
 		_animationScale->setScale({ -1, -1.f });
 		_animationScale->setTime(sf::seconds(1));
 
@@ -365,16 +365,17 @@ public:
 	}
 
 	void handle_event(const sf::Event& event) override {
-        if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::Left) changeState("Physics");
-        }
-    }
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == sf::Keyboard::Left) changeState("Physics");
+		}
+	}
 
 	void on_update() override {
 		if (_tempTime + _clock.getElapsedTime() >= sf::seconds(1) && _animation->start()) {
+			_animationScale->start();
 			_clock.restart();
 			_animation->setDistance(_animation->getDistance() * -1.f);
-			_animationScale->setScale(_animation->getScale() * -1.f);
+			_animationScale->setScale(_animationScale->getScale() * -1.f);
 			_tempTime = sf::Time::Zero;
 		}
 	}
