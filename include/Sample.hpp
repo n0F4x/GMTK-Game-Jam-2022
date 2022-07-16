@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <random>
 #include "engine/Assets.hpp"
 #include "engine/Window.hpp"
 #include "engine/State.hpp"
@@ -201,12 +202,6 @@ public:
 		renderer().push_background(&_sprite);
 		renderer().push_background(&_shape);
 
-		//renderer().add_static(&_wallShape);
-		_wallShape.setOutlineThickness(5);
-		_wallShape.setFillColor(sf::Color(0, 0, 0, 0));
-		_wallShape.setOutlineColor(sf::Color::Red);
-		_wallShape.setSize(sf::Vector2f(100, 800));
-
 
 		_shape.setOutlineThickness(5);
 		_shape.setFillColor(sf::Color(0, 0, 0, 0));
@@ -223,9 +218,6 @@ public:
 		physicsComponent->setVelocity(sf::Vector2f(160, 160));
 		physicsComponent->apply_force(sf::Vector2f(0, 0));
 
-		_wallObject.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(0, 0, _wallShape.getSize().x, _wallShape.getSize().y)));
-		_wallObject.setPosition(900, 600);
-
 		_bottomWall.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(0, 0, _bottomWall.getSize().x, _bottomWall.getSize().y)));
 		_bottomWall.setPosition(0.f, engine::Window::getSize().y);
 		_leftWall.setComponent(std::make_unique<engine::Collider>(sf::FloatRect(0, 0, _leftWall.getSize().x, _leftWall.getSize().y)));
@@ -236,7 +228,6 @@ public:
 		_rightWall.setPosition(engine::Window::getSize().x, 0.f);
 
 		addObject(&_sprite);
-		//addObject(&_wallObject);
 		addObject(&_bottomWall);
 		addObject(&_leftWall);
 		addObject(&_topWall);
@@ -254,11 +245,15 @@ public:
 		_shape.setPosition(sf::Vector2f(_sprite.getComponent<engine::Collider>()->getHitBox().left, _sprite.getComponent<engine::Collider>()->getHitBox().top));
 		_shape.setSize(sf::Vector2f(_sprite.getComponent<engine::Collider>()->getHitBox().width, _sprite.getComponent<engine::Collider>()->getHitBox().height));
 
-		_wallShape.setPosition(sf::Vector2f(_wallObject.getComponent<engine::Collider>()->getHitBox().left, _wallObject.getComponent<engine::Collider>()->getHitBox().top));
-		_wallShape.setSize(sf::Vector2f(_wallObject.getComponent<engine::Collider>()->getHitBox().width, _wallObject.getComponent<engine::Collider>()->getHitBox().height));
-
 		if (_sprite.getComponent<engine::Collider>()->collided()) {
-			_sprite.setColor(sf::Color(rand() % 155 + 100, rand() % 155 + 100, rand() % 155 + 100, 255));
+			_sprite.setColor(
+				sf::Color{
+					static_cast<sf::Uint8>(std::uniform_int_distribution{ 0, 155 }(_randomEngine)+100),
+					static_cast<sf::Uint8>(std::uniform_int_distribution{ 0, 155 }(_randomEngine)+100),
+					static_cast<sf::Uint8>(std::uniform_int_distribution{ 0, 155 }(_randomEngine)+100),
+					255
+				}
+			);
 		}
 	}
 
@@ -271,13 +266,12 @@ private:
 	engine::Sprite _sprite{ &engine::Assets::getTexture("surprise") };
 	engine::RectangleShape _shape;
 
-	engine::Object _wallObject;
-	engine::RectangleShape _wallShape;
-
 	engine::RectangleShape _bottomWall{ { engine::Window::getSize().x, 50.f } };
 	engine::RectangleShape _leftWall{ { 50.f, engine::Window::getSize().y } };
 	engine::RectangleShape _topWall{ { engine::Window::getSize().x, 50.f } };
 	engine::RectangleShape _rightWall{ { 50.f, engine::Window::getSize().y } };
+
+	std::mt19937 _randomEngine{ std::random_device{}() };
 };
 
 
@@ -352,7 +346,6 @@ public:
 		_player.getComponent<engine::Physics>()->setVelocity({ 50, 20 });
 
 		_minimapPlayer.setRadius(25);
-		//_minimapPlayer.setOrigin(25, 25);
 		_minimapPlayer.scale(5);
 		_minimapPlayer.setPosition({ engine::Window::getSize().x / 2.f - 25.f, engine::Window::getSize().y / 2.f - 25.f });
 		_minimapPlayer.setFillColor(sf::Color(250, 40, 40, 255));
@@ -371,7 +364,6 @@ public:
 
 		addObject(&_player);
 
-		_minimapCamera = sf::View({ 0, 0, 300, 300 });
 		_minimapCamera.setViewport({ (engine::Window::getSize().x - 270.f) / engine::Window::getSize().x, 20.f / engine::Window::getSize().y, 250.f / engine::Window::getSize().x, 250.f / engine::Window::getSize().y });
 		_minimapCamera.zoom(10.f);
 	}
@@ -385,8 +377,8 @@ public:
 	}
 
 	void handle_event(const sf::Event& event) override {
-		if (event.type == sf::Event::KeyPressed) {
-			if (event.key.code == sf::Keyboard::Left) changeState("Animations");
+		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left) {
+			changeState("Animations");
 		}
 	}
 
@@ -423,6 +415,6 @@ private:
 	engine::CircleShape _player;
 
 	engine::CircleShape _minimapPlayer;
-	sf::View _minimapCamera;
+	sf::View _minimapCamera = sf::View({ 0, 0, 300, 300 });;
 	engine::RectangleShape _minimapBorder;
 };
