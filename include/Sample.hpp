@@ -133,6 +133,10 @@ public:
 		store().add("restart", "true");
 		
 		// Environment
+		_floor.setTexture(&engine::Assets::getTexture("Environment/floor"));
+		_floor.scale(6.f, 6.f);
+		renderer().push_background(&_floor);
+
 		_table.setTexture(&engine::Assets::getTexture("Environment/table"));
 		_table.setPosition(480, 270);
 		_table.scale(6.f, 6.f);
@@ -229,7 +233,7 @@ private:
 	sf::Clock _progressClock;
 	UI::ProgressBar _progressbar{ {400.f, 20.f} };
 
-	engine::Sprite _table, _boy, _girl, _grandpa, _dog;
+	engine::Sprite _floor, _table, _boy, _girl, _grandpa, _dog;
 };
 
 
