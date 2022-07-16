@@ -51,7 +51,7 @@ void ProgressBar::draw(sf::RenderTarget &target, sf::RenderStates states) const 
 
 void ProgressBar::updateBar() {
     _bar.setSize({ _originalSize.x * _progress, _originalSize.y });
-    if (_progress > 0.2f)
+    if (_progress > 0.25f)
         _bar.setFillColor(_primaryColor);
     else
         _bar.setFillColor(_secondaryColor);
