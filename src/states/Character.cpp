@@ -63,10 +63,15 @@ void Character::calculateHappinessAfterTurn(Character *activeCharacter, int dice
 
 void Character::setCurrentTile(Tile *tile) {
     _currentTile = tile;
+    setPosition(tile->getPosition());
 }
 
 Tile *Character::getCurrentTile() {
     return _currentTile;
+}
+
+void Character::move(int offset) {
+    setCurrentTile(getCurrentTile()->getRelativeTile(offset));
 }
 
 void Character::setSpecialCallback(const std::function<int()> callback) {
