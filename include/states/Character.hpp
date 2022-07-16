@@ -4,6 +4,7 @@
 #include <utility>
 #include "engine/drawables/Sprite.hpp"
 #include "states/TileType.hpp"
+#include "Tile.hpp"
 
 class Character : public engine::Sprite {
 public:
@@ -41,6 +42,10 @@ public:
      */
     void calculateHappinessAfterTurn(Character* activeCharacter, int diceNumber, TileType tile);
 
+    void setCurrentTile(Tile* tile);
+
+    Tile* getCurrentTile();
+
 private:
     int _happiness = MAX_HAPPINESS;
     int _happinessLoss;
@@ -59,4 +64,6 @@ private:
 
     std::function<int()> _specialCallback;
     std::function<void()> _gameOverCallback;
+
+    Tile* _currentTile = nullptr;
 };
