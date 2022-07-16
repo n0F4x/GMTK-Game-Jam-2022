@@ -19,7 +19,7 @@
 class SampleChildState : public engine::State {
 public:
 	explicit SampleChildState(const std::string_view& side) : _side{ side } {
-		_sprite.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
+		_sprite.setTexture(&engine::Assets::getTexture("sample/ThumbsUp"));
 		_sprite.setSize({ 100.f, 100.f });
 		renderer().push_background(&_sprite);
 
@@ -89,7 +89,7 @@ public:
 		_object.getComponent<engine::Animator>();
 
 		// Sprite
-		_sprite.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
+		_sprite.setTexture(&engine::Assets::getTexture("sample/ThumbsUp"));
 		_sprite.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 0.f, -200.f });
 		_sprite.scale(0.2f, 0.2f);
 		_sprite.setOrigin(_sprite.getLocalBounds().width / 2, _sprite.getLocalBounds().height / 2);
@@ -101,7 +101,7 @@ public:
 		_button.setCallback([this] { changeState("Physics"); });
 
 		// RectangleShape
-		_rectangleShape.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
+		_rectangleShape.setTexture(&engine::Assets::getTexture("sample/ThumbsUp"));
 		_rectangleShape.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ -400.f, 0.f });
 		_rectangleShape.setSize({ 200.f, 200.f });
 		_rectangleShape.setOutlineThickness(5);
@@ -109,7 +109,7 @@ public:
 		_rectangleShape.setOrigin(_rectangleShape.getSize() / 2.f);
 
 		// CircleShape
-		_circleShape.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
+		_circleShape.setTexture(&engine::Assets::getTexture("sample/ThumbsUp"));
 		_circleShape.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 0.f, +200.f });
 		_circleShape.setRadius(100.f);
 		_circleShape.setOutlineThickness(5);
@@ -145,7 +145,7 @@ public:
         _bottomRight.setFillColor(sf::Color::Blue);
         _bottomRight.setPosition({engine::Window::getSize().x - 20, engine::Window::getSize().y - 20});
 
-        _mapTexture = engine::Assets::getTexture("middlewallupdated");
+        _mapTexture = engine::Assets::getTexture("sample/middlewallupdated");
         _mapSprite.setTexture(&_mapTexture);
         _mapSprite.scale(5);
         _mapSprite.setPosition({-300, -300});
@@ -205,7 +205,7 @@ private:
 	engine::Arc _ball{ 80.f, 360.f };
 	engine::Arc _flashLight{ 120.f, 60.f, 8 };
 	engine::Arc _triangle{ 160.f, 60.f, 2 };
-	UI::Button _button{ &engine::Assets::getTexture("UI/Button"), &engine::Assets::getTexture("UI/ButtonHover")};
+	UI::Button _button{ &engine::Assets::getTexture("sample/Button"), &engine::Assets::getTexture("sample/ButtonHover")};
 	sf::Clock _progressClock;
 	UI::ProgressBar _progressbar{ {400.f, 20.f} };
 
@@ -221,7 +221,7 @@ public:
 	PhysicsSampleState() {
 		renderer().push_background(&_sprite);
 		renderer().push_background(&_shape);
-        music.openFromFile(engine::Assets::ASSETS_PATH + "/music/calmbgm.ogg");
+        music.openFromFile(engine::Assets::ASSETS_PATH + "/music/sample/calmbgm.ogg");
         music.setLoop(true);
 
 		_shape.setOutlineThickness(5);
@@ -292,7 +292,7 @@ public:
 
 
 private:
-	engine::Sprite _sprite{ &engine::Assets::getTexture("surprise") };
+	engine::Sprite _sprite{ &engine::Assets::getTexture("sample/surprise") };
 	engine::RectangleShape _shape;
 
 	engine::RectangleShape _bottomWall{ { engine::Window::getSize().x, 50.f } };
@@ -311,7 +311,7 @@ public:
 	AnimationsSampleState() {
 		_shape.setOrigin(_shape.getSize() / 2.f);
 		_shape.setPosition(engine::Window::getSize() / 2.f - sf::Vector2f{ 200.f, 0.f });
-		_shape.setTexture(&engine::Assets::getTexture("myState/ThumbsUp"));
+		_shape.setTexture(&engine::Assets::getTexture("sample/ThumbsUp"));
 		addObject(&_shape);
 	}
 
