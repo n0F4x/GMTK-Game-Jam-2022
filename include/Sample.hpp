@@ -14,7 +14,9 @@
 #include "animations/Bezier.hpp"
 #include "UI/Button.hpp"
 #include "UI/ProgressBar.hpp"
-#include "Settings.hpp"
+#include "states/Settings.hpp"
+#include "states/Tile.hpp"
+#include "states/TileManager.hpp"
 
 class SampleChildState : public engine::State {
 public:
@@ -180,8 +182,8 @@ public:
 	}
 
 	void on_draw() override {
-		_machine->draw();
         engine::Window::draw(_mapSprite);
+		_machine->draw();
 		engine::Window::draw(_sprite);
 		engine::Window::draw(_rectangleShape);
 		engine::Window::draw(_circleShape);
