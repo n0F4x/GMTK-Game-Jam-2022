@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <utility>
 #include "engine/drawables/Sprite.hpp"
 #include "states/TileType.hpp"
 
@@ -8,13 +9,18 @@ class Character : public engine::Sprite {
 public:
     static const int MAX_HAPPINESS;
 
-    Character(const sf::Texture* texture,
-                       const int favoriteNumber, int favoriteNumberHappinessChange,
-                       int hatedNumber, int _hatedNumberHappinessChange,
-                       TileType favoriteTile, int favoriteTileHappinessChange,
-                       TileType hatedTile, int hatedTileHappinessChange,
-                       std::function<int()> specialCallback,std::function<void()> gameOverCallback)
-              : Sprite(texture) {}
+    Character( const sf::Texture* texture,
+               const int favoriteNumber, int favoriteNumberHappinessChange,
+               int hatedNumber, int hatedNumberHappinessChange,
+               TileType favoriteTile, int favoriteTileHappinessChange,
+               TileType hatedTile, int hatedTileHappinessChange,
+               std::function<int()> specialCallback, std::function<void()> gameOverCallback)
+                : Sprite(texture),
+                _favoriteNumber(favoriteNumber), _favoriteNumberHappinessChange(favoriteNumberHappinessChange),
+                _hatedNumber(hatedNumber), _hatedNumberHappinessChange(hatedTileHappinessChange),
+                _favoriteTile(favoriteTile), _favoriteTileHappinessChange(favoriteTileHappinessChange),
+                _hatedTile(hatedTile), _hatedTileHappinessChange(hatedTileHappinessChange),
+                _specialCallback(std::move(specialCallback)), _gameOverCallback(std::move(gameOverCallback)) {}
 
     /**
      * @brief set happiness of character between 0 and MAX_HAPPINESS
@@ -39,7 +45,7 @@ public:
 
 
 private:
-    int _happiness = 100;
+    int _happiness = MAX_HAPPINESS;
 
     int _favoriteNumber;
     int _favoriteNumberHappinessChange;

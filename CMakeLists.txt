@@ -45,6 +45,7 @@ set(SOURCE_FILES
 
     # Application
     "src/states/Settings.cpp"
+    "src/states/Character.cpp"
 )
 
 set(SFML_DIR ./dependencies/SFML-2.5.1/lib/cmake/SFML)
