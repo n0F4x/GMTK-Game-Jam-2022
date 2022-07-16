@@ -18,6 +18,7 @@
 #include "states/Settings.hpp"
 #include "states/Tile.hpp"
 #include "states/TileManager.hpp"
+#include "states/BoardGameManager.hpp"
 
 class SampleChildState : public engine::State {
 public:
@@ -88,52 +89,6 @@ private:
 class SampleState : public engine::State {
 public:
 	SampleState() {
-		_tilesBg.setSize({ (21 * 11 + 1) * 3.f + 12, (21 * 7 + 1) * 3.f + 12 });
-		_tilesBg.setPosition(Window::getSize().x / 2.f - (21 * 11 + 1) / 2.f * 3.f - 6, Window::getSize().y / 2.f - (21 * 7 + 1) / 2.f * 3.f - 6);
-		_tilesBg.setFillColor(sf::Color(255, 255, 255, 255));
-		_tilesBg.setOutlineColor(sf::Color(150, 150, 150, 255));
-		_tilesBg.setOutlineThickness(6);
-		renderer().push_basic(&_tilesBg);
-
-		_tileMgr.addTile(TileType::NORMAL, RIGHT);
-		_tileMgr.addTile(TileType::NORMAL, RIGHT);
-		_tileMgr.addTile(TileType::NORMAL, RIGHT);
-		_tileMgr.addTile(TileType::NORMAL, RIGHT);
-		_tileMgr.addTile(TileType::NORMAL, RIGHT);
-		_tileMgr.addTile(TileType::NORMAL, RIGHT);
-		_tileMgr.addTile(TileType::NORMAL, RIGHT);
-		_tileMgr.addTile(TileType::NORMAL, RIGHT);
-		_tileMgr.addTile(TileType::NORMAL, RIGHT);
-		_tileMgr.addTile(TileType::NORMAL, RIGHT);
-		_tileMgr.addTile(TileType::NORMAL, DOWN);
-		_tileMgr.addTile(TileType::NORMAL, DOWN);
-		_tileMgr.addTile(TileType::NORMAL, DOWN);
-		_tileMgr.addTile(TileType::NORMAL, DOWN);
-		_tileMgr.addTile(TileType::NORMAL, DOWN);
-		_tileMgr.addTile(TileType::NORMAL, DOWN);
-		_tileMgr.addTile(TileType::NORMAL, LEFT);
-		_tileMgr.addTile(TileType::NORMAL, LEFT);
-		_tileMgr.addTile(TileType::NORMAL, LEFT);
-		_tileMgr.addTile(TileType::NORMAL, LEFT);
-		_tileMgr.addTile(TileType::NORMAL, LEFT);
-		_tileMgr.addTile(TileType::NORMAL, UP);
-		_tileMgr.addTile(TileType::NORMAL, UP);
-		_tileMgr.addTile(TileType::NORMAL, LEFT);
-		_tileMgr.addTile(TileType::NORMAL, LEFT);
-		_tileMgr.addTile(TileType::NORMAL, LEFT);
-		_tileMgr.addTile(TileType::NORMAL, DOWN);
-		_tileMgr.addTile(TileType::NORMAL, DOWN);
-		_tileMgr.addTile(TileType::NORMAL, LEFT);
-		_tileMgr.addTile(TileType::NORMAL, LEFT);
-		_tileMgr.addTile(TileType::NORMAL, UP);
-		_tileMgr.addTile(TileType::NORMAL, UP);
-		_tileMgr.addTile(TileType::NORMAL, UP);
-		_tileMgr.addTile(TileType::NORMAL, UP);
-		_tileMgr.addTile(TileType::FINISH, UP);
-		_tileMgr.setPosition(Window::getSize().x / 2.f - (21 * 11 + 1) / 2.f * 3.f, Window::getSize().y / 2.f - (21 * 7 + 1) / 2.f * 3.f);
-		_tileMgr.setScale(3.f);
-		renderer().push_basic(&_tileMgr);
-
 		addStateMachine(&_machine);
 
 		_machine.addState("Child1", std::make_unique<SampleChildState>("Left"));
@@ -162,7 +117,7 @@ public:
 		_scaler.getComponent<engine::Animator>()->addAnimation("zoomOut", std::make_unique<animations::EaseScale>());
 		scaleAnimator->findAnimation("zoomOut")->setScale({-2.f, -2.f});
 		scaleAnimator->findAnimation("zoomOut")->setTime(sf::seconds(3));
-		
+
 		addObject(&_scaler);
 
 		_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
@@ -282,7 +237,7 @@ public:
 		_grandpaBar.setPosition(1866, 1026 + 500);
 
 		// START ANIMATIONS
-		
+
 		_boy.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_girl.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_grandpa.getComponent<engine::Animator>()->findAnimation("in")->start();
@@ -292,7 +247,7 @@ public:
 		_girlBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_gradpaBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_dogBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
-		
+
 	}
 
 	void handle_event(const sf::Event& event) override {
@@ -310,6 +265,8 @@ public:
 		_machine->draw();
 
 		renderer().render();
+
+        Window::draw(_boardGameMgr);
 	}
 
 
@@ -323,8 +280,7 @@ private:
 
 	UI::ProgressBar _boyBar { {392.f, 32.f} }, _girlBar{ {392.f, 32.f} }, _grandpaBar{ {392.f, 32.f} }, _dogBar{ {392.f, 32.f} };
 
-	TileManager _tileMgr;
-	engine::RectangleShape _tilesBg;
+    BoardGameManager _boardGameMgr;
 };
 
 
