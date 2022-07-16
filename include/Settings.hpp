@@ -1,10 +1,7 @@
 #pragma once
 
-namespace engine {
-    class Settings {
+class Settings {
     public:
         static bool soundOn;
     private:
-    };
-
-}
+};
