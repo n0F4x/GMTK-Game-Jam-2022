@@ -7,13 +7,13 @@ Character::Character(  const sf::Texture* texture, int happinessLoss,
                        int hatedNumber, int hatedNumberHappinessChange,
                        TileType favoriteTile, int favoriteTileHappinessChange,
                        TileType hatedTile, int hatedTileHappinessChange,
-                       std::function<int()> specialCallback, std::function<void()> gameOverCallback)
+                       std::function<int()> specialCallback, std::function<void()> loseCallback)
                     : Sprite(texture), _happinessLoss(happinessLoss),
                       _favoriteNumber(favoriteNumber), _favoriteNumberHappinessChange(favoriteNumberHappinessChange),
                       _hatedNumber(hatedNumber), _hatedNumberHappinessChange(hatedNumberHappinessChange),
                       _favoriteTile(favoriteTile), _favoriteTileHappinessChange(favoriteTileHappinessChange),
                       _hatedTile(hatedTile), _hatedTileHappinessChange(hatedTileHappinessChange),
-                      _specialCallback(std::move(specialCallback)), _gameOverCallback(std::move(gameOverCallback)) {}
+                      _specialCallback(std::move(specialCallback)), _loseCallback(std::move(loseCallback)) {}
 
 void Character::setHappiness(const int amount) {
     _happiness = amount;
@@ -21,7 +21,7 @@ void Character::setHappiness(const int amount) {
         _happiness = MAX_HAPPINESS;
     else if (_happiness <= 0){
         _happiness = 0;
-        _gameOverCallback();
+        _loseCallback();
     }
 }
 
@@ -31,7 +31,7 @@ void Character::addHappiness(const int amount) {
         _happiness = MAX_HAPPINESS;
     else if (_happiness <= 0){
         _happiness = 0;
-        _gameOverCallback();
+        _loseCallback();
     }
 }
 
@@ -67,4 +67,12 @@ void Character::setCurrentTile(Tile *tile) {
 
 Tile *Character::getCurrentTile() {
     return _currentTile;
+}
+
+void Character::setSpecialCallback(const std::function<int()> callback) {
+    _specialCallback = callback;
+}
+
+void Character::setLoseCallback(const std::function<void()> callback) {
+    _loseCallback = callback;
 }
