@@ -8,8 +8,10 @@ using namespace engine;
 //////////////
 // Settings //
 //////////////
+
 sf::RenderWindow Window::_window;
-sf::VideoMode Window::_videoMode = sf::VideoMode(1600, 900);
+sf::Vector2f Window::_renderResolution = { 1920, 1080 };
+sf::VideoMode Window::_videoMode = sf::VideoMode::getFullscreenModes().at(0);
 sf::String Window::_title = "Title";
 sf::ContextSettings Window::_settings{
 	/*depthBits*/			24,
@@ -20,16 +22,10 @@ sf::ContextSettings Window::_settings{
 	/*attributeFlags*/		sf::ContextSettings::Attribute::Default,
 	/*sRgbCapable*/			true
 };
-sf::Uint32 Window::_style = sf::Style::Titlebar | sf::Style::Close;
-std::stack<sf::View> Window::_prevViews;
+sf::Uint32 Window::_style = sf::Style::Fullscreen;
 int Window::_FPSLimit = 120;
 bool Window::_vSyncEnabled = true;
 static const bool keyRepeatEnabled = false;
-
-
-Window::Window() {
-    _prevViews.push(_window.getDefaultView());
-}
 
 
 /////////
@@ -40,31 +36,11 @@ const sf::RenderWindow& Window::get() {
 }
 
 sf::Vector2f Window::getSize() {
-	return sf::Vector2f{ sf::Vector2u{ _videoMode.width, _videoMode.height } };
+	return _renderResolution;
 }
 
 sf::FloatRect Window::getBounds() {
 	return sf::FloatRect{ { 0, 0 }, getSize() };
-}
-
-
-////////////
-// Camera //
-////////////
-void Window::setView(sf::View view) {
-    _prevViews.push(_window.getView());
-    _window.setView(view);
-}
-
-void Window::setDefaultView() {
-    _prevViews.push(_window.getView());
-    _window.setView(_window.getDefaultView());
-}
-
-void Window::resetToPreviousView() {
-    _window.setView(_prevViews.top());
-    if (_prevViews.size() > 1)
-        _prevViews.pop();
 }
 
 
@@ -128,6 +104,11 @@ void Window::open() {
         if (!_vSyncEnabled) _window.setFramerateLimit(_FPSLimit);
 		_window.setKeyRepeatEnabled(keyRepeatEnabled);
 	}
+
+    float scaleX = _renderResolution.x / _videoMode.width;
+    float scaleY = _renderResolution.y / _videoMode.height;
+    sf::View view { {_renderResolution.x / 2.f, _renderResolution.y / 2.f}, {_videoMode.width * std::max(scaleX, scaleY), _videoMode.height * std::max(scaleX, scaleY)} };
+    _window.setView(view);
 }
 
 bool Window::isOpen() {

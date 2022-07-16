@@ -13,8 +13,6 @@ namespace engine {
 	*/
 	class Window {
 	public:
-        Window();
-
 		/////////
 		// API //
 		/////////
@@ -34,27 +32,13 @@ namespace engine {
 		*/
 		static sf::FloatRect getBounds();
 
-        ////////////
-        // Camera //
-        ////////////
         /**
-         * @brief Sets the window's view (camera). Everything drawn after setting the view
-         * will be drawn using this view. To revert to the previous view, use `resetToPreviousView()`.
+         * @brief Gets mouse position mapped to real coordinates.
+         * @return
          */
-        static void setView(sf::View view);
-
-        /**
-         * @brief Sets the window's view (camera) to the window's default view (fill entire window).
-         * To revert to the previous view, use `resetToPreviousView()`.
-         */
-        static void setDefaultView();
-
-        /**
-         * @brief Reverts the window's view (camera) to the previously used one.
-         * This can be called as many times as the `setView`/`setDefaultView` functions have been called,
-         * stepping to the previous view with each call.
-         */
-        static void resetToPreviousView();
+        static sf::Vector2f getMousePosition() {
+            return _window.mapPixelToCoords(sf::Mouse::getPosition(_window));
+        }
 
 
 		/////////////
@@ -123,11 +107,11 @@ namespace engine {
 		// Variables //
 		///////////////
 		static sf::RenderWindow _window;
+        static sf::Vector2f _renderResolution;
 		static sf::VideoMode _videoMode;
 		static sf::String _title;
 		static sf::ContextSettings _settings;
 		static sf::Uint32 _style;
-        static std::stack<sf::View> _prevViews;
 		static int _FPSLimit;
         static bool _vSyncEnabled;
 	};
