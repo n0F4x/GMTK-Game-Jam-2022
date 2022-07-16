@@ -49,6 +49,14 @@ bool Object::hasParent() const {
 	return _parent != nullptr;
 }
 
+std::size_t Object::getChildrenCount() const {
+    return _children.size();
+}
+
+Object *Object::getChild(size_t index) const {
+    return _children.at(index);
+}
+
 
 ////////////////
 // Components //
@@ -95,19 +103,20 @@ void Object::update() { /*currently empty*/ }
 ///////////////////
 void Object::setPosition(float x, float y) {
 	auto newPos = sf::Vector2f{ x, y };
-	_transformable.move(newPos - getPosition());
 
-	for (auto sprite : _children) {
-		sprite->setPosition(x, y);
-	}
+    for (auto sprite : _children) {
+        sprite->move(newPos - getPosition());
+    }
+
+	_transformable.move(newPos - getPosition());
 }
 
 void Object::setPosition(const sf::Vector2f& position) {
-	_transformable.move(position - getPosition());
+    for (auto sprite : _children) {
+        sprite->move(position - getPosition());
+    }
 
-	for (auto sprite : _children) {
-		sprite->setPosition(position);
-	}
+	_transformable.move(position - getPosition());
 }
 
 void Object::setRotation(float angle) {
