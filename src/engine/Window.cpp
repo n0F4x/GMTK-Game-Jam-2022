@@ -20,7 +20,7 @@ sf::ContextSettings Window::_settings{
 	/*majorVersion*/		1,
 	/*minorVersion*/		1,
 	/*attributeFlags*/		sf::ContextSettings::Attribute::Default,
-	/*sRgbCapable*/			true
+	/*sRgbCapable*/			false
 };
 sf::Uint32 Window::_style = sf::Style::Fullscreen;
 int Window::_FPSLimit = 120;
