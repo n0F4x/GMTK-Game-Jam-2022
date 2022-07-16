@@ -13,12 +13,10 @@ void Renderer::render() {
 	for (auto drawable : _basic) {
 		Window::draw(*drawable);
 	}
-	_basic.clear();
 
 	for (auto drawable : _priority) {
 		Window::draw(*drawable);
 	}
-	_priority.clear();
 }
 
 
