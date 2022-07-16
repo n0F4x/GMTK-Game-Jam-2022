@@ -76,8 +76,18 @@ void Shape::setTextureRect(const sf::IntRect& rect) {
 
 
 ////////////////////////////////////////////////////////////
+void Shape::setColor(const sf::Color& color) {
+	setFillColor(color);
+}
+
+
+////////////////////////////////////////////////////////////
 const sf::IntRect& Shape::getTextureRect() const {
 	return m_textureRect;
+}
+
+const sf::Color* engine::Shape::getColor() const {
+	return &getFillColor();
 }
 
 

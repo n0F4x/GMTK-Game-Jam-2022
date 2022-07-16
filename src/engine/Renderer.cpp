@@ -5,7 +5,7 @@
 using namespace engine;
 
 
-void Renderer::render() {
+void Renderer::render() const {
 	for (auto drawable : _static) {
 		Window::draw(*drawable);
 	}
