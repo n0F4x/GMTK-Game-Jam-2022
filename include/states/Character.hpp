@@ -15,6 +15,7 @@ public:
                int hatedNumber, int hatedNumberHappinessChange,
                TileType favoriteTile, int favoriteTileHappinessChange,
                TileType hatedTile, int hatedTileHappinessChange,
+               std::string specialDescription,
                std::function<int()> specialCallback = std::function<int()>(),
                std::function<void()> loseCallback = std::function<void()>());
 
@@ -50,6 +51,8 @@ public:
     void setSpecialCallback(const std::function<int()> callback);
     void setLoseCallback(const std::function<void()> callback);
 
+    std::string getSpecialDescription();
+
 private:
     int _happiness = MAX_HAPPINESS;
     int _happinessLoss;
@@ -65,6 +68,8 @@ private:
 
     TileType _hatedTile;
     int _hatedTileHappinessChange;
+
+    std::string _specialDescription;
 
     std::function<int()> _specialCallback;
     std::function<void()> _loseCallback;
