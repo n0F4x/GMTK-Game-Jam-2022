@@ -96,7 +96,7 @@ public:
 		_machine.setInitialState("Child1");	// this is the default
 
 		store().add("restart", "true");
-		
+
 		// Environment
 		_floor.setTexture(&engine::Assets::getTexture("Environment/floor"));
 		_floor.scale(6.f, 6.f);
@@ -111,6 +111,17 @@ public:
 		_scaler.setOrigin(960, 540);
 		_scaler.attach_child(&_floor);
 		_scaler.attach_child(&_table);
+		_scaler.setScale(3, 3);
+
+		Animator* scaleAnimator = _scaler.setComponent(std::make_unique<engine::Animator>());
+		_scaler.getComponent<engine::Animator>()->addAnimation("zoomOut", std::make_unique<animations::EaseScale>());
+		scaleAnimator->findAnimation("zoomOut")->setScale({-2.f, -2.f});
+		scaleAnimator->findAnimation("zoomOut")->setTime(sf::seconds(3));
+
+		addObject(&_scaler);
+
+		_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
+
 
 		_boy.setTexture(&engine::Assets::getTexture("Environment/blue_player"));
 		_boy.setPosition(360 - 500, 120 - 500);
@@ -133,7 +144,7 @@ public:
 		animator->findAnimation("in")->setTime(sf::seconds(3.5f));
 
 		_grandpa.setTexture(&engine::Assets::getTexture("Environment/red_player"));
-		_grandpa.setPosition(1270 + 500, 630 + 500);
+		_grandpa.setPosition(1290 + 500, 650 + 500);
 		_grandpa.scale(12.f, 12.f);
 		addObject(&_grandpa);
 		renderer().push_background(&_grandpa);
@@ -226,7 +237,7 @@ public:
 		_grandpaBar.setPosition(1866, 1026 + 500);
 
 		// START ANIMATIONS
-		/*
+
 		_boy.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_girl.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_grandpa.getComponent<engine::Animator>()->findAnimation("in")->start();
@@ -236,15 +247,15 @@ public:
 		_girlBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_gradpaBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_dogBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
-		*/
+
 	}
 
 	void handle_event(const sf::Event& event) override {
-        if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::Right) changeState("Physics");
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == sf::Keyboard::Right) changeState("Physics");
 			if (event.key.code == sf::Keyboard::Enter) changeState("Menu");
-        }
-    }
+		}
+	}
 
 	void on_update() override {
 		_machine->update();
@@ -278,8 +289,8 @@ public:
 	PhysicsSampleState() {
 		renderer().push_background(&_sprite);
 		renderer().push_background(&_shape);
-        music.openFromFile(engine::Assets::ASSETS_PATH + "/music/sample/calmbgm.ogg");
-        music.setLoop(true);
+		music.openFromFile(engine::Assets::ASSETS_PATH + "/music/sample/calmbgm.ogg");
+		music.setLoop(true);
 
 		_shape.setOutlineThickness(5);
 		_shape.setFillColor(sf::Color(0, 0, 0, 0));
@@ -312,20 +323,20 @@ public:
 		addObject(&_rightWall);
 	}
 
-    void on_activate() override {
-        if(Settings::soundOn) music.play();
-    }
+	void on_activate() override {
+		if (Settings::soundOn) music.play();
+	}
 
-    void on_deactivate() override {
-        music.pause();
-    }
+	void on_deactivate() override {
+		music.pause();
+	}
 
 	void handle_event(const sf::Event& event) override {
-        if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::Right) changeState("Animations");
-            else if (event.key.code == sf::Keyboard::Left) changeState("Sample");
-        }
-    }
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == sf::Keyboard::Right) changeState("Animations");
+			else if (event.key.code == sf::Keyboard::Left) changeState("Sample");
+		}
+	}
 
 	void on_update() override {
 		_shape.setPosition(sf::Vector2f(_sprite.getComponent<engine::Collider>()->getHitBox().left, _sprite.getComponent<engine::Collider>()->getHitBox().top));
@@ -359,7 +370,7 @@ private:
 
 	std::mt19937 _randomEngine{ std::random_device{}() };
 
-    sf::Music music;
+	sf::Music music;
 };
 
 
@@ -382,11 +393,11 @@ public:
 		_animation->setDistance({ -400.f, 0.f });
 		_animation->setTime(sf::seconds(1));
 
-		if (_animationScale = animator->findAnimation("Ease"); _animationScale == nullptr) {
+		animator->addAnimation("EaseScale", std::make_unique<animations::EaseScale>());
+		if (_animationScale = animator->findAnimation("EaseScale"); _animationScale == nullptr) {
 			std::cerr << "\nAnimationsSampleState: _animationScale is nullptr\n";
 			return 1;
 		}
-		animator->addAnimation("EaseScale", std::make_unique<animations::EaseScale>());
 		_animationScale->setScale({ -1, -1.f });
 		_animationScale->setTime(sf::seconds(1));
 
@@ -394,16 +405,17 @@ public:
 	}
 
 	void handle_event(const sf::Event& event) override {
-        if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::Left) changeState("Physics");
-        }
-    }
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == sf::Keyboard::Left) changeState("Physics");
+		}
+	}
 
 	void on_update() override {
 		if (_tempTime + _clock.getElapsedTime() >= sf::seconds(1) && _animation->start()) {
+			_animationScale->start();
 			_clock.restart();
 			_animation->setDistance(_animation->getDistance() * -1.f);
-			_animationScale->setScale(_animation->getScale() * -1.f);
+			_animationScale->setScale(_animationScale->getScale() * -1.f);
 			_tempTime = sf::Time::Zero;
 		}
 	}
