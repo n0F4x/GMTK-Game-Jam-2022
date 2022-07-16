@@ -43,14 +43,9 @@ public:
     float getHappinessNormed() const;
 
     /**
-     * @brief calculate happiness after this character's turn
+     * @brief calculate happiness after turn
      */
-    void calculateHappinessAfterOwnTurn(int diceNumber, TileType tile);
-
-    /**
-     * @brief calculate happiness after other character's turn
-     */
-    void calculateHappinessAfterOthersTurn();
+    void calculateHappinessAfterTurn(Character* activeCharacter, int diceNumber, TileType tile);
 
 private:
     int _happiness = MAX_HAPPINESS;

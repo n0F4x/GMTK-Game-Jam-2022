@@ -30,19 +30,20 @@ float Character::getHappinessNormed() const {
     return (float)_happiness / (float)MAX_HAPPINESS;
 }
 
-void Character::calculateHappinessAfterOwnTurn(int diceNumber, TileType tile) {
-    if (diceNumber == _favoriteNumber)
-        addHappiness(_favoriteNumberHappinessChange);
-    else if (diceNumber == _hatedNumber)
-        addHappiness(_hatedNumberHappinessChange);
-    if (tile == _favoriteTile)
-        addHappiness(_favoriteTileHappinessChange);
-    else if (tile == _hatedTile)
-        addHappiness(_hatedTileHappinessChange);
+void Character::calculateHappinessAfterTurn(Character *activeCharacter, int diceNumber, TileType tile) {
+    if (activeCharacter == this) {
+        if (diceNumber == _favoriteNumber)
+            addHappiness(_favoriteNumberHappinessChange);
+        else if (diceNumber == _hatedNumber)
+            addHappiness(_hatedNumberHappinessChange);
+        if (tile == _favoriteTile)
+            addHappiness(_favoriteTileHappinessChange);
+        else if (tile == _hatedTile)
+            addHappiness(_hatedTileHappinessChange);
 
-    addHappiness(_specialCallback());
-}
-
-void Character::calculateHappinessAfterOthersTurn() {
-    addHappiness(-_happinessLoss);
+        addHappiness(_specialCallback());
+    }
+    else {
+        addHappiness(-_happinessLoss);
+    }
 }
