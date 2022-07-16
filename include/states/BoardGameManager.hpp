@@ -57,25 +57,29 @@ public:
                 &Assets::getTexture("Figures/blu"),
                 5,
                 1, 5, 2, -5,
-                REPEAT_MOVE, 5, NORMAL, -5
+                REPEAT_MOVE, 5, NORMAL, -5,
+                ""
         );
         _characters[1] = std::make_unique<Character>(
                 &Assets::getTexture("Figures/gren"),
                 5,
                 1, 5, 2, -5,
-                REPEAT_MOVE, 5, NORMAL, -5
+                REPEAT_MOVE, 5, NORMAL, -5,
+                ""
         );
         _characters[2] = std::make_unique<Character>(
                 &Assets::getTexture("Figures/red"),
                 5,
                 1, 5, 2, -5,
-                REPEAT_MOVE, 5, NORMAL, -5
+                REPEAT_MOVE, 5, NORMAL, -5,
+                ""
         );
         _characters[3] = std::make_unique<Character>(
                 &Assets::getTexture("Figures/yelow"),
                 5,
                 1, 5, 2, -5,
-                REPEAT_MOVE, 5, NORMAL, -5
+                REPEAT_MOVE, 5, NORMAL, -5,
+                ""
         );
         _characters[0]->setScale(3.f);
         _characters[1]->setScale(3.f);
@@ -83,7 +87,7 @@ public:
         _characters[3]->setScale(3.f);
 
         _characters[0]->setCurrentTile(
-                _tileMgr.getFirstTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile().get());
+                _tileMgr.getFirstTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile()->getRelativeTile());
         _characters[1]->setCurrentTile(_tileMgr.getFirstTile());
         _characters[2]->setCurrentTile(_tileMgr.getFirstTile());
         _characters[3]->setCurrentTile(_tileMgr.getFirstTile());
