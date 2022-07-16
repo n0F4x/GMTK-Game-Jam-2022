@@ -9,24 +9,31 @@ Bezier::Bezier(const sf::Vector2f& point1, const sf::Vector2f& point2) : _bezier
 
 
 void Bezier::update(sf::Time deltaTime) {
-	_timePassed += deltaTime;
-
 	if (isPaused()) {
 		return;
 	}
+
+	_timePassed += deltaTime;
+
 	if (_timePassed >= getTime()) {
 		object()->move(getDistance() - _distanceTraveled);
+
 		stop();
 		return;
 	}
 
-	sf::Vector2f distanceTraveled = getDistance() * (_bezier.GetEasingProgress(_timePassed / getTime()));
+	float progress = _bezier.GetEasingProgress(_timePassed / getTime());
+
+	// Move
+	sf::Vector2f distanceTraveled = getDistance() * progress;
 	object()->move(distanceTraveled - _distanceTraveled);
 	_distanceTraveled = distanceTraveled;
 }
 
 void Bezier::on_start() {
-	_timePassed = sf::Time::Zero;
-	_distanceTraveled = { 0.f, 0.f };
 	_bezier = _bezierCopy;
+
+	_timePassed = sf::Time::Zero;
+	
+	_distanceTraveled = { 0.f, 0.f };
 }

@@ -11,6 +11,7 @@
 #include "Sample.hpp"
 #include "states/menu/MenuState.hpp"
 #include "states/game/GameState.hpp"
+#include "states/description/DescriptionState.hpp"
 
 
 int main() {
@@ -32,6 +33,7 @@ int main() {
 	machine.addState("Animations", std::make_unique<AnimationsSampleState>());
 	machine.addState("Menu", std::make_unique<MenuState>());
 	machine.addState("Game", std::make_unique<GameState>());
+    machine.addState("Description", std::make_unique<DescriptionState>());
 
 
 	// SET INITIAL STATE

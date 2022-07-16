@@ -12,9 +12,9 @@ Core::Core() {
 	addStore(&_store);
 
 	_loadingText.setString("Loading...");
-	_loadingFont.loadFromFile(Assets::ASSETS_PATH + "fonts/AlbertSans-ExtraLight.ttf");
+	_loadingFont.loadFromFile(Assets::ASSETS_PATH + "fonts/unlearned.ttf");
 	_loadingText.setFont(_loadingFont);
-	_loadingText.setCharacterSize(100);
+	_loadingText.setCharacterSize(156);
 	sf::FloatRect textRect = _loadingText.getLocalBounds();
 	_loadingText.setOrigin(textRect.left + textRect.width / 2.f, textRect.top + textRect.height / 2.f);
 	_loadingText.setPosition(Window::getSize() / 2.f);

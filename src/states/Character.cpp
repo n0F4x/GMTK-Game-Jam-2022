@@ -19,7 +19,7 @@ void Character::setHappiness(const int amount) {
     _happiness = amount;
     if (_happiness > MAX_HAPPINESS)
         _happiness = MAX_HAPPINESS;
-    else if (_happiness < 0){
+    else if (_happiness <= 0){
         _happiness = 0;
         _gameOverCallback();
     }
@@ -29,7 +29,7 @@ void Character::addHappiness(const int amount) {
     _happiness += amount;
     if (_happiness > MAX_HAPPINESS)
         _happiness = MAX_HAPPINESS;
-    else if (_happiness < 0){
+    else if (_happiness <= 0){
         _happiness = 0;
         _gameOverCallback();
     }
@@ -59,4 +59,12 @@ void Character::calculateHappinessAfterTurn(Character *activeCharacter, int dice
     else {
         addHappiness(-_happinessLoss);
     }
+}
+
+void Character::setCurrentTile(Tile *tile) {
+    _currentTile = tile;
+}
+
+Tile *Character::getCurrentTile() {
+    return _currentTile;
 }
