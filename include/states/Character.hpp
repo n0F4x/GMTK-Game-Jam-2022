@@ -14,13 +14,7 @@ public:
                int hatedNumber, int hatedNumberHappinessChange,
                TileType favoriteTile, int favoriteTileHappinessChange,
                TileType hatedTile, int hatedTileHappinessChange,
-               std::function<int()> specialCallback, std::function<void()> gameOverCallback)
-                : Sprite(texture), _happinessLoss(happinessLoss),
-                _favoriteNumber(favoriteNumber), _favoriteNumberHappinessChange(favoriteNumberHappinessChange),
-                _hatedNumber(hatedNumber), _hatedNumberHappinessChange(hatedNumberHappinessChange),
-                _favoriteTile(favoriteTile), _favoriteTileHappinessChange(favoriteTileHappinessChange),
-                _hatedTile(hatedTile), _hatedTileHappinessChange(hatedTileHappinessChange),
-                _specialCallback(std::move(specialCallback)), _gameOverCallback(std::move(gameOverCallback)) {}
+               std::function<int()> specialCallback, std::function<void()> gameOverCallback);
 
     /**
      * @brief set happiness of character between 0 and MAX_HAPPINESS
