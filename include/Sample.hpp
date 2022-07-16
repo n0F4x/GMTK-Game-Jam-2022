@@ -138,6 +138,18 @@ public:
 		_progressbar.setPrimaryColor(sf::Color::Green);
 		_progressbar.setSecondaryColor(sf::Color::Red);
 
+        _topLeft.setSize({20, 20});
+        _topLeft.setFillColor(sf::Color::Blue);
+
+        _bottomRight.setSize({20, 20});
+        _bottomRight.setFillColor(sf::Color::Blue);
+        _bottomRight.setPosition({engine::Window::getSize().x - 20, engine::Window::getSize().y - 20});
+
+        _mapTexture = engine::Assets::getTexture("middlewallupdated");
+        _mapSprite.setTexture(&_mapTexture);
+        _mapSprite.scale(5);
+        _mapSprite.setPosition({-300, -300});
+
 		addStateMachine(&_machine);
 
 		_machine.addState("Child1", std::make_unique<SampleChildState>("Left"));
@@ -148,10 +160,10 @@ public:
 	}
 
 	void handle_event(const sf::Event& event) override {
-		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right) {
-			changeState("Physics");
-		}
-	}
+        if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::Right) changeState("Physics");
+        }
+    }
 
 	void on_update() override {
 		_machine->update();
@@ -169,6 +181,7 @@ public:
 
 	void on_draw() override {
 		_machine->draw();
+        engine::Window::draw(_mapSprite);
 		engine::Window::draw(_sprite);
 		engine::Window::draw(_rectangleShape);
 		engine::Window::draw(_circleShape);
@@ -177,6 +190,9 @@ public:
 		engine::Window::draw(_triangle);
 		engine::Window::draw(_button);
 		engine::Window::draw(_progressbar);
+        engine::Window::draw(_button);
+        engine::Window::draw(_topLeft);
+        engine::Window::draw(_bottomRight);
 	}
 
 
@@ -192,6 +208,11 @@ private:
 	UI::Button _button{ &engine::Assets::getTexture("UI/Button"), &engine::Assets::getTexture("UI/ButtonHover")};
 	sf::Clock _progressClock;
 	UI::ProgressBar _progressbar{ {400.f, 20.f} };
+
+    sf::Texture _mapTexture;
+    engine::Sprite _mapSprite;
+
+    engine::RectangleShape _topLeft, _bottomRight;
 };
 
 
@@ -200,7 +221,8 @@ public:
 	PhysicsSampleState() {
 		renderer().push_background(&_sprite);
 		renderer().push_background(&_shape);
-
+        music.openFromFile(engine::Assets::ASSETS_PATH + "/music/calmbgm.ogg");
+        music.setLoop(true);
 
 		_shape.setOutlineThickness(5);
 		_shape.setFillColor(sf::Color(0, 0, 0, 0));
@@ -233,12 +255,20 @@ public:
 		addObject(&_rightWall);
 	}
 
+    void on_activate() override {
+        music.play();
+    }
+
+    void on_deactivate() override {
+        music.pause();
+    }
+
 	void handle_event(const sf::Event& event) override {
-		if (event.type == sf::Event::KeyPressed) {
-			if (event.key.code == sf::Keyboard::Right) changeState("Animations");
-			else if (event.key.code == sf::Keyboard::Left) changeState("Sample");
-		}
-	}
+        if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::Right) changeState("Animations");
+            else if (event.key.code == sf::Keyboard::Left) changeState("Sample");
+        }
+    }
 
 	void on_update() override {
 		_shape.setPosition(sf::Vector2f(_sprite.getComponent<engine::Collider>()->getHitBox().left, _sprite.getComponent<engine::Collider>()->getHitBox().top));
@@ -271,6 +301,8 @@ private:
 	engine::RectangleShape _rightWall{ { 50.f, engine::Window::getSize().y } };
 
 	std::mt19937 _randomEngine{ std::random_device{}() };
+
+    sf::Music music;
 };
 
 
@@ -296,11 +328,10 @@ public:
 	}
 
 	void handle_event(const sf::Event& event) override {
-		if (event.type == sf::Event::KeyPressed) {
-			if (event.key.code == sf::Keyboard::Right) changeState("Minimap");
-			else if (event.key.code == sf::Keyboard::Left) changeState("Physics");
-		}
-	}
+        if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::Left) changeState("Physics");
+        }
+    }
 
 	void on_update() override {
 		if (_tempTime + _clock.getElapsedTime() >= sf::seconds(1) && _animation->start()) {
@@ -328,92 +359,4 @@ private:
 	sf::Time _tempTime;
 	engine::RectangleShape _shape{ { 200.f, 200.f } };
 	engine::Animation* _animation = nullptr;
-};
-
-class MinimapSampleState : public engine::State {
-public:
-	MinimapSampleState() {
-		music.openFromFile(engine::Assets::ASSETS_PATH + "/music/calmbgm.ogg");
-		music.setLoop(true);
-		music.setVolume(50);
-
-		_player.setRadius(25);
-		_player.setOrigin(25, 25);
-		_player.setPosition(engine::Window::getSize() / 2.f);
-		_player.setFillColor(sf::Color(50, 220, 240, 255));
-		_player.setComponent(std::make_unique<engine::Physics>());
-		_player.getComponent<engine::Physics>()->setVelocity({ 50, 20 });
-
-		_minimapPlayer.setRadius(25);
-		_minimapPlayer.scale(5);
-		_minimapPlayer.setPosition({ engine::Window::getSize().x / 2.f - 25.f, engine::Window::getSize().y / 2.f - 25.f });
-		_minimapPlayer.setFillColor(sf::Color(250, 40, 40, 255));
-		_minimapPlayer.setComponent(std::make_unique<engine::Physics>());
-		_minimapPlayer.getComponent<engine::Physics>()->setVelocity({ 50, 100 });
-
-		_mapTexture = engine::Assets::getTexture("middlewallupdated");
-		_mapSprite.setTexture(&_mapTexture);
-		_mapSprite.scale(5);
-
-		_minimapBorder.setSize({ 250, 250 });
-		_minimapBorder.setPosition(engine::Window::getSize().x - 270.f, 20.f);
-		_minimapBorder.setFillColor(sf::Color(0, 0, 0, 100));
-		_minimapBorder.setOutlineThickness(5);
-		_minimapBorder.setOutlineColor(sf::Color(10, 10, 10, 255));
-
-		addObject(&_player);
-
-		_minimapCamera.setViewport({ (engine::Window::getSize().x - 270.f) / engine::Window::getSize().x, 20.f / engine::Window::getSize().y, 250.f / engine::Window::getSize().x, 250.f / engine::Window::getSize().y });
-		_minimapCamera.zoom(10.f);
-	}
-
-	void on_activate() override {
-		music.play();
-	}
-
-	void on_deactivate() override {
-		music.pause();
-	}
-
-	void handle_event(const sf::Event& event) override {
-		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left) {
-			changeState("Animations");
-		}
-	}
-
-	void on_update() override {
-		camera().setCenter(_player.getPosition());
-		_minimapPlayer.setPosition(_player.getPosition());
-		_minimapCamera.setCenter(_minimapPlayer.getPosition());
-	}
-
-	void on_draw() override {
-		engine::Window::draw(_mapSprite);
-		engine::Window::draw(_player);
-
-		engine::Window::setDefaultView();
-		engine::Window::draw(_minimapBorder);
-		engine::Window::resetToPreviousView();
-
-		engine::Window::setView(_minimapCamera);
-		_mapSprite.setColor(sf::Color(255, 255, 255, 200));
-		_mapTexture.setSmooth(true);
-		engine::Window::draw(_mapSprite);
-		_mapSprite.setColor(sf::Color::White);
-		_mapTexture.setSmooth(false);
-		engine::Window::draw(_minimapPlayer);
-		engine::Window::resetToPreviousView();
-	}
-
-private:
-	sf::Music music;
-
-	sf::Texture _mapTexture;
-	engine::Sprite _mapSprite;
-
-	engine::CircleShape _player;
-
-	engine::CircleShape _minimapPlayer;
-	sf::View _minimapCamera = sf::View({ 0, 0, 300, 300 });;
-	engine::RectangleShape _minimapBorder;
 };
