@@ -134,12 +134,6 @@ public:
         _tileMgr.setScale(3.f);
         renderer().push_basic(&_tileMgr);
 
-		// Progressbar
-		_progressbar.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 100.f, 370.f });
-		_progressbar.setProgress(0.f);
-		_progressbar.setPrimaryColor(sf::Color::Green);
-		_progressbar.setSecondaryColor(sf::Color::Red);
-
 		addStateMachine(&_machine);
 
 		_machine.addState("Child1", std::make_unique<SampleChildState>("Left"));
