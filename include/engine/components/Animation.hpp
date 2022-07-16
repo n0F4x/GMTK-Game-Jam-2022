@@ -11,6 +11,7 @@ namespace engine {
 
 	/**
 	 * @brief	Component class to apply special animations onto your object using transforms and/or alternating textures.
+	 *			Set the origin of your object correctly for transform animations!
 	*/
 	class Animation {
 	public:
@@ -44,11 +45,6 @@ namespace engine {
 		void setDistance(const sf::Vector2f& distance);
 
 		/**
-		 * @brief	Set the origin of the animation (usually best if you set it to match the center point).
-		 * @param origin	This will be the origin for all the transforms.
-		*/
-		void setOrigin(const sf::Vector2f& origin);
-		/**
 		 * @brief	Set the amount of rotation applied during animation. (For most cases this option is not supported, so nothing will happen).
 		 * @param rotation	IN DEGREES!!!
 		*/
@@ -56,7 +52,7 @@ namespace engine {
 		/**
 		 * @brief	Set the amount of scaling applied during animation. (For most cases this option is not supported, so nothing will happen).
 		*/
-		void setScale(float scale);
+		void setScale(const sf::Vector2f& scale);
 
 		/**
 		 * @brief	Set the textures to be shown (in order) during animation.
@@ -74,9 +70,8 @@ namespace engine {
 
 		sf::Time getTime() const;
 		const sf::Vector2f& getDistance() const;
-		const sf::Vector2f& getOrigin() const;
 		float getRotation() const;
-		float getScale() const;
+		const sf::Vector2f& getScale() const;
 		std::vector<const sf::Texture*>& getTextures();
 		sf::Time getTextureTime() const;
 
@@ -95,9 +90,8 @@ namespace engine {
 
 		sf::Time _time;
 		sf::Vector2f _distance;
-		sf::Vector2f _origin;
 		float _rotation = 0;
-		float _scale = 0;
+		sf::Vector2f _scale = { 0.f, 0.f };
 		std::vector<const sf::Texture*> _textures;
 		sf::Time _textureTime;
 	};
