@@ -30,6 +30,10 @@ void Text::setStyle(sf::Uint32 style) {
 	_text.setStyle(style);
 }
 
+void Text::setColor(const sf::Color& color) {
+	setFillColor(color);
+}
+
 void Text::setFillColor(const sf::Color& color) {
 	_text.setFillColor(color);
 }
@@ -65,6 +69,10 @@ float Text::getLineSpacing() const {
 
 sf::Uint32 Text::getStyle() const {
 	return _text.getStyle();
+}
+
+const sf::Color* Text::getColor() const {
+	return &getFillColor();
 }
 
 const sf::Color& Text::getFillColor() const {

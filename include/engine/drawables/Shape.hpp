@@ -37,12 +37,14 @@ namespace engine {
 	public:
 		void setTexture(const sf::Texture* texture, bool resetRect = false) override;
 		void setTextureRect(const sf::IntRect& rect);
+		void setColor(const sf::Color& color) override;
 		void setFillColor(const sf::Color& color);
 		void setOutlineColor(const sf::Color& color);
 		void setOutlineThickness(float thickness);
 
 		const sf::Texture* getTexture() const override;
 		const sf::IntRect& getTextureRect() const;
+		const sf::Color* getColor() const override;
 		const sf::Color& getFillColor() const;
 		const sf::Color& getOutlineColor() const;
 		float getOutlineThickness() const;
