@@ -220,7 +220,6 @@ public:
 		engine::Window::draw(_circleShape);
 		engine::Window::draw(_button);
 		engine::Window::draw(_progressbar);
-        engine::Window::draw(_button);
 	}
 
 
