@@ -42,6 +42,7 @@ set(SOURCE_FILES
     "src/animations/Bezier.cpp"
     "src/engine/components/Bezier.cpp"
     "src/UI/Button.cpp"
+    "src/UI/ProgressBar.cpp"
 )
 
 set(SFML_DIR ./dependencies/SFML-2.5.1/lib/cmake/SFML)

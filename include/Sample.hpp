@@ -12,6 +12,7 @@
 #include "engine/drawables/Arc.hpp"
 #include "animations/Bezier.hpp"
 #include "UI/Button.hpp"
+#include "UI/ProgressBar.hpp"
 
 
 class SampleChildState : public engine::State {
@@ -131,6 +132,12 @@ public:
 		_triangle.getPoint(1).color = sf::Color::Yellow;
 		_triangle.getPoint(2).color = sf::Color::Blue;
 
+        // Progressbar
+        _progressbar.setPosition(engine::Window::getSize() / 2.f + sf::Vector2f{ 100.f, 370.f });
+        _progressbar.setProgress(0.f);
+        _progressbar.setPrimaryColor(sf::Color::Green);
+        _progressbar.setSecondaryColor(sf::Color::Red);
+
 		addStateMachine(&_machine);
 
 		_machine.addState("Child1", std::make_unique<SampleChildState>("Left"));
@@ -149,10 +156,15 @@ public:
 	void on_update() override {
 		_machine->update();
 
-		_sprite.rotate(-1);
+		_sprite.rotate(-1.f);
         _button.update();
-		_rectangleShape.rotate(1);
-		_circleShape.rotate(1);
+		_rectangleShape.rotate(1.f);
+		_circleShape.rotate(1.f);
+
+        if (_progressClock.getElapsedTime() > sf::seconds(2)) {
+            _progressbar.setSize({500.f, 40.f});
+        }
+        _progressbar.addToProgress(0.005f);
 	}
 
 	void on_draw() override {
@@ -164,6 +176,7 @@ public:
 		engine::Window::draw(_flashLight);
 		engine::Window::draw(_triangle);
         engine::Window::draw(_button);
+        engine::Window::draw(_progressbar);
 	}
 
 
@@ -177,6 +190,8 @@ private:
 	engine::Arc _flashLight{ 120.f, 60.f, 8 };
 	engine::Arc _triangle{ 160.f, 60.f, 2 };
     UI::Button _button;
+    sf::Clock _progressClock;
+    UI::ProgressBar _progressbar{{400.f, 20.f}};
 };
 
 
