@@ -16,12 +16,18 @@ public:
         Sprite::setTexture(&Assets::getTexture(tileTypeToString(type)));
     }
 
-    std::unique_ptr<Tile>& nextTile() {
-        return _next;
-    }
-
-    Tile* prevTile() {
-        return _prev;
+    Tile* getRelativeTile(int offset = 1) {
+        Tile* t = this;
+        if (offset >= 0) {
+            for (int i = 0; i < offset; ++i) {
+                t = t->_next.get();
+            }
+        } else {
+            for (int i = 0; i < -offset; ++i) {
+                t = t->_prev;
+            }
+        }
+        return t;
     }
 
     TileType getType() {
@@ -35,6 +41,10 @@ public:
     TileDirection getDirToNext() {
         return _dirToNext;
     }
+
+    int getTileIndex() const {
+        return _tileIndex;
+    }
 private:
     friend TileManager;
 
@@ -42,4 +52,5 @@ private:
     TileDirection _dirFromPrev = NONE, _dirToNext = NONE;
     std::unique_ptr<Tile> _next = nullptr;
     Tile* _prev = nullptr;
+    int _tileIndex = 0;
 };
