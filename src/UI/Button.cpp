@@ -6,7 +6,8 @@
 using namespace UI;
 
 
-Button::Button(std::function<void()> callback) : _callback(std::move(callback)) {}
+Button::Button(const sf::Texture *texture, const sf::Texture *hoverTexture, std::function<void()> callback)
+    : _callback(std::move(callback)), _texture(texture), _hoverTexture(hoverTexture) {}
 
 
 void Button::setCallback(std::function<void()> callback) {
@@ -22,21 +23,26 @@ void Button::update() {
     bool isAboveButton = getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(engine::Window::get())));
     bool isMousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 
-    // if mouse is above the button and left-click was just clicked
-    if (isAboveButton && !_wasButtonPressedLastFrame && isMousePressed) {
-        _pressed = true;
-        setTexture(_pressedTexture);
+    // if mouse is above the button
+    if (isAboveButton) {
+        setTexture(_hoverTexture);
+        // left-click was just clicked
+        if (!_wasButtonPressedLastFrame && isMousePressed) {
+            _pressed = true;
+        }
+        // button was pressed and left-click is released
+        else if (_pressed && !isMousePressed) {
+            _pressed = false;
+            _callback();
+        }
     }
-    // if mouse is above the button and button was pressed and left-click is released
-    else if (isAboveButton && _pressed && !isMousePressed) {
-        _pressed = false;
+    // otherwise
+    else {
         setTexture(_texture);
-        _callback();
-    }
-    // otherwise if left-click is released
-    else if (!isMousePressed) {
-        _pressed = false;
-        setTexture(_texture);
+        // if left-click is released
+        if (!isMousePressed) {
+            _pressed = false;
+        }
     }
 
     _wasButtonPressedLastFrame = isMousePressed;
