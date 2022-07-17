@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utility>
+
 #include "TileManager.hpp"
 #include "Character.hpp"
 #include "CharacterType.hpp"
@@ -9,7 +11,7 @@ using namespace engine;
 
 class BoardGameManager : public sf::Drawable {
 public:
-    BoardGameManager(CharacterType startingCharacter) {
+    BoardGameManager(CharacterType startingCharacter, const std::function<void(Character&)>& gameOverCallback = std::function<void(Character&)>()) {
         _tilesBg.setTexture(&engine::Assets::getTexture("Tiles/board_background"));
         _tilesBg.setPosition(Window::getSize().x / 2.f - (21 * 11 + 1) / 2.f * 3.f - 12, Window::getSize().y / 2.f - (21 * 7 + 1) / 2.f * 3.f - 12);
         _tilesBg.setScale(3, 3);
@@ -18,10 +20,10 @@ public:
         _tileMgr.addTile(TileType::NORMAL, RIGHT);
         _tileMgr.addTile(TileType::NORMAL, RIGHT);
         _tileMgr.addTile(TileType::NORMAL, RIGHT);
+        _tileMgr.addTile(TileType::PLUS_3, RIGHT);
         _tileMgr.addTile(TileType::NORMAL, RIGHT);
         _tileMgr.addTile(TileType::NORMAL, RIGHT);
-        _tileMgr.addTile(TileType::NORMAL, RIGHT);
-        _tileMgr.addTile(TileType::NORMAL, RIGHT);
+        _tileMgr.addTile(TileType::SWAP_PLACES, RIGHT);
         _tileMgr.addTile(TileType::NORMAL, RIGHT);
         _tileMgr.addTile(TileType::NORMAL, RIGHT);
         _tileMgr.addTile(TileType::NORMAL, DOWN);
@@ -98,15 +100,68 @@ public:
         return *_activeCharacter;
     }
 
-    /*void tick(int diceNumber) {
-        _activeCharacter->move(diceNumber);
-        _characters[0]->calculateHappinessAfterTurn();
+    void tick(int moveOffset, int recursionLevel = 0) {
+        // move character
+        int oldPos[4] = { _characters[0]->getCurrentTile()->getTileIndex(), _characters[1]->getCurrentTile()->getTileIndex(),
+                          _characters[2]->getCurrentTile()->getTileIndex(), _characters[3]->getCurrentTile()->getTileIndex()};
+
+        _activeCharacter->move(moveOffset);
+
+        int newPos[4];
+        std::copy(std::begin(oldPos), std::end(oldPos), std::begin(newPos));
+        newPos[_activeCharacter->getType()] += moveOffset;
+
+        // calculate happiness
+        for (int i = 0; i < 4; ++i) {
+            _characters[i]->calculateHappinessAfterTurn(recursionLevel > 0 ? 0 : moveOffset, _activeCharacter->getCurrentTile()->getType(),
+                                                        _activeCharacter->getType(), *this, oldPos, newPos);
+        }
+
+        // process tile type and move character if it is current character
+        if (recursionLevel > 20) {
+            // TODO finish move if character has visited a tile again that it has already visited in their current turn
+            nextCharacter();
+            return;
+        }
+
+        switch (_activeCharacter->getCurrentTile()->getType()) {
+            case PLUS_3:
+                tick(3, recursionLevel + 1);
+                break;
+            case MINUS_5:
+                tick(-5, recursionLevel + 1);
+                break;
+            case SWAP_PLACES:
+                int sortedNewPos[4];
+                std::copy(std::begin(newPos), std::end(newPos), std::begin(sortedNewPos));
+                std::sort(std::begin(sortedNewPos), std::end(sortedNewPos), std::greater<>());
+
+                for (int i = 0; i < 4; ++i) {
+                    if (sortedNewPos[i] < newPos[_activeCharacter->getType()]) {
+                        for (int j = 0; j < 4; ++j) {
+                            if (_characters[j]->getCurrentTile()->getTileIndex() == sortedNewPos[i]) {
+                                _characters[j]->move(newPos[_activeCharacter->getType()] - sortedNewPos[i]);
+                            }
+                        }
+                        tick(sortedNewPos[i] - newPos[_activeCharacter->getType()], recursionLevel + 1);
+                        break;
+                    }
+                }
+                break;
+            case REPEAT_MOVE:
+                tick(moveOffset, recursionLevel + 1);
+                break;
+            case FINISH:
+                break;
+            default:
+                nextCharacter();
+                break;
+        }
     }
 
-    void moveCharacter(int offset) {
-        _activeCharacter->move(diceNumber);
-        _characters[0]->calculateHappinessAfterTurn();
-    }*/
+    void setGameOverCallback(std::function<void(Character& character)> callback) {
+        _gameOverCallback = std::move(callback);
+    }
 
 protected:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override {
@@ -131,6 +186,8 @@ private:
     TileManager _tileMgr;
     engine::Sprite _tilesBg;
     std::unique_ptr<Character> _characters[4];
+
+    std::function<void(Character&)> _gameOverCallback;
 
     Character* _activeCharacter = nullptr;
 };

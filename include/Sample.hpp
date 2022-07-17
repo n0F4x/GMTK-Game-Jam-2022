@@ -387,6 +387,14 @@ public:
 		_dogPostit.getComponent<engine::Animator>()->findAnimation("in")->start();
 
 		renderer().push_basic(&_boardGameMgr);
+        _boardGameMgr.tick(1);
+        _boardGameMgr.tick(3);
+        _boardGameMgr.tick(7);
+        _boardGameMgr.tick(5);
+
+        for (int i = 0; i < 4; ++i) {
+            printf("%d\n", _boardGameMgr.getCharacter(static_cast<CharacterType>(i)).getHappiness());
+        }
 	}
 
 	void handle_event(const sf::Event& event) override {
