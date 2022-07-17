@@ -133,6 +133,9 @@ void GamePlaySelectState::on_update() {
 		}
 	}
 	if (_clock.getElapsedTime() > sf::seconds(3.5f) || _skipped) {
+		if (!_skipped) {
+			*_storeDice = "-1";
+		}
 		_selectHolder.getComponent<engine::Animator>()->findAnimation("out")->start();
 		_clock.restart();
 		_exiting = true;

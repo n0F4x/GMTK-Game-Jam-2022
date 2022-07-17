@@ -103,6 +103,24 @@ void MenuState::on_update() {
 
 			_tileInfoDisplay.getComponent<engine::Animator>()->findAnimation("in")->start();
 		}
+
+        // Volume control - fade out
+        if (_clock.getElapsedTime() >= sf::seconds(8.f))
+            _menuMusic.setVolume(5.f);
+        else if (_clock.getElapsedTime() >= sf::seconds(7.f))
+            _menuMusic.setVolume(15.f);
+        else if (_clock.getElapsedTime() >= sf::seconds(6.f))
+            _menuMusic.setVolume(25.f);
+        else if (_clock.getElapsedTime() >= sf::seconds(5.f))
+            _menuMusic.setVolume(35.f);
+        else if (_clock.getElapsedTime() >= sf::seconds(4.f))
+            _menuMusic.setVolume(45.f);
+        else if (_clock.getElapsedTime() >= sf::seconds(3.f))
+            _menuMusic.setVolume(55.f);
+        else if (_clock.getElapsedTime() >= sf::seconds(2.f))
+            _menuMusic.setVolume(60.f);
+        else if (_clock.getElapsedTime() >= sf::seconds(1.f))
+            _menuMusic.setVolume(75.f);
 	}
 }
 
