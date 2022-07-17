@@ -37,7 +37,7 @@ Character::Character(CharacterType type, int happinessLoss,
             break;
     }
 
-    _happiness = 50 + (rand() % 11) * 5;
+    _happiness = 50 + (rand() % 9) * 5;
     printf("%d\n", _happiness);
 }
 

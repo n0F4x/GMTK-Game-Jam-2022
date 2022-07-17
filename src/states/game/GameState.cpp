@@ -6,6 +6,7 @@
 #include "engine/Assets.hpp"
 #include "animations/Bezier.hpp"
 
+static sf::Sprite marker;
 
 GameState::GameState() {
 	addStateMachine(&_stateMachine);
@@ -14,6 +15,10 @@ GameState::GameState() {
 
 	_stateMachine.setInitialState("Play");
 
+    marker.setTexture(engine::Assets::getTexture("UI/marker"));
+    marker.setOrigin(5, 5);
+    marker.setScale(5.f, 5.f);
+    renderer().push_priority(&marker);
 
 	background_setup();
 	character_setup();
@@ -38,6 +43,23 @@ void GameState::on_update() {
     _girlBar.setProgress(_boardGameManager.getCharacter(GIRL).getHappinessNormed());
     _grandpaBar.setProgress(_boardGameManager.getCharacter(GRANDPA).getHappinessNormed());
     _dogBar.setProgress(_boardGameManager.getCharacter(DOGE).getHappinessNormed());
+
+    if (_boardGameManager.getActiveCharacter().getType() == BOY) {
+        marker.setPosition(350, 150);
+        marker.setRotation(-45);
+    }
+    if (_boardGameManager.getActiveCharacter().getType() == GIRL) {
+        marker.setPosition(350, 150);
+        marker.setRotation(-45);
+    }
+    if (_boardGameManager.getActiveCharacter().getType() == GRANDPA) {
+        marker.setPosition(350, 150);
+        marker.setRotation(-45);
+    }
+    if (_boardGameManager.getActiveCharacter().getType() == DOGE) {
+        marker.setPosition(350, 150);
+        marker.setRotation(-45);
+    }
 
     if (state == 0) {
         _timeDisplay.setProgress((5.f - timer.getElapsedTime().asSeconds()) / 5.f);
@@ -267,3 +289,4 @@ void GameState::helper_setup() {
 	addObject(&_timeDisplay);
 	renderer().push_basic(&_timeDisplay);
 }
+
