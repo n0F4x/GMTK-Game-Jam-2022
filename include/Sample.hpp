@@ -97,6 +97,49 @@ public:
 
 		store().add("restart", "true");
 
+		// SELECT STUFF
+		_selectBackdrop.setFillColor(sf::Color(100, 100, 100, 200));
+		_selectBackdrop.setSize(sf::Vector2f(1920, 1080));
+		renderer().push_priority(&_selectBackdrop);
+
+		_dice1.setTexture(&engine::Assets::getTexture("DiceSides/1"));
+		_dice1.scale(7.f, 7.f);
+		_dice1.setPosition(345, 700);
+		renderer().push_priority(&_dice1);
+		_dice2.setTexture(&engine::Assets::getTexture("DiceSides/2"));
+		_dice2.scale(7.f, 7.f);
+		_dice2.setPosition(545, 700);
+		renderer().push_priority(&_dice2);
+		_dice3.setTexture(&engine::Assets::getTexture("DiceSides/3"));
+		_dice3.scale(7.f, 7.f);
+		_dice3.setPosition(745, 700);
+		renderer().push_priority(&_dice3);
+		_dice4.setTexture(&engine::Assets::getTexture("DiceSides/4"));
+		_dice4.scale(7.f, 7.f);
+		_dice4.setPosition(945, 700);
+		renderer().push_priority(&_dice4);
+		_dice5.setTexture(&engine::Assets::getTexture("DiceSides/5"));
+		_dice5.scale(7.f, 7.f);
+		_dice5.setPosition(1145, 700);
+		renderer().push_priority(&_dice5);
+		_dice6.setTexture(&engine::Assets::getTexture("DiceSides/6"));
+		_dice6.scale(7.f, 7.f);
+		_dice6.setPosition(1345, 700); 
+		renderer().push_priority(&_dice6);
+
+		_selectText.setTexture(&engine::Assets::getTexture("UI/select"));
+		_selectText.scale(10.f, 10.f);
+		_selectText.setPosition(485, 300);
+		renderer().push_priority(&_selectText);
+
+		_selectTime.setPrimaryColor(sf::Color::White);
+		_selectTime.setSecondaryColor(sf::Color::White);
+		_selectTime.setPosition({ 495,600 });
+		renderer().push_priority(&_selectTime);
+		addObject(&_selectTime);
+
+		// END OF SELECT STUFF
+
 		// MAIN MENU
 		_floor.setTexture(&engine::Assets::getTexture("Environment/floor"));
 		_floor.scale(6.f, 6.f);
@@ -143,10 +186,6 @@ public:
 		scaleAnimator->findAnimation("zoomOut")->setTime(sf::seconds(3));
 
 		addObject(&_scaler);
-
-		//_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
-		//TODO - (click to start game) text on bottom center of screen
-		//TODO - take items off table animation, main title, click text fadeOut while zooming out
 
 		// END OF MENU
 
@@ -195,7 +234,7 @@ public:
 		_boyBarBack.setPosition(50, 50 - 500);
 		_boyBarBack.scale(4.f, 4.f);
 		addObject(&_boyBarBack);
-		renderer().push_background(&_boyBarBack);
+		renderer().push_priority(&_boyBarBack);
 		animator = _boyBarBack.setComponent(std::make_unique<engine::Animator>());
 		animator->addAnimation("in", std::make_unique<animations::Ease>());
 		animator->findAnimation("in")->setDistance({ 0, 500.f });
@@ -203,7 +242,7 @@ public:
 
 		_boyBar.setPosition(54, 54 - 500);
 		addObject(&_boyBar);
-		renderer().push_background(&_boyBar);
+		renderer().push_priority(&_boyBar);
 		_boyBar.attach_parent(&_boyBarBack);
 		_boyBar.setPrimaryColor(sf::Color(88, 193, 53, 255));
 		_boyBar.setSecondaryColor(sf::Color(223, 63, 35, 255));
@@ -211,14 +250,14 @@ public:
 		_girlBarBack.setTexture(&engine::Assets::getTexture("UI/bar_background"));
 		_girlBarBack.scale(4.f, 4.f);
 		addObject(&_girlBarBack);
-		renderer().push_background(&_girlBarBack);
+		renderer().push_priority(&_girlBarBack);
 		animator = _girlBarBack.setComponent(std::make_unique<engine::Animator>());
 		animator->addAnimation("in", std::make_unique<animations::Ease>());
 		animator->findAnimation("in")->setDistance({ 0, 500.f });
 		animator->findAnimation("in")->setTime(sf::seconds(6.f));
 
 		addObject(&_girlBar);
-		renderer().push_background(&_girlBar);
+		renderer().push_priority(&_girlBar);
 		_girlBar.attach_parent(&_girlBarBack);
 		_girlBar.setPrimaryColor(sf::Color(88, 193, 53, 255));
 		_girlBar.setSecondaryColor(sf::Color(223, 63, 35, 255));
@@ -231,7 +270,7 @@ public:
 		_dogBarBack.setPosition(50, 990 + 500);
 		_dogBarBack.scale(4.f, 4.f);
 		addObject(&_dogBarBack);
-		renderer().push_background(&_dogBarBack);
+		renderer().push_priority(&_dogBarBack);
 		animator = _dogBarBack.setComponent(std::make_unique<engine::Animator>());
 		animator->addAnimation("in", std::make_unique<animations::Ease>());
 		animator->findAnimation("in")->setDistance({ 0, -500.f });
@@ -239,7 +278,7 @@ public:
 
 		_dogBar.setPosition(54, 994 + 500);
 		addObject(&_dogBar);
-		renderer().push_background(&_dogBar);
+		renderer().push_priority(&_dogBar);
 		_dogBar.attach_parent(&_dogBarBack);
 		_dogBar.setPrimaryColor(sf::Color(88, 193, 53, 255));
 		_dogBar.setSecondaryColor(sf::Color(223, 63, 35, 255));
@@ -247,14 +286,14 @@ public:
 		_gradpaBarBack.setTexture(&engine::Assets::getTexture("UI/bar_background"));
 		_gradpaBarBack.scale(4.f, 4.f);
 		addObject(&_gradpaBarBack);
-		renderer().push_background(&_gradpaBarBack);
+		renderer().push_priority(&_gradpaBarBack);
 		animator = _gradpaBarBack.setComponent(std::make_unique<engine::Animator>());
 		animator->addAnimation("in", std::make_unique<animations::Ease>());
 		animator->findAnimation("in")->setDistance({ 0, -500.f });
 		animator->findAnimation("in")->setTime(sf::seconds(6.f));
 
 		addObject(&_grandpaBar);
-		renderer().push_background(&_grandpaBar);
+		renderer().push_priority(&_grandpaBar);
 		_grandpaBar.attach_parent(&_gradpaBarBack);
 		_grandpaBar.setPrimaryColor(sf::Color(88, 193, 53, 255));
 		_grandpaBar.setSecondaryColor(sf::Color(223, 63, 35, 255));
@@ -264,7 +303,7 @@ public:
 		_grandpaBar.setPosition(1866, 1026 + 500);
 
 		// START ANIMATIONS
-		/*
+		
 		_boy.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_girl.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_grandpa.getComponent<engine::Animator>()->findAnimation("in")->start();
@@ -274,8 +313,10 @@ public:
 		_girlBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_gradpaBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_dogBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
-		*/
 		
+		_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
+
+		renderer().push_basic(&_boardGameMgr);
 	}
 
 	void handle_event(const sf::Event& event) override {
@@ -293,8 +334,6 @@ public:
 		_machine->draw();
 
 		renderer().render();
-
-        Window::draw(_boardGameMgr);
 	}
 
 
@@ -311,6 +350,12 @@ private:
 	//Tabletop
 	engine::Sprite _title;
 	engine::Sprite _croissant, _plant, _coffee;
+
+	//Select!
+	engine::Sprite _dice1, _dice2, _dice3, _dice4, _dice5, _dice6;
+	engine::Sprite _selectText;
+	UI::ProgressBar _selectTime {{930,20}};
+	engine::RectangleShape _selectBackdrop;
 
 	TileManager _tileMgr;
 	engine::RectangleShape _tilesBg;
