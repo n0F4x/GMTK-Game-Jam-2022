@@ -196,7 +196,7 @@ namespace engine {
 		///////////////
 		StateMachine* _stateMachine = nullptr;
 
-		bool _isActive = false;
+		bool _isActive = true;
 		std::string _nextState;
 
 		std::vector<Object*> _objects;

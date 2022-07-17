@@ -1,5 +1,6 @@
 #pragma once
 
+#include "engine/Assets.hpp"
 #include "engine/State.hpp"
 #include "engine/StateMachine.hpp"
 
@@ -12,6 +13,10 @@ private:
 	int setup() override;
 
 	void handle_event(const sf::Event&) override;
+
+    void on_activate() override;
+    void on_deactivate() override;
+
 	void on_update() override;
 	void on_draw() override;
 
@@ -20,4 +25,5 @@ private:
 	// Variables //
 	///////////////
 	engine::StateMachine _stateMachine;
+    sf::Music _gameplayMusic;
 };
