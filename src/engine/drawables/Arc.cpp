@@ -44,13 +44,13 @@ sf::Vertex& Arc::getPoint(size_t index) {
 }
 
 
-void Arc::setColor(const sf::Color& color) {
+void Arc::setFillColor(const sf::Color& color) {
 	for (auto& vertex : _vertices) {
 		vertex.color = color;
 	}
 }
 
-const sf::Color* engine::Arc::getColor() const {
+const sf::Color* engine::Arc::getFillColor() const {
 	return &_vertices[0].color;
 }
 

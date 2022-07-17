@@ -67,7 +67,11 @@ namespace engine {
 		/**
 		 * @brief	Set the amount of color to transition.
 		*/
-		void setColor(const Color& color);
+		void setFillColor(const Color& color);
+		/**
+		 * @brief	Set the amount of color to transition.
+		*/
+		void setOutlineColor(const Color& color);
 
 
 		/////////////
@@ -80,7 +84,8 @@ namespace engine {
 		const sf::Vector2f& getScale() const;
 		std::vector<const sf::Texture*>& getTextures();
 		sf::Time getTextureTime() const;
-		const Color& getColor() const;
+		const Color& getFillColor() const;
+		const Color& getOutlineColor() const;
 
 
 	protected:
@@ -101,7 +106,8 @@ namespace engine {
 		sf::Vector2f _scale = { 0.f, 0.f };
 		std::vector<const sf::Texture*> _textures;
 		sf::Time _textureTime;
-		Color _color;
+		Color _fillColor;
+		Color _outlineColor;
 	};
 
 }

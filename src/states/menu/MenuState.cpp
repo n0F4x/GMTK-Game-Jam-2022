@@ -3,10 +3,8 @@
 #include "engine/Window.hpp"
 #include "animations/Bezier.hpp"
 #include "animations/BezierScale.hpp"
-#include "animations/BezierColor.hpp"
-
-
-sf::Color operator*(sf::Color color, float factor);
+#include "animations/BezierFillColor.hpp"
+#include "animations/BezierOutlineColor.hpp"
 
 
 MenuState::MenuState() {
@@ -99,9 +97,12 @@ MenuState::MenuState() {
 	_clickText.setOutlineThickness(4.f);
 	_clickText.setFillColor(sf::Color{ 227, 230, 255 });
 	_clickText.setOutlineColor(sf::Color::Black);
-	engine::Animation* animation = _clickText.setComponent(std::make_unique<engine::Animator>())->addAnimation("colorOut", std::make_unique<animations::EaseColor>());
-	animation->setTime(sf::seconds(5));
-	animation->setColor({ 0.f, 0.f, 0.f, -255.f });
+	engine::Animation* animation = _clickText.setComponent(std::make_unique<engine::Animator>())->addAnimation("fillColorOut", std::make_unique<animations::EaseFillColor>());
+	animation->setTime(sf::seconds(2));
+	animation->setFillColor({ 0.f, 0.f, 0.f, -255.f });
+	animation = _clickText.getComponent<engine::Animator>()->addAnimation("outlineColorOut", std::make_unique<animations::EaseOutlineColor>());
+	animation->setTime(sf::seconds(2));
+	animation->setOutlineColor({ 0.f, 0.f, 0.f, -255.f });
 	addObject(&_clickText);
 	renderer().push_background(&_clickText);
 
@@ -112,7 +113,6 @@ void MenuState::handle_event(const sf::Event& event) {
 	if (!_startGame && event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
 		_startGame = true;
 		_clock.restart();
-		_clickText.setOutlineColor({ 0, 0, 0, 0 });
 	}
 }
 
@@ -124,7 +124,8 @@ void MenuState::on_activate() {
 
 void MenuState::on_update() {
 	if (_startGame) {
-		_clickText.getComponent<engine::Animator>()->findAnimation("colorOut")->start();
+		_clickText.getComponent<engine::Animator>()->findAnimation("fillColorOut")->start();
+		_clickText.getComponent<engine::Animator>()->findAnimation("outlineColorOut")->start();
 		_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
 		_croissant.getComponent<engine::Animator>()->findAnimation("out")->start();
 		_title.getComponent<engine::Animator>()->findAnimation("out")->start();

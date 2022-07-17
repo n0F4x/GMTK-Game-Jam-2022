@@ -77,6 +77,13 @@ void Sprite::setColor(const sf::Color& color) {
 	m_vertices[3].color = color;
 }
 
+
+////////////////////////////////////////////////////////////
+void Sprite::setFillColor(const sf::Color& color) {
+	setColor(color);
+}
+
+
 ////////////////////////////////////////////////////////////
 void Sprite::scaleToSize(float sizeX, float sizeY) {
     setScale(sizeX / getLocalBounds().width, sizeY / getLocalBounds().height);
@@ -109,6 +116,10 @@ const sf::IntRect& Sprite::getTextureRect() const {
 ////////////////////////////////////////////////////////////
 const sf::Color* Sprite::getColor() const {
 	return &m_vertices[0].color;
+}
+
+const sf::Color* engine::Sprite::getFillColor() const {
+	return getColor();
 }
 
 
