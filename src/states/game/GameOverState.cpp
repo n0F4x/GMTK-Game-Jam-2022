@@ -3,18 +3,96 @@
 #include "engine/Assets.hpp"
 #include "states/BoardGameManager.hpp"
 #include "states/CharacterType.hpp"
-
+#include "animations/BezierScale.hpp"
+#include "animations/BezierFillColor.hpp"
 
 GameOverState::GameOverState() {
+	_scaler.setPosition(960, 540);
+
 	background_setup();
 	character_setup();
 	postits_setup();
 	game_board_setup();
 	helper_setup();
+
+	_clock.restart();
+
+	auto animator = _scaler.setComponent(std::make_unique<engine::Animator>());
+	animator->addAnimation("zoomIn", std::make_unique<animations::EaseScale>());
+	animator->findAnimation("zoomIn")->setScale({ 4.f, 4.f });
+	animator->findAnimation("zoomIn")->setTime(sf::seconds(3));
+	addObject(&_scaler);
+
+	animator = _boardGameManager.setComponent(std::make_unique<engine::Animator>());
+	animator->addAnimation("fade", std::make_unique<animations::Ease>());
+	animator->findAnimation("fade")->setDistance({ 0, 1250 });
+	animator->findAnimation("fade")->setTime(sf::seconds(3));
+	addObject(&_boardGameManager);
+
+	_gameOver.setTexture(&engine::Assets::getTexture("UI/gameover"));
+	_gameOver.setPosition(935, 480);
+	_gameOver.scale(1.5f);
+	_gameOver.attach_parent(&_scaler);
+	renderer().push_background(&_gameOver);
+
+	animator = _gameOver.setComponent(std::make_unique<engine::Animator>());
+	animator->addAnimation("fade", std::make_unique<animations::EaseFillColor>());
+	animator->findAnimation("fade")->setFillColor({ 0, 0,0,-255 });
+	animator->findAnimation("fade")->setTime(sf::seconds(3));
+	addObject(&_gameOver);
+
+	_title.setTexture(&engine::Assets::getTexture("UI/title"));
+	_title.setPosition(935, 480);
+	_title.scale(1.5f);
+	_title.attach_parent(&_scaler);
+	renderer().push_background(&_title);
+	addObject(&_title);
+
+	_title.setFillColor({_title.getFillColor()->r, _title.getFillColor()->g, _title.getFillColor()->b, 0});
+	animator = _title.setComponent(std::make_unique<engine::Animator>());
+	animator->addAnimation("fade", std::make_unique<animations::EaseFillColor>());
+	animator->findAnimation("fade")->setFillColor({ 0,0,0,255 });
+	animator->findAnimation("fade")->setTime(sf::seconds(3.f));
+
+	engine::Animator* takerAnimator = _croissant.setComponent(std::make_unique<engine::Animator>());
+	_croissant.getComponent<engine::Animator>()->addAnimation("in", std::make_unique<animations::Ease>());
+	takerAnimator->findAnimation("in")->setDistance({ 300, 2600 });
+	takerAnimator->findAnimation("in")->setTime(sf::seconds(3));
+	addObject(&_croissant);
+
+	takerAnimator = _coffee.setComponent(std::make_unique<engine::Animator>());
+	_coffee.getComponent<engine::Animator>()->addAnimation("in", std::make_unique<animations::Ease>());
+	takerAnimator->findAnimation("in")->setDistance({ 800, 2600 });
+	takerAnimator->findAnimation("in")->setTime(sf::seconds(3));
+	addObject(&_coffee);
+
+	takerAnimator = _plant.setComponent(std::make_unique<engine::Animator>());
+	_plant.getComponent<engine::Animator>()->addAnimation("in", std::make_unique<animations::Ease>());
+	takerAnimator->findAnimation("in")->setDistance({ -600, 1340 });
+	takerAnimator->findAnimation("in")->setTime(sf::seconds(3));
+	addObject(&_plant);
+
+	_scaler.getComponent<engine::Animator>()->findAnimation("zoomIn")->start();
+	_boardGameManager.getComponent<engine::Animator>()->findAnimation("fade")->start();
 }
 
+void GameOverState::on_update() {
+	if (_clock.getElapsedTime() > sf::seconds(3)) {
+		_gameOver.getComponent<engine::Animator>()->findAnimation("fade")->start();
+		_title.getComponent<engine::Animator>()->findAnimation("fade")->start();
+		_coffee.getComponent<engine::Animator>()->findAnimation("in")->start();
+		_plant.getComponent<engine::Animator>()->findAnimation("in")->start();
+		_croissant.getComponent<engine::Animator>()->findAnimation("in")->start();
+	}
+	if (_clock.getElapsedTime() > sf::seconds(6)) {
+		changeState("Menu");
+	}
 
-void GameOverState::on_draw() { /*TODO*/ }
+}
+
+void GameOverState::on_draw() { 
+	renderer().render();
+}
 
 
 void GameOverState::character_setup() {
@@ -98,6 +176,15 @@ void GameOverState::character_setup() {
 	_gradpaBarBack.rotate(180);
 	_gradpaBarBack.setPosition(1870, 1030);
 	_grandpaBar.setPosition(1866, 1026);
+
+	_scaler.attach_child(&_boy);
+	_scaler.attach_child(&_girl);
+	_scaler.attach_child(&_grandpa);
+	_scaler.attach_child(&_dog);
+	_scaler.attach_child(&_boyBarBack);
+	_scaler.attach_child(&_girlBarBack);
+	_scaler.attach_child(&_gradpaBarBack);
+	_scaler.attach_child(&_dogBarBack);
 }
 
 
@@ -135,6 +222,14 @@ void GameOverState::background_setup() {
 	_plant2.setPosition(700, 900);
 	_plant2.scale(4.f, 4.f);
 	renderer().push_background(&_plant2);
+
+	_scaler.attach_child(&_floor);
+	_scaler.attach_child(&_table);
+	_scaler.attach_child(&_table2);
+	_scaler.attach_child(&_croissant);
+	_scaler.attach_child(&_plant);
+	_scaler.attach_child(&_coffee);
+	_scaler.attach_child(&_plant2);
 }
 
 
@@ -178,6 +273,11 @@ void GameOverState::postits_setup() {
 	_grandpaText.setFillColor(sf::Color::Black);
 	renderer().push_priority(&_grandpaText);
 	_grandpaPostit.setPosition(1600, 525);
+
+	_scaler.attach_child(&_boyPostit);
+	_scaler.attach_child(&_girlPostit);
+	_scaler.attach_child(&_grandpaPostit);
+	_scaler.attach_child(&_dogPostit);
 }
 
 void GameOverState::game_board_setup() {
@@ -190,6 +290,7 @@ void GameOverState::game_board_setup() {
 	}
 
 	//_boardGameManager.setGameOverCallback(gameOverCallback);
+	_scaler.attach_child(&_boardGameManager);
 }
 
 
@@ -205,4 +306,7 @@ void GameOverState::helper_setup() {
 	_timeDisplay.setSecondaryColor(sf::Color(255, 255, 255, 100));
 	addObject(&_timeDisplay);
 	renderer().push_basic(&_timeDisplay);
+
+	_scaler.attach_child(&_tileInfoDisplay);
+	_scaler.attach_child(&_timeDisplay);
 }
