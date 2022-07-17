@@ -2,7 +2,7 @@
 
 #include "states/game/gamestates/gameplaystates/GamePlayLookAroundState.hpp"
 #include "states/game/gamestates/gameplaystates/GamePlaySelectState.hpp"
-
+#include "states/Settings.hpp"
 
 GamePlayState::GamePlayState() {
 	addStateMachine(&_stateMachine);
@@ -10,6 +10,9 @@ GamePlayState::GamePlayState() {
 	_stateMachine.addState("Select", std::make_unique<GamePlaySelectState>());
 
 	_stateMachine.setInitialState("LookAround");
+
+    _gameplayMusic.openFromFile(engine::Assets::ASSETS_PATH + "/music/gameplay.ogg");
+    _gameplayMusic.setLoop(true);
 }
 
 
@@ -31,6 +34,14 @@ void GamePlayState::handle_event(const sf::Event& event) {
 	}
 
 	_stateMachine->handle_event(event);
+}
+
+void GamePlayState::on_activate() {
+    if(Settings::soundOn) _gameplayMusic.play();
+}
+
+void GamePlayState::on_deactivate() {
+    _gameplayMusic.stop();
 }
 
 void GamePlayState::on_update() {

@@ -166,6 +166,10 @@ void State::activate() {
 	_animationsClock.restart();
 
 	on_activate();
+
+    for (auto machine : _stateMachines) {
+        machine->operator->()->activate();
+    }
 }
 
 void State::deactivate() {
