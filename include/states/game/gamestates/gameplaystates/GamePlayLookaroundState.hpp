@@ -10,7 +10,7 @@ protected:
 	void on_update() override;
 	void on_draw() override;
 
-
+private:
 	///////////////
 	// Variables //
 	///////////////

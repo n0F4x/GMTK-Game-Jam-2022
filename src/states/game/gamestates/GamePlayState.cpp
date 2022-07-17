@@ -18,21 +18,27 @@ GamePlayState::GamePlayState() {
 
 int GamePlayState::setup() {
 	store().add("selector", "LookAround");
-	store().add("dice", "0"); // from 1 to 6 is okay
+	_storeState = store().get("selector");
+	globalStore()->add("selector", "LookAround");
+	_globalState = globalStore()->get("selector");
+	store().add("dice", "0"); // from 1 to 6 is valid
+	_storeDice = store().get("dice");
+	globalStore()->add("dice", "0"); // from 1 to 6 is valid
+	_globalDice = globalStore()->get("dice");
 
 	return 0;
 }
 
 
 void GamePlayState::handle_event(const sf::Event& event) {
-	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
-		if (*store().get("selector") == "LookAround") {
-			*store().get("selector") = "Select";
-		}
-		else if (*store().get("selector") == "Select") {
-			*store().get("selector") = "LookAround";
-		}
-	}
+	//if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
+	//	if (*store().get("selector") == "LookAround") {
+	//		*store().get("selector") = "Select";
+	//	}
+	//	else if (*store().get("selector") == "Select") {
+	//		*store().get("selector") = "LookAround";
+	//	}
+	//}
 
 	_stateMachine->handle_event(event);
 }
@@ -47,6 +53,15 @@ void GamePlayState::on_deactivate() {
 
 void GamePlayState::on_update() {
 	_stateMachine->update();
+	if (*_storeDice == "-1") {
+		*_globalDice = "0";
+		*_storeDice = "0";
+	}
+	if (*_storeDice != "0") {
+		*_globalDice = *_storeDice;
+		*_storeDice = "0";
+	}
+	*_storeState = *_globalState;
 }
 
 void GamePlayState::on_draw() { 
