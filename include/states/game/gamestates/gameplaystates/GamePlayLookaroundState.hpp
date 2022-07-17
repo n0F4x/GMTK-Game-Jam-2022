@@ -3,7 +3,7 @@
 #include "engine/State.hpp"
 
 
-class GamePlayLookaroundState : public engine::State {
+class GamePlayLookAroundState : public engine::State {
 private:
 	void on_draw() override;
 };

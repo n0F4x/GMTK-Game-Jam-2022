@@ -45,6 +45,8 @@ public:
      */
     float getHappinessNormed() const;
 
+    int getHappinessChange() const;
+
     /**
      * @brief calculate happiness after turn
      */
@@ -77,7 +79,7 @@ private:
     TileType _hatedTile;
     int _hatedTileHappinessChange;
 
-    std::string _specialDescription;
+    int _happinessChangeSinceLastTurn = 0;
 
     int _specialCallbackHappinessChange;
     std::function<int(Character& character, BoardGameManager& boardGameMgr, int oldPositions[], int newPositions[])> _specialCallback;

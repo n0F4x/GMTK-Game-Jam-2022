@@ -4,6 +4,7 @@
 #include "engine/State.hpp"
 #include "engine/drawables/Sprite.hpp"
 #include "engine/drawables/Text.hpp"
+#include "UI/ProgressBar.hpp"
 
 
 class MenuState : public engine::State {
@@ -20,6 +21,9 @@ protected:
 
 
 private:
+	void background_setup();
+	void character_setup();
+
 	///////////////
 	// Variables //
 	///////////////
@@ -33,17 +37,23 @@ private:
 	engine::Animation* _outlinePulseOnAnimation = nullptr;
 	engine::Animation* _outlinePulseOffAnimation = nullptr;
 
+	engine::Text _clickText{ "( click to start the game )", engine::Assets::getFont("unlearned2"), 56 };
 
+	// Background
 	engine::Sprite _floor;
 	engine::Sprite _table;
 	engine::Sprite _table2;
-	engine::Object _scaler;
-
 	engine::Sprite _title;
 	engine::Sprite _croissant;
 	engine::Sprite _plant;
 	engine::Sprite _plant2;
 	engine::Sprite _coffee;
+	engine::Object _scaler;
 
-	engine::Text _clickText{ "( click to start the game )", engine::Assets::getFont("unlearned2"), 56 };
+
+	bool _characterAnimations = false;
+	// Characters
+	engine::Sprite _boy, _girl, _grandpa, _dog;
+	engine::Sprite _boyBarBack, _girlBarBack, _gradpaBarBack, _dogBarBack;
+	UI::ProgressBar _boyBar{ {392.f, 32.f} }, _girlBar{ {392.f, 32.f} }, _grandpaBar{ {392.f, 32.f} }, _dogBar{ {392.f, 32.f} };
 };
