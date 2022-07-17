@@ -25,6 +25,13 @@ private:
 	///////////////
 	bool _startGame = false;
 	sf::Clock _clock;
+	sf::Clock _pulseClock;
+	bool _pulseOn = false;
+	engine::Animation* _fillPulseOnAnimation = nullptr;
+	engine::Animation* _fillPulseOffAnimation = nullptr;
+	engine::Animation* _outlinePulseOnAnimation = nullptr;
+	engine::Animation* _outlinePulseOffAnimation = nullptr;
+
 
 	engine::Sprite _floor;
 	engine::Sprite _table;
