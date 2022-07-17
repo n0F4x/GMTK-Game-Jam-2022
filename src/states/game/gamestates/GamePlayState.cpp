@@ -44,7 +44,9 @@ void GamePlayState::handle_event(const sf::Event& event) {
 }
 
 void GamePlayState::on_activate() {
+    _gameplayMusic.setVolume(0.f);
     if(Settings::soundOn) _gameplayMusic.play();
+    _volumeFadeInClock.restart();
 }
 
 void GamePlayState::on_deactivate() {
@@ -53,6 +55,25 @@ void GamePlayState::on_deactivate() {
 
 void GamePlayState::on_update() {
 	_stateMachine->update();
+
+    // Volume control - fade in
+    if (_volumeFadeInClock.getElapsedTime() >= sf::seconds(4.f))
+        _gameplayMusic.setVolume(100.f);
+    else if (_volumeFadeInClock.getElapsedTime() >= sf::seconds(3.5f))
+        _gameplayMusic.setVolume(85.f);
+    else if (_volumeFadeInClock.getElapsedTime() >= sf::seconds(3.f))
+        _gameplayMusic.setVolume(70.f);
+    else if (_volumeFadeInClock.getElapsedTime() >= sf::seconds(2.5f))
+        _gameplayMusic.setVolume(55.f);
+    else if (_volumeFadeInClock.getElapsedTime() >= sf::seconds(2.f))
+        _gameplayMusic.setVolume(40.f);
+    else if (_volumeFadeInClock.getElapsedTime() >= sf::seconds(1.5f))
+        _gameplayMusic.setVolume(25.f);
+    else if (_volumeFadeInClock.getElapsedTime() >= sf::seconds(1.f))
+        _gameplayMusic.setVolume(15.f);
+    else if (_volumeFadeInClock.getElapsedTime() >= sf::seconds(0.5f))
+        _gameplayMusic.setVolume(5.f);
+
 	if (*_storeDice == "-1") {
 		*_globalDice = "0";
 		*_storeDice = "0";
