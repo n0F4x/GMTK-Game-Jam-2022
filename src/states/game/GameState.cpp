@@ -7,8 +7,6 @@
 
 
 GameState::GameState() {
-	store().add("init", "false");
-
 	addStateMachine(&_stateMachine);
 	_stateMachine.addState("Play", std::make_unique<GamePlayState>());
 	_stateMachine.addState("Paused", std::make_unique<GamePausedState>());
