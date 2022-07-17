@@ -44,7 +44,6 @@ void MenuState::on_update() {
 		_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
 		_croissant.getComponent<engine::Animator>()->findAnimation("out")->start();
 		_title.getComponent<engine::Animator>()->findAnimation("out")->start();
-		_title.getComponent<engine::Animator>()->findAnimation("downscale")->start();
 		_coffee.getComponent<engine::Animator>()->findAnimation("out")->start();
 		_plant.getComponent<engine::Animator>()->findAnimation("out")->start();
 		_startGame = false;
@@ -281,13 +280,9 @@ void MenuState::background_setup() {
 	addObject(&_croissant);
 
 	takerAnimator = _title.setComponent(std::make_unique<engine::Animator>());
-	_title.getComponent<engine::Animator>()->addAnimation("out", std::make_unique<animations::Ease>());
-	takerAnimator->findAnimation("out")->setDistance({ -630.f, -920.f });
+	_title.getComponent<engine::Animator>()->addAnimation("out", std::make_unique<animations::EaseFillColor>());
+	takerAnimator->findAnimation("out")->setFillColor({ 0, 0, 0, -255 });
 	takerAnimator->findAnimation("out")->setTime(sf::seconds(4));
-
-	_title.getComponent<engine::Animator>()->addAnimation("downscale", std::make_unique<animations::EaseScale>());
-	takerAnimator->findAnimation("downscale")->setScale({ -.5f, -.5f });
-	takerAnimator->findAnimation("downscale")->setTime(sf::seconds(4));
 
 	addObject(&_title);
 

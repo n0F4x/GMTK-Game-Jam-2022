@@ -497,7 +497,6 @@ private:
 	UI::ProgressBar _selectTime {{930,20}};
 	engine::RectangleShape _selectBackdrop;
 
-	TileManager _tileMgr;
 	engine::RectangleShape _tilesBg;
     BoardGameManager _boardGameMgr{GIRL};
 };

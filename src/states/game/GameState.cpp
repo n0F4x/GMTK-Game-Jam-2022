@@ -142,11 +142,6 @@ void GameState::background_setup() {
 	_croissant.scale(4.f, 4.f);
 	renderer().push_background(&_croissant);
 
-	_title.setTexture(&engine::Assets::getTexture("UI/title"));
-	_title.setPosition(618.5f, 18);
-	_title.scale(1.25f, 1.25f);
-	renderer().push_background(&_title);
-
 	_plant.setTexture(&engine::Assets::getTexture("Environment/plant"));
 	_plant.setPosition(1170, 82);
 	_plant.scale(4.f, 4.f);

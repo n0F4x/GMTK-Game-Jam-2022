@@ -34,7 +34,6 @@ private:
 	engine::Sprite _floor;
 	engine::Sprite _table;
 	engine::Sprite _table2;
-	engine::Sprite _title;
 	engine::Sprite _croissant;
 	engine::Sprite _plant;
 	engine::Sprite _plant2;
