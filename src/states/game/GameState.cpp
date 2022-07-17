@@ -230,4 +230,10 @@ void GameState::helper_setup() {
 	_tileInfoDisplay.scale(6.f, 6.f);
 	renderer().push_basic(&_tileInfoDisplay);
 	_tileInfoDisplay.setPosition(1040, 885);
+
+	_timeDisplay.setPosition(660, 840);
+	_timeDisplay.setPrimaryColor(sf::Color(255, 255, 255, 100));
+	_timeDisplay.setSecondaryColor(sf::Color(255, 255, 255, 100));
+	addObject(&_timeDisplay);
+	renderer().push_basic(&_timeDisplay);
 }
