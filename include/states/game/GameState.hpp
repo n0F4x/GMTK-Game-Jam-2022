@@ -14,8 +14,18 @@
 class GameState : public engine::State {
 public:
 	GameState();
+	std::function<void(Character&)> loseCallback = [this](Character& character) {
+		changeState("GameOver");
+		printf("%d lost\n", character.getType());
+	};
 
+	std::function<void(Character&)> gameOverCallback = [this](Character& character) {
+		changeState("GameOver");
+		printf("game over, %d won.\n", character.getType());
+	};
 protected:
+	
+
 	void handle_event(const sf::Event& event) override;
 	void on_update() override;
 	void on_draw() override;
