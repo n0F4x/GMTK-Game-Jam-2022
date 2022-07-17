@@ -71,10 +71,10 @@ void MenuState::on_update() {
 		}
 	}
 	else {
-		if (_clock.getElapsedTime() >= sf::seconds(10)) {
+		if (_clock.getElapsedTime() >= sf::seconds(9.5f)) {
 			changeState("Game");
 		}
-		if (_clock.getElapsedTime() >= sf::seconds(4) && !_characterAnimations) {
+		if (_clock.getElapsedTime() >= sf::seconds(3.5f) && !_characterAnimations) {
 			_characterAnimations = true;
 			_boy.getComponent<engine::Animator>()->findAnimation("in")->start();
 			_girl.getComponent<engine::Animator>()->findAnimation("in")->start();
@@ -108,7 +108,7 @@ void MenuState::character_setup() {
 	addObject(&_boy);
 	renderer().push_basic(&_boy);
 	auto animator = _boy.setComponent(std::make_unique<engine::Animator>());
-	animator->addAnimation("in", std::make_unique<animations::Ease>());
+	animator->addAnimation("in", std::make_unique<animations::Ease_In_Out>());
 	animator->findAnimation("in")->setDistance({ 500.f, 500.f });
 	animator->findAnimation("in")->setTime(sf::seconds(3));
 
@@ -118,7 +118,7 @@ void MenuState::character_setup() {
 	addObject(&_girl);
 	renderer().push_basic(&_girl);
 	animator = _girl.setComponent(std::make_unique<engine::Animator>());
-	animator->addAnimation("in", std::make_unique<animations::Ease>());
+	animator->addAnimation("in", std::make_unique<animations::Ease_In_Out>());
 	animator->findAnimation("in")->setDistance({ -500.f, 500.f });
 	animator->findAnimation("in")->setTime(sf::seconds(3.5f));
 
@@ -128,7 +128,7 @@ void MenuState::character_setup() {
 	addObject(&_grandpa);
 	renderer().push_basic(&_grandpa);
 	animator = _grandpa.setComponent(std::make_unique<engine::Animator>());
-	animator->addAnimation("in", std::make_unique<animations::Ease>());
+	animator->addAnimation("in", std::make_unique<animations::Ease_In_Out>());
 	animator->findAnimation("in")->setDistance({ -500.f, -500.f });
 	animator->findAnimation("in")->setTime(sf::seconds(4));
 
@@ -138,7 +138,7 @@ void MenuState::character_setup() {
 	addObject(&_dog);
 	renderer().push_basic(&_dog);
 	animator = _dog.setComponent(std::make_unique<engine::Animator>());
-	animator->addAnimation("in", std::make_unique<animations::Ease>());
+	animator->addAnimation("in", std::make_unique<animations::Ease_In_Out>());
 	animator->findAnimation("in")->setDistance({ 500.f, -500.f });
 	animator->findAnimation("in")->setTime(sf::seconds(4.5f));
 
@@ -149,9 +149,9 @@ void MenuState::character_setup() {
 	addObject(&_boyBarBack);
 	renderer().push_basic(&_boyBarBack);
 	animator = _boyBarBack.setComponent(std::make_unique<engine::Animator>());
-	animator->addAnimation("in", std::make_unique<animations::Ease>());
+	animator->addAnimation("in", std::make_unique<animations::Ease_In_Out>());
 	animator->findAnimation("in")->setDistance({ 0, 500.f });
-	animator->findAnimation("in")->setTime(sf::seconds(6.f));
+	animator->findAnimation("in")->setTime(sf::seconds(5.f));
 
 	_boyBar.setPosition(54, 54 - 500);
 	addObject(&_boyBar);
@@ -165,9 +165,9 @@ void MenuState::character_setup() {
 	addObject(&_girlBarBack);
 	renderer().push_basic(&_girlBarBack);
 	animator = _girlBarBack.setComponent(std::make_unique<engine::Animator>());
-	animator->addAnimation("in", std::make_unique<animations::Ease>());
+	animator->addAnimation("in", std::make_unique<animations::Ease_In_Out>());
 	animator->findAnimation("in")->setDistance({ 0, 500.f });
-	animator->findAnimation("in")->setTime(sf::seconds(6.f));
+	animator->findAnimation("in")->setTime(sf::seconds(5.f));
 
 	addObject(&_girlBar);
 	renderer().push_basic(&_girlBar);
@@ -185,9 +185,9 @@ void MenuState::character_setup() {
 	addObject(&_dogBarBack);
 	renderer().push_basic(&_dogBarBack);
 	animator = _dogBarBack.setComponent(std::make_unique<engine::Animator>());
-	animator->addAnimation("in", std::make_unique<animations::Ease>());
+	animator->addAnimation("in", std::make_unique<animations::Ease_In_Out>());
 	animator->findAnimation("in")->setDistance({ 0, -500.f });
-	animator->findAnimation("in")->setTime(sf::seconds(6.f));
+	animator->findAnimation("in")->setTime(sf::seconds(5.f));
 
 	_dogBar.setPosition(54, 994 + 500);
 	addObject(&_dogBar);
@@ -201,9 +201,9 @@ void MenuState::character_setup() {
 	addObject(&_gradpaBarBack);
 	renderer().push_basic(&_gradpaBarBack);
 	animator = _gradpaBarBack.setComponent(std::make_unique<engine::Animator>());
-	animator->addAnimation("in", std::make_unique<animations::Ease>());
+	animator->addAnimation("in", std::make_unique<animations::Ease_In_Out>());
 	animator->findAnimation("in")->setDistance({ 0, -500.f });
-	animator->findAnimation("in")->setTime(sf::seconds(6.f));
+	animator->findAnimation("in")->setTime(sf::seconds(5.f));
 
 	addObject(&_grandpaBar);
 	renderer().push_basic(&_grandpaBar);
@@ -346,7 +346,7 @@ void MenuState::postits_setup() {
 	auto animator = _boyPostit.setComponent(std::make_unique<engine::Animator>());
 	animator->addAnimation("in", std::make_unique<animations::Ease>());
 	animator->findAnimation("in")->setDistance({ 500, 0 });
-	animator->findAnimation("in")->setTime(sf::seconds(6.f));
+	animator->findAnimation("in")->setTime(sf::seconds(5.f));
 
 	_girlPostit.setTexture(&engine::Assets::getTexture("UI/girl_postit"));
 	addObject(&_girlPostit);
@@ -360,7 +360,7 @@ void MenuState::postits_setup() {
 	animator = _girlPostit.setComponent(std::make_unique<engine::Animator>());
 	animator->addAnimation("in", std::make_unique<animations::Ease>());
 	animator->findAnimation("in")->setDistance({ -500, 0 });
-	animator->findAnimation("in")->setTime(sf::seconds(6.f));
+	animator->findAnimation("in")->setTime(sf::seconds(5.f));
 
 	_dogPostit.setTexture(&engine::Assets::getTexture("UI/dog_postit"));
 	addObject(&_dogPostit);
@@ -374,7 +374,7 @@ void MenuState::postits_setup() {
 	animator = _dogPostit.setComponent(std::make_unique<engine::Animator>());
 	animator->addAnimation("in", std::make_unique<animations::Ease>());
 	animator->findAnimation("in")->setDistance({ 500, 0 });
-	animator->findAnimation("in")->setTime(sf::seconds(6.f));
+	animator->findAnimation("in")->setTime(sf::seconds(5.f));
 
 	_grandpaPostit.setTexture(&engine::Assets::getTexture("UI/grandpa_postit"));
 	addObject(&_grandpaPostit);
@@ -388,7 +388,7 @@ void MenuState::postits_setup() {
 	animator = _grandpaPostit.setComponent(std::make_unique<engine::Animator>());
 	animator->addAnimation("in", std::make_unique<animations::Ease>());
 	animator->findAnimation("in")->setDistance({ -500, 0 });
-	animator->findAnimation("in")->setTime(sf::seconds(6.f));
+	animator->findAnimation("in")->setTime(sf::seconds(5.f));
 }
 
 
@@ -401,5 +401,5 @@ void MenuState::helper_setup() {
 	auto animator = _tileInfoDisplay.setComponent(std::make_unique<engine::Animator>());
 	animator->addAnimation("in", std::make_unique<animations::Ease>());
 	animator->findAnimation("in")->setDistance({ 0, -500 });
-	animator->findAnimation("in")->setTime(sf::seconds(6.f));
+	animator->findAnimation("in")->setTime(sf::seconds(5.f));
 }
