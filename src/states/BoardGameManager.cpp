@@ -55,7 +55,7 @@ BoardGameManager::BoardGameManager(CharacterType startingCharacter,
 
     _characters[0] = std::make_unique<Character>(
             BOY,
-            6,
+            4,
             6, 3, 1, -5,
             PLUS_3, 5, SWAP_PLACES, -7, 10
     );
@@ -106,7 +106,7 @@ bool BoardGameManager::isBoardOccupied() const {
 void BoardGameManager::diceRoll(int moveOffset) {
     if (_boardOccupied) return;
     _boardOccupied = true;
-    recursionLevel = 0;
+    recursionLevel = -1;
     calculateNewMove(_activeCharacter->getType(), moveOffset);
 }
 
