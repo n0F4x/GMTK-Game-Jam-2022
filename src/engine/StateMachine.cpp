@@ -22,7 +22,7 @@ void StateMachine::setInitialState(const std::string_view& name) {
 	else {
 		_currentState = _states.begin()->second.get();
 	}
-	_currentState->activate();
+	//currentState->activate();
 }
 
 
