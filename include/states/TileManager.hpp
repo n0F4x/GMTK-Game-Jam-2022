@@ -19,6 +19,7 @@ public:
         _lastTile->_dirToNext = dir;
         _lastTile->_next->_dirFromPrev = dir;
         _lastTile->_next->_tileIndex = _lastTile->_tileIndex + 1;
+        _lastTile->_next->_prev = _lastTile;
 
         switch (dir) {
             case LEFT:
