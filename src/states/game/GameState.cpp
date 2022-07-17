@@ -60,8 +60,8 @@ void GameState::on_update() {
     }
 
     if (state == 0) {
-        _timeDisplay.setProgress((0.5f - timer.getElapsedTime().asSeconds()) / 0.5f);
-        if (timer.getElapsedTime().asSeconds() >= 0.5f) {
+        _timeDisplay.setProgress((3.f - timer.getElapsedTime().asSeconds()) / 3.f);
+        if (timer.getElapsedTime().asSeconds() >= 3.f) {
             state = 1;
             *store().get("selector") = "Select";
             *store().get("dice") = "7";
