@@ -19,6 +19,7 @@ GameState::GameState() {
 	background_setup();
 	character_setup();
 	postits_setup();
+    game_board_setup();
 	helper_setup();
 }
 
@@ -199,6 +200,27 @@ void GameState::postits_setup() {
 	_grandpaText.setFillColor(sf::Color::Black);
 	renderer().push_priority(&_grandpaText);
 	_grandpaPostit.setPosition(1600, 525);
+}
+
+
+std::function<void(Character&)> loseCallback = [](Character& character) {
+    printf("%d lost\n", character.getType());
+};
+
+std::function<void(Character&)> gameOverCallback = [](Character& character) {
+    printf("game over, %d won.\n", character.getType());
+};
+
+void GameState::game_board_setup() {
+    renderer().push_basic(&_boardGameManager);
+    addObject(&_boardGameManager);
+
+    for (int i = 0; i < 4; ++i) {
+        addObject(&_boardGameManager.getCharacter(static_cast<CharacterType>(i)));
+        _boardGameManager.getCharacter(static_cast<CharacterType>(i)).setLoseCallback(loseCallback);
+    }
+
+    _boardGameManager.setGameOverCallback(gameOverCallback);
 }
 
 

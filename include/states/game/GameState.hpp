@@ -5,7 +5,10 @@
 #include "engine/drawables/Sprite.hpp"
 #include "engine/drawables/Text.hpp"
 #include "engine/Assets.hpp"
+#include "states/BoardGameManager.hpp"
+#include "states/CharacterType.hpp"
 #include "UI/ProgressBar.hpp"
+#include "animations/BezierScale.hpp"
 
 
 class GameState : public engine::State {
@@ -22,6 +25,7 @@ private:
 	void background_setup();
 	void character_setup();
 	void postits_setup();
+    void game_board_setup();
 	void helper_setup();
 
 	///////////////
@@ -54,6 +58,8 @@ private:
 	engine::Text _girlText{ "anyone going back", engine::Assets::getFont("unlearned"), 26 };
 	engine::Text _grandpaText{ "standing on corner", engine::Assets::getFont("unlearned"), 26 };
 	engine::Text _dogText{ "being with someone", engine::Assets::getFont("unlearned"), 26 };
+
+    BoardGameManager _boardGameManager { CharacterType::BOY };
 
 	// Helper
 	engine::Sprite _tileInfoDisplay;

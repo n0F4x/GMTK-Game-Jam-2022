@@ -11,40 +11,17 @@ class TileManager;
 
 class Tile : public Sprite {
 public:
-    Tile(TileType type) {
-        this->_type = type;
-        Sprite::setTexture(&getTileTypeTexture(type));
-    }
+    Tile(TileType type);
 
-    Tile* getRelativeTile(int offset = 1) {
-        Tile* t = this;
-        if (offset >= 0) {
-            for (int i = 0; i < offset; ++i) {
-                t = t->_next.get();
-            }
-        } else {
-            for (int i = 0; i < -offset; ++i) {
-                t = t->_prev;
-            }
-        }
-        return t;
-    }
+    Tile* getRelativeTile(int offset = 1);
 
-    TileType getType() {
-        return _type;
-    }
+    TileType getType();
 
-    TileDirection getDirFromPrev() {
-        return _dirFromPrev;
-    }
+    TileDirection getDirFromPrev();
 
-    TileDirection getDirToNext() {
-        return _dirToNext;
-    }
+    TileDirection getDirToNext();
 
-    int getTileIndex() const {
-        return _tileIndex;
-    }
+    int getTileIndex() const;
 private:
     friend TileManager;
 
