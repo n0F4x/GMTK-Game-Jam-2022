@@ -4,6 +4,15 @@
 
 
 class GamePlayLookAroundState : public engine::State {
-private:
+protected:
+	int setup() override;
+
+	void on_update() override;
 	void on_draw() override;
+
+
+	///////////////
+	// Variables //
+	///////////////
+	std::string* _storeState = nullptr;
 };

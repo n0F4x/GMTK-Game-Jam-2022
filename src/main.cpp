@@ -37,7 +37,7 @@ int main() {
 
 
 	// SET INITIAL STATE
-	machine.setInitialState("Sample");
+	machine.setInitialState("Menu");
 
 //////////////////////////////////
 //		  END OF REGION			//

@@ -9,6 +9,10 @@ public:
 	GamePlayState();
 
 private:
+	int setup() override;
+
+	void handle_event(const sf::Event&) override;
+	void on_update() override;
 	void on_draw() override;
 
 

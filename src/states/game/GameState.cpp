@@ -4,6 +4,7 @@
 #include "states/game/gamestates/GamePausedState.hpp"
 #include "states/game/gamestates/GameOverState.hpp"
 #include "engine/Assets.hpp"
+#include "animations/Bezier.hpp"
 
 
 GameState::GameState() {
@@ -17,6 +18,8 @@ GameState::GameState() {
 
 	background_setup();
 	character_setup();
+	postits_setup();
+	helper_setup();
 }
 
 
@@ -158,4 +161,56 @@ void GameState::background_setup() {
 	_plant2.setPosition(700, 900);
 	_plant2.scale(4.f, 4.f);
 	renderer().push_background(&_plant2);
+}
+
+
+void GameState::postits_setup() {
+	_boyPostit.setTexture(&engine::Assets::getTexture("UI/boy_postit"));
+	addObject(&_boyPostit);
+	renderer().push_priority(&_boyPostit);
+	_boyPostit.scale(6.f, 6.f);
+	_boyText.attach_parent(&_boyPostit);
+	_boyText.setPosition(25, 135);
+	_boyText.setFillColor(sf::Color::Black);
+	renderer().push_priority(&_boyText);
+	_boyPostit.setPosition(50, 125);
+
+	_girlPostit.setTexture(&engine::Assets::getTexture("UI/girl_postit"));
+	addObject(&_girlPostit);
+	renderer().push_priority(&_girlPostit);
+	_girlPostit.scale(6.f, 6.f);
+	_girlText.attach_parent(&_girlPostit);
+	_girlText.setPosition(25, 135);
+	_girlText.setFillColor(sf::Color::Black);
+	renderer().push_priority(&_girlText);
+	_girlPostit.setPosition(1600, 125);
+
+	_dogPostit.setTexture(&engine::Assets::getTexture("UI/dog_postit"));
+	addObject(&_dogPostit);
+	renderer().push_priority(&_dogPostit);
+	_dogPostit.scale(6.f, 6.f);
+	_dogText.attach_parent(&_dogPostit);
+	_dogText.setPosition(25, 135);
+	_dogText.setFillColor(sf::Color::Black);
+	renderer().push_priority(&_dogText);
+	_dogPostit.setPosition(50, 525);
+
+	_grandpaPostit.setTexture(&engine::Assets::getTexture("UI/grandpa_postit"));
+	addObject(&_grandpaPostit);
+	renderer().push_priority(&_grandpaPostit);
+	_grandpaPostit.scale(6.f, 6.f);
+	_grandpaText.attach_parent(&_grandpaPostit);
+	_grandpaText.setPosition(25, 135);
+	_grandpaText.setFillColor(sf::Color::Black);
+	renderer().push_priority(&_grandpaText);
+	_grandpaPostit.setPosition(1600, 525);
+}
+
+
+void GameState::helper_setup() {
+	_tileInfoDisplay.setTexture(&engine::Assets::getTexture("UI/helper"));
+	addObject(&_tileInfoDisplay);
+	_tileInfoDisplay.scale(6.f, 6.f);
+	renderer().push_basic(&_tileInfoDisplay);
+	_tileInfoDisplay.setPosition(1040, 885);
 }
