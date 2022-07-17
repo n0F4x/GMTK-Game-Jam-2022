@@ -4,7 +4,7 @@
 
 #include <utility>
 
-const int Character::MAX_HAPPINESS = 1000;
+const int Character::MAX_HAPPINESS = 100;
 
 Character::Character(CharacterType type, int happinessLoss,
                      int favoriteNumber, int favoriteNumberHappinessChange,
