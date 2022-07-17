@@ -57,7 +57,9 @@ set(SOURCE_FILES
     "src/states/game/gamestates/gameplaystates/GamePlayLookaroundState.cpp"
     "src/states/game/gamestates/gameplaystates/GamePlaySelectState.cpp"
     "src/states/description/DescriptionState.cpp"
- "src/animations/BezierOutlineColor.cpp")
+    "src/animations/BezierOutlineColor.cpp"
+    "src/states/CharacterCallbacks.cpp"
+)
 
 set(SFML_DIR ./dependencies/SFML-2.5.1/lib/cmake/SFML)
 

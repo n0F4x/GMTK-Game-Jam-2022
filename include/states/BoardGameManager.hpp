@@ -56,29 +56,25 @@ public:
                 BOY,
                 5,
                 1, 5, 2, -5,
-                REPEAT_MOVE, 5, NORMAL, -5,
-                ""
+                REPEAT_MOVE, 5, NORMAL, -5, 5
         );
         _characters[1] = std::make_unique<Character>(
                 GIRL,
                 5,
                 1, 5, 2, -5,
-                REPEAT_MOVE, 5, NORMAL, -5,
-                ""
+                REPEAT_MOVE, 5, NORMAL, -5, 5
         );
         _characters[2] = std::make_unique<Character>(
                 GRANDPA,
                 5,
                 1, 5, 2, -5,
-                REPEAT_MOVE, 5, NORMAL, -5,
-                ""
+                REPEAT_MOVE, 5, NORMAL, -5, 5
         );
         _characters[3] = std::make_unique<Character>(
                 DOGE,
                 5,
                 1, 5, 2, -5,
-                REPEAT_MOVE, 5, NORMAL, -5,
-                ""
+                REPEAT_MOVE, 5, NORMAL, -5, 5
         );
 
         _characters[0]->setScale(3.f);
