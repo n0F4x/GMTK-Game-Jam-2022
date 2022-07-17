@@ -16,7 +16,7 @@ MenuState::MenuState() {
 
 
 void MenuState::handle_event(const sf::Event& event) {
-	if (!_startGame && event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+	if (!_started && event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
 		_startGame = true;
 		_clock.restart();
 	}
