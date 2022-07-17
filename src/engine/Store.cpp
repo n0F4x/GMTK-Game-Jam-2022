@@ -5,10 +5,14 @@
 using namespace engine;
 
 
-void Store::add(const std::string& id, const std::string& item) {
-	if (!_data.try_emplace(id, item).second) {
+std::string* Store::add(const std::string& id, const std::string& item) {
+	if (auto [it, result] = _data.try_emplace(id, item); !result) {
 		std::cerr << "\nStore: Failed adding item \"" << id << "\", as one with the same is already added.\n";
 	}
+	else {
+		return &it->second;
+	}
+	return nullptr;
 }
 
 std::string* Store::get(const std::string_view& id) {

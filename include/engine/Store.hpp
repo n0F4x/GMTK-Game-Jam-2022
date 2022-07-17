@@ -11,7 +11,7 @@ namespace engine {
 	*/
 	class Store {
 	public:
-		void add(const std::string& id, const std::string& item);
+		std::string* add(const std::string& id, const std::string& item);
 		/**
 		 * @brief	Access an item of the store
 		 * @param id 
