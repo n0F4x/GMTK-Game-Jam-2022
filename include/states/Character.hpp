@@ -5,19 +5,27 @@
 #include "engine/drawables/Sprite.hpp"
 #include "states/TileType.hpp"
 #include "Tile.hpp"
+#include "CharacterType.hpp"
+
+class BoardGameManager;
 
 class Character : public engine::Sprite {
 public:
     static const int MAX_HAPPINESS;
 
-    Character( const sf::Texture* texture, int happinessLoss,
-               const int favoriteNumber, int favoriteNumberHappinessChange,
-               int hatedNumber, int hatedNumberHappinessChange,
-               TileType favoriteTile, int favoriteTileHappinessChange,
-               TileType hatedTile, int hatedTileHappinessChange,
-               std::string specialDescription,
-               std::function<int()> specialCallback = std::function<int()>(),
-               std::function<void()> loseCallback = std::function<void()>());
+    Character(CharacterType type, int happinessLoss,
+              const int favoriteNumber, int favoriteNumberHappinessChange,
+              int hatedNumber, int hatedNumberHappinessChange,
+              TileType favoriteTile, int favoriteTileHappinessChange,
+              TileType hatedTile, int hatedTileHappinessChange,
+              std::string specialDescription,
+              std::function<int(Character& character, BoardGameManager& boardGameMgr, int oldPositions[], int newPositions[])> specialCallback =
+                      std::function<int(Character& character, BoardGameManager& boardGameMgr, int oldPositions[], int newPositions[])>(),
+              std::function<void(Character&)> loseCallback = std::function<void(Character&)>());
+
+    CharacterType getType() {
+        return _type;
+    }
 
     /**
      * @brief set happiness of character between 0 and MAX_HAPPINESS
@@ -42,7 +50,8 @@ public:
     /**
      * @brief calculate happiness after turn
      */
-    void calculateHappinessAfterTurn(Character* activeCharacter, int diceNumber, TileType tile);
+    void calculateHappinessAfterTurn(int diceNumber, TileType tile, CharacterType activeCharacter,
+                                     BoardGameManager &boardGameMgr, int oldPositions[], int newPositions[]);
 
     void setCurrentTile(Tile* tile);
 
@@ -50,12 +59,14 @@ public:
 
     void move(int offset);
 
-    void setSpecialCallback(const std::function<int()> callback);
-    void setLoseCallback(const std::function<void()> callback);
+    void setSpecialCallback(std::function<int(Character& character, BoardGameManager& boardGameMgr, int oldPositions[], int newPositions[])> callback);
+    void setLoseCallback(std::function<void(Character& character)> callback);
 
     std::string getSpecialDescription();
 
 private:
+    CharacterType _type;
+
     int _happiness = MAX_HAPPINESS;
     int _happinessLoss;
 
@@ -73,8 +84,8 @@ private:
 
     std::string _specialDescription;
 
-    std::function<int()> _specialCallback;
-    std::function<void()> _loseCallback;
+    std::function<int(Character& character, BoardGameManager& boardGameMgr, int oldPositions[], int newPositions[])> _specialCallback;
+    std::function<void(Character&)> _loseCallback;
 
     Tile* _currentTile = nullptr;
 };
