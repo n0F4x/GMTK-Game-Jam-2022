@@ -15,6 +15,8 @@ public:
 	void handle_event(const sf::Event&) override;
 
 protected:
+    int setup() override;
+
 	void on_activate() override;
     void on_deactivate() override;
 

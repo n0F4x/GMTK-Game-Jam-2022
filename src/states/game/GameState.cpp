@@ -1,3 +1,4 @@
+#include <iostream>
 #include "states/game/GameState.hpp"
 
 #include "states/game/gamestates/GamePlayState.hpp"
@@ -26,13 +27,53 @@ void GameState::handle_event(const sf::Event& event) {
 	_stateMachine->handle_event(event);
 }
 
+sf::Clock timer;
+int state = 0;
+
 void GameState::on_update() {
 	_stateMachine->update();
+
+    _boardGameManager.updateBoard();
+    _boyBar.setProgress(_boardGameManager.getCharacter(BOY).getHappinessNormed());
+    _girlBar.setProgress(_boardGameManager.getCharacter(GIRL).getHappinessNormed());
+    _grandpaBar.setProgress(_boardGameManager.getCharacter(GRANDPA).getHappinessNormed());
+    _dogBar.setProgress(_boardGameManager.getCharacter(DOGE).getHappinessNormed());
+
+    if (state == 0) {
+        _timeDisplay.setProgress((5.f - timer.getElapsedTime().asSeconds()) / 5.f);
+        if (timer.getElapsedTime().asSeconds() >= 5.f) {
+            state = 1;
+            *store().get("selector") = "Select";
+            *store().get("dice") = "7";
+        }
+    } else if (state == 1) {
+        *store().get("selector") = "LookAround";
+        if (*store().get("dice") != "7") {
+            int dice = (rand() % 6) + 1;
+            std::cout << "dice " << *store().get("dice") << std::endl;
+            if (*store().get("dice") != "0") dice = std::atoi(store().get("dice")->c_str());
+            _boardGameManager.diceRoll(dice);
+            state = 2;
+        }
+    } else if (state == 2) {
+        if (!_boardGameManager.isBoardOccupied()) {
+            state = 0;
+            timer.restart();
+        }
+    }
 }
 
 void GameState::on_draw() {
 	renderer().render();
 	_stateMachine->draw();
+}
+
+void GameState::on_activate() {
+    timer.restart();
+    _boardGameManager.getCharacter(BOY).setHappiness(std::stoi(*globalStore()->get("boy_happiness")));
+    _boardGameManager.getCharacter(BOY).setHappiness(std::stoi(*globalStore()->get("girl_happiness")));
+    _boardGameManager.getCharacter(BOY).setHappiness(std::stoi(*globalStore()->get("grandpa_happiness")));
+    _boardGameManager.getCharacter(BOY).setHappiness(std::stoi(*globalStore()->get("doge_happiness")));
 }
 
 

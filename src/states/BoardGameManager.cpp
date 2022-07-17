@@ -77,11 +77,6 @@ BoardGameManager::BoardGameManager(CharacterType startingCharacter,
             MINUS_5, 5, REPEAT_MOVE, -7, 10
     );
 
-    _characters[0]->setHappiness(100);
-    _characters[1]->setHappiness(100);
-    _characters[2]->setHappiness(100);
-    _characters[3]->setHappiness(100);
-
     for (int i = 0; i < 4; ++i) {
         _characters[i]->setScale(3.f);
         _characters[i]->setPosition(_tileMgr.getFirstTile()->getPosition());
