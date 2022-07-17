@@ -5,6 +5,7 @@
 #include "states/CharacterType.hpp"
 #include "animations/BezierScale.hpp"
 #include "animations/BezierFillColor.hpp"
+#include "states/Settings.hpp"
 
 GameOverState::GameOverState() {
 	_scaler.setPosition(960, 540);
@@ -90,10 +91,17 @@ void GameOverState::on_update() {
 
 }
 
-void GameOverState::on_draw() { 
+void GameOverState::on_draw() {
 	renderer().render();
 }
 
+void GameOverState::on_activate() {
+    if(Settings::soundOn) _gameoverMusic.play();
+}
+
+void GameOverState::on_deactivate() {
+    _gameoverMusic.stop();
+}
 
 void GameOverState::character_setup() {
 	_boy.setTexture(&engine::Assets::getTexture("Environment/blue_player"));
@@ -309,4 +317,9 @@ void GameOverState::helper_setup() {
 
 	_scaler.attach_child(&_tileInfoDisplay);
 	_scaler.attach_child(&_timeDisplay);
+}
+
+void GameOverState::music_setup() {
+    _gameoverMusic.openFromFile(engine::Assets::ASSETS_PATH + "/music/endgame.ogg");
+    _gameoverMusic.setLoop(false);
 }
