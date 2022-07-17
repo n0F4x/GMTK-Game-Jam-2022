@@ -158,7 +158,7 @@ public:
 		selectAnimator->findAnimation("down")->setDistance({ 0, 1080 });
 		selectAnimator->findAnimation("down")->setTime(sf::seconds(1));
 
-		_selectHolder.getComponent<engine::Animator>()->findAnimation("down")->start();
+		//_selectHolder.getComponent<engine::Animator>()->findAnimation("down")->start();
 
 		// END OF SELECT STUFF
 
@@ -324,6 +324,48 @@ public:
 		_gradpaBarBack.setPosition(1870, 1030 + 500);
 		_grandpaBar.setPosition(1866, 1026 + 500);
 
+		// PrOS-TITS xd (pov: kp at 3:37AM)
+		
+		_boyPostit.setTexture(&engine::Assets::getTexture("UI/postit"));
+		_boyPostit.setPosition(50 - 500, 125);
+		_boyPostit.scale(6.f, 6.f);
+		addObject(&_boyPostit);
+		renderer().push_priority(&_boyPostit);
+		animator = _boyPostit.setComponent(std::make_unique<engine::Animator>());
+		animator->addAnimation("in", std::make_unique<animations::Ease>());
+		animator->findAnimation("in")->setDistance({ 500, 0 });
+		animator->findAnimation("in")->setTime(sf::seconds(6.f));
+
+		_girlPostit.setTexture(&engine::Assets::getTexture("UI/postit"));
+		_girlPostit.setPosition(1600 + 500, 125);
+		_girlPostit.scale(6.f, 6.f);
+		addObject(&_girlPostit);
+		renderer().push_priority(&_girlPostit);
+		animator = _girlPostit.setComponent(std::make_unique<engine::Animator>());
+		animator->addAnimation("in", std::make_unique<animations::Ease>());
+		animator->findAnimation("in")->setDistance({ -500, 0 });
+		animator->findAnimation("in")->setTime(sf::seconds(6.f));
+
+		_dogPostit.setTexture(&engine::Assets::getTexture("UI/postit2"));
+		_dogPostit.setPosition(50 - 500, 525);
+		_dogPostit.scale(6.f, 6.f);
+		addObject(&_dogPostit);
+		renderer().push_priority(&_dogPostit);
+		animator = _dogPostit.setComponent(std::make_unique<engine::Animator>());
+		animator->addAnimation("in", std::make_unique<animations::Ease>());
+		animator->findAnimation("in")->setDistance({ 500, 0 });
+		animator->findAnimation("in")->setTime(sf::seconds(6.f));
+
+		_grandpaPostit.setTexture(&engine::Assets::getTexture("UI/postit"));
+		_grandpaPostit.setPosition(1600 + 500, 525);
+		_grandpaPostit.scale(6.f, 6.f);
+		addObject(&_grandpaPostit);
+		renderer().push_priority(&_grandpaPostit);
+		animator = _grandpaPostit.setComponent(std::make_unique<engine::Animator>());
+		animator->addAnimation("in", std::make_unique<animations::Ease>());
+		animator->findAnimation("in")->setDistance({ -500, 0 });
+		animator->findAnimation("in")->setTime(sf::seconds(6.f));
+
 		// START ANIMATIONS
 		
 		_boy.getComponent<engine::Animator>()->findAnimation("in")->start();
@@ -337,6 +379,11 @@ public:
 		_dogBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
 		
 		_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
+
+		_boyPostit.getComponent<engine::Animator>()->findAnimation("in")->start();
+		_girlPostit.getComponent<engine::Animator>()->findAnimation("in")->start();
+		_grandpaPostit.getComponent<engine::Animator>()->findAnimation("in")->start();
+		_dogPostit.getComponent<engine::Animator>()->findAnimation("in")->start();
 
 		renderer().push_basic(&_boardGameMgr);
 	}
@@ -368,6 +415,8 @@ private:
 	engine::Sprite _boyBarBack, _girlBarBack, _gradpaBarBack, _dogBarBack;
 
 	UI::ProgressBar _boyBar { {392.f, 32.f} }, _girlBar{ {392.f, 32.f} }, _grandpaBar{ {392.f, 32.f} }, _dogBar{ {392.f, 32.f} };
+
+	engine::Sprite _boyPostit, _girlPostit, _grandpaPostit, _dogPostit;
 
 	//Tabletop
 	engine::Sprite _title;
