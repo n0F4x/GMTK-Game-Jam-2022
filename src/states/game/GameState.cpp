@@ -200,15 +200,6 @@ void GameState::postits_setup() {
 	_grandpaPostit.setPosition(1600, 525);
 }
 
-
-std::function<void(Character&)> loseCallback = [](Character& character) {
-    printf("%d lost\n", character.getType());
-};
-
-std::function<void(Character&)> gameOverCallback = [](Character& character) {
-    printf("game over, %d won.\n", character.getType());
-};
-
 void GameState::game_board_setup() {
     renderer().push_basic(&_boardGameManager);
     addObject(&_boardGameManager);
