@@ -69,10 +69,12 @@ MenuState::MenuState() {
 	_clickText.setOutlineThickness(4.f);
 	_clickText.setFillColor(sf::Color{ 227, 230, 255 });
 	_clickText.setOutlineColor(sf::Color::Black);
+	engine::Animation* animation = _clickText.setComponent(std::make_unique<engine::Animator>())->addAnimation("colorOut", std::make_unique<animations::EaseColor>());
+	animation->setTime(sf::seconds(5));
+	animation->setColor({ 0.f, 0.f, 0.f, -255.f });
 	addObject(&_clickText);
 	renderer().push_background(&_clickText);
 
-	//_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
 	//TODO - (click to start game) text on bottom center of screen
 	//TODO - take items off table animation, main title, click text fadeOut while zooming out
 }
@@ -81,7 +83,7 @@ void MenuState::handle_event(const sf::Event& event) {
 	if (!_startGame && event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
 		_startGame = true;
 		_clock.restart();
-		renderer().remove_background(&_clickText);
+		_clickText.setOutlineColor({ 0, 0, 0, 0 });
 	}
 }
 
@@ -93,6 +95,7 @@ void MenuState::on_activate() {
 
 void MenuState::on_update() {
 	if (_startGame) {
+		_clickText.getComponent<engine::Animator>()->findAnimation("colorOut")->start();
 		_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
 		_croissant.getComponent<engine::Animator>()->findAnimation("out")->start();
 		if (_clock.getElapsedTime() >= sf::seconds(3)) {

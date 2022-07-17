@@ -61,7 +61,7 @@ void Animation::setTextureTime(sf::Time time) {
 	_textureTime = time;
 }
 
-void Animation::setColor(const sf::Color& color) {
+void Animation::setColor(const Color& color) {
 	_color = color;
 }
 
@@ -90,7 +90,7 @@ sf::Time Animation::getTextureTime() const {
 	return _textureTime;
 }
 
-const sf::Color& Animation::getColor() const {
+const Color& Animation::getColor() const {
 	return _color;
 }
 
