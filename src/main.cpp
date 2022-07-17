@@ -39,7 +39,7 @@ int main() {
 
 
 	// SET INITIAL STATE
-	machine.setInitialState("Menu");
+	machine.setInitialState("GameOver");
 
 //////////////////////////////////
 //		  END OF REGION			//
