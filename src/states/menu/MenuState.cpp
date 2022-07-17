@@ -94,7 +94,7 @@ MenuState::MenuState() {
 
 	_clickText.setOrigin(_clickText.getGlobalBounds().width / 2.f, _clickText.getGlobalBounds().height / 2.f);
 	_clickText.setPosition(engine::Window::getSize().x / 2.f, engine::Window::getSize().y * 9.f / 10.f);
-	_clickText.setOutlineThickness(4.f);
+	_clickText.setOutlineThickness(3.f);
 	_clickText.setFillColor(sf::Color{ 227, 230, 255 });
 	_clickText.setOutlineColor(sf::Color::Black);
 	engine::Animation* animation = _clickText.setComponent(std::make_unique<engine::Animator>())->addAnimation("fillColorOut", std::make_unique<animations::EaseFillColor>());
@@ -103,6 +103,18 @@ MenuState::MenuState() {
 	animation = _clickText.getComponent<engine::Animator>()->addAnimation("outlineColorOut", std::make_unique<animations::EaseOutlineColor>());
 	animation->setTime(sf::seconds(2));
 	animation->setOutlineColor({ 0.f, 0.f, 0.f, -255.f });
+	_fillPulseOnAnimation = _clickText.getComponent<engine::Animator>()->addAnimation("fillPulseOn", std::make_unique<animations::EaseFillColor>());
+	_fillPulseOnAnimation->setTime(sf::seconds(2));
+	_fillPulseOnAnimation->setFillColor({ 0.f, 0.f, 0.f, 255.f });
+	_fillPulseOffAnimation = _clickText.getComponent<engine::Animator>()->addAnimation("fillPulseOff", std::make_unique<animations::EaseFillColor>());
+	_fillPulseOffAnimation->setTime(sf::seconds(2));
+	_fillPulseOffAnimation->setFillColor({ 0.f, 0.f, 0.f, -255.f });
+	_outlinePulseOnAnimation = _clickText.getComponent<engine::Animator>()->addAnimation("outlinePulseOn", std::make_unique<animations::EaseOutlineColor>());
+	_outlinePulseOnAnimation->setTime(sf::seconds(2));
+	_outlinePulseOnAnimation->setOutlineColor({ 0.f, 0.f, 0.f, 255.f });
+	_outlinePulseOffAnimation = _clickText.getComponent<engine::Animator>()->addAnimation("outlinePulseOff", std::make_unique<animations::EaseOutlineColor>());
+	_outlinePulseOffAnimation->setTime(sf::seconds(2));
+	_outlinePulseOffAnimation->setOutlineColor({ 0.f, 0.f, 0.f, -255.f });
 	addObject(&_clickText);
 	renderer().push_background(&_clickText);
 
@@ -124,8 +136,15 @@ void MenuState::on_activate() {
 
 void MenuState::on_update() {
 	if (_startGame) {
+		_fillPulseOnAnimation->stop();
+		_fillPulseOffAnimation->stop();
+		_outlinePulseOnAnimation->stop();
+		_outlinePulseOffAnimation->stop();
+
 		_clickText.getComponent<engine::Animator>()->findAnimation("fillColorOut")->start();
 		_clickText.getComponent<engine::Animator>()->findAnimation("outlineColorOut")->start();
+
+
 		_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
 		_croissant.getComponent<engine::Animator>()->findAnimation("out")->start();
 		_title.getComponent<engine::Animator>()->findAnimation("out")->start();
@@ -133,7 +152,25 @@ void MenuState::on_update() {
 		_plant.getComponent<engine::Animator>()->findAnimation("out")->start();
 		_startGame = false;
 		if (_clock.getElapsedTime() >= sf::seconds(3)) {
-			//changeState("Game");
+			changeState("Game");
+		}
+	}
+	else {
+		if (_pulseClock.getElapsedTime() >= sf::seconds(2)) {
+			if (_pulseOn) {
+				_fillPulseOnAnimation->stop();
+				_fillPulseOnAnimation->start();
+				_outlinePulseOnAnimation->stop();
+				_outlinePulseOnAnimation->start();
+			}
+			else {
+				_fillPulseOffAnimation->stop();
+				_fillPulseOffAnimation->start();
+				_outlinePulseOffAnimation->stop();
+				_outlinePulseOffAnimation->start();
+			}
+			_pulseOn = !_pulseOn;
+			_pulseClock.restart();
 		}
 	}
 }
