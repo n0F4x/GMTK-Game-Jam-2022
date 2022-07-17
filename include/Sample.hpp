@@ -384,6 +384,16 @@ public:
 		animator->findAnimation("in")->setDistance({ -500, 0 });
 		animator->findAnimation("in")->setTime(sf::seconds(6.f));
 
+		_tileInfoDisplay.setTexture(&engine::Assets::getTexture("UI/helper"));
+		addObject(&_tileInfoDisplay);
+		_tileInfoDisplay.scale(6.f, 6.f);
+		renderer().push_basic(&_tileInfoDisplay);
+		_tileInfoDisplay.setPosition(1040, 885 + 500);
+		animator = _tileInfoDisplay.setComponent(std::make_unique<engine::Animator>());
+		animator->addAnimation("in", std::make_unique<animations::Ease>());
+		animator->findAnimation("in")->setDistance({ 0, -500 });
+		animator->findAnimation("in")->setTime(sf::seconds(6.f));
+
 		// START ANIMATIONS
 		
 		_boy.getComponent<engine::Animator>()->findAnimation("in")->start();
@@ -402,6 +412,8 @@ public:
 		_girlPostit.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_grandpaPostit.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_dogPostit.getComponent<engine::Animator>()->findAnimation("in")->start();
+
+		_tileInfoDisplay.getComponent<engine::Animator>()->findAnimation("in")->start();
 
 		renderer().push_basic(&_boardGameMgr);
         _boardGameMgr.tick(1);
@@ -451,6 +463,8 @@ private:
 	engine::Text _girlText{ "anyone going back", engine::Assets::getFont("unlearned"), 26 };
 	engine::Text _grandpaText{ "standing on corner", engine::Assets::getFont("unlearned"), 26 };
 	engine::Text _dogText{ "being with someone", engine::Assets::getFont("unlearned"), 26 };
+
+	engine::Sprite _tileInfoDisplay;
 
 	//Tabletop
 	engine::Sprite _title;
