@@ -177,6 +177,10 @@ void State::deactivate() {
 	_animationsTime = _animationsClock.getElapsedTime();
 
 	on_deactivate();
+
+	for (auto machine : _stateMachines) {
+		machine->operator->()->deactivate();
+	}
 }
 
 bool State::isActive() const {
