@@ -9,11 +9,7 @@
 
 
 MenuState::MenuState() {
-	background_setup();
-	character_setup();
-	postits_setup();
-	helper_setup();
-    music_setup();
+	
 }
 
 
@@ -26,11 +22,17 @@ void MenuState::handle_event(const sf::Event& event) {
 
 
 void MenuState::on_activate() {
+	background_setup();
+	character_setup();
+	postits_setup();
+	helper_setup();
+	music_setup();
+
 	_startGame = false;
 	_started = false;
 	_characterAnimations = false;
 
-    if(Settings::soundOn) _menuMusic.play();
+	if (Settings::soundOn) _menuMusic.play();
 }
 
 void MenuState::on_deactivate() {
