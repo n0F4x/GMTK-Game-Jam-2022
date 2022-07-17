@@ -19,6 +19,7 @@
 #include "states/Tile.hpp"
 #include "states/TileManager.hpp"
 #include "states/BoardGameManager.hpp"
+#include "states/CharacterType.hpp"
 
 class SampleChildState : public engine::State {
 public:
@@ -359,7 +360,7 @@ private:
 
 	TileManager _tileMgr;
 	engine::RectangleShape _tilesBg;
-    BoardGameManager _boardGameMgr;
+    BoardGameManager _boardGameMgr{BOY};
 };
 
 

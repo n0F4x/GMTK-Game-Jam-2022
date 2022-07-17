@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "engine/Assets.hpp"
 
 enum TileType {
     START,
@@ -18,10 +19,10 @@ static const std::string tileTypeTextures[] = {
         "Tiles/basic_tile",
         "Tiles/plus_tile",
         "Tiles/minus_tile",
-        "Tiles/changer_tile",
-        "Tiles/doubler_tile"
+        "Tiles/swap_tile",
+        "Tiles/repeat_move_tile"
 };
 
-inline std::string tileTypeToString(TileType type) {
-    return tileTypeTextures[type];
+inline sf::Texture& getTileTypeTexture(TileType type) {
+    return engine::Assets::getTexture(tileTypeTextures[type]);
 }
