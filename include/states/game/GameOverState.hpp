@@ -14,6 +14,7 @@ public:
 
 protected:
 	void on_draw() override;
+	void on_update() override;
 
 private:
 	void background_setup();
@@ -58,4 +59,8 @@ private:
 
 	// Helper
 	engine::Sprite _tileInfoDisplay;
+
+	engine::Sprite _gameOver, _title;
+
+	sf::Clock _clock;
 };
