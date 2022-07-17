@@ -52,8 +52,8 @@ void StateMachine::processChanges() {
 			_currentState->deactivate();
 			_currentState = nextState->second.get();
 		}
-		else {
-			std::cerr << "\nStateMachine: Failed changing state to \"" << _currentState->getNextState() << "\"\n";
+		else if (_currentState->getNextState() != "") {
+            std::cerr << "\nStateMachine: Failed changing state to \"" << _currentState->getNextState() << "\"\n";
 		}
 		_currentState->activate();
 	}

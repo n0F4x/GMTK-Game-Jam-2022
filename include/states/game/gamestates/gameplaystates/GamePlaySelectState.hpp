@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include "engine/State.hpp"
 #include "engine/Assets.hpp"
 #include "engine/drawables/Sprite.hpp"
@@ -22,10 +23,13 @@ private:
 	///////////////
 	// Variables //
 	///////////////
+	std::string* _storeDice = nullptr;
+
 	std::string* _storeState = nullptr;
 	sf::Clock _clock;
 	bool _exiting = false;
 	bool _active = false;
+	bool _skipped = false;
 
 	engine::Object _selectHolder;
 	engine::Sprite _dice1, _dice2, _dice3, _dice4, _dice5, _dice6;
@@ -35,6 +39,7 @@ private:
 	UI::Button _button4{ &engine::Assets::getTexture("UI/transparent"), &engine::Assets::getTexture("UI/outline") };
 	UI::Button _button5{ &engine::Assets::getTexture("UI/transparent"), &engine::Assets::getTexture("UI/outline") };
 	UI::Button _button6{ &engine::Assets::getTexture("UI/transparent"), &engine::Assets::getTexture("UI/outline") };
+	std::array<UI::Button*, 6> _buttons{ &_button1, &_button2, &_button3, &_button4, &_button5, &_button6 };
 	engine::Sprite _selectText;
 	UI::ProgressBar _selectTime{ { 930, 30 } };
 	engine::Sprite _selectBackdrop;
