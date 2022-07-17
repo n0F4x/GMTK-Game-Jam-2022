@@ -444,7 +444,7 @@ private:
 
 	engine::Sprite _boyPostit, _girlPostit, _grandpaPostit, _dogPostit;
 	engine::Text _boyText{ "taking over", engine::Assets::getFont("unlearned"), 26 };
-	engine::Text _girlText{ "other's suffering", engine::Assets::getFont("unlearned"), 26 };
+	engine::Text _girlText{ "reversing", engine::Assets::getFont("unlearned"), 26 };
 	engine::Text _grandpaText{ "standing on corner", engine::Assets::getFont("unlearned"), 26 };
 	engine::Text _dogText{ "being with someone", engine::Assets::getFont("unlearned"), 26 };
 
