@@ -13,7 +13,7 @@ class Tile : public Sprite {
 public:
     Tile(TileType type) {
         this->_type = type;
-        Sprite::setTexture(&Assets::getTexture(tileTypeToString(type)));
+        Sprite::setTexture(&getTileTypeTexture(type));
     }
 
     Tile* getRelativeTile(int offset = 1) {
