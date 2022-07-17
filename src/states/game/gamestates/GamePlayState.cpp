@@ -5,6 +5,7 @@
 
 
 GamePlayState::GamePlayState() {
+	addStateMachine(&_stateMachine);
 	_stateMachine.addState("LookAround", std::make_unique<GamePlayLookaroundState>());
 	_stateMachine.addState("Select", std::make_unique<GamePlaySelectState>());
 
