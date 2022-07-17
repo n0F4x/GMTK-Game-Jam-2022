@@ -20,11 +20,6 @@ GameState::GameState() {
 }
 
 
-void GameState::on_activate() {
-	*store().get("init") = "true";
-}
-
-
 void GameState::handle_event(const sf::Event& event) {
 	_stateMachine->handle_event(event);
 }

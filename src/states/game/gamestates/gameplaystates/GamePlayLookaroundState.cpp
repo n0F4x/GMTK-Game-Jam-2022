@@ -1,4 +1,4 @@
-#include "states/game/gamestates/gameplaystates/GamePlayLookaroundState.hpp"
+#include "states/game/gamestates/gameplaystates/GamePlayLookAroundState.hpp"
 
 
-void GamePlayLookaroundState::on_draw() { /*TODO*/ }
+void GamePlayLookAroundState::on_draw() { /*TODO*/ }
