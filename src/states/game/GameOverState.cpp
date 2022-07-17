@@ -15,6 +15,7 @@ GameOverState::GameOverState() {
 	postits_setup();
 	game_board_setup();
 	helper_setup();
+    music_setup();
 
 	_clock.restart();
 
