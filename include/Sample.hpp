@@ -328,12 +328,12 @@ public:
 
 		// PrOS-TITS xd (pov: kp at 3:37AM)
 		
-		_boyPostit.setTexture(&engine::Assets::getTexture("UI/postit"));
+		_boyPostit.setTexture(&engine::Assets::getTexture("UI/boy_postit"));
 		addObject(&_boyPostit);
 		renderer().push_priority(&_boyPostit);
 		_boyPostit.scale(6.f, 6.f);
 		_boyText.attach_parent(&_boyPostit);
-		_boyText.setPosition(25, 125);
+		_boyText.setPosition(25, 135);
 		_boyText.setFillColor(sf::Color::Black);
 		renderer().push_priority(&_boyText);
 		_boyPostit.setPosition(50 - 500, 125);
@@ -342,12 +342,12 @@ public:
 		animator->findAnimation("in")->setDistance({ 500, 0 });
 		animator->findAnimation("in")->setTime(sf::seconds(6.f));
 
-		_girlPostit.setTexture(&engine::Assets::getTexture("UI/postit"));
+		_girlPostit.setTexture(&engine::Assets::getTexture("UI/girl_postit"));
 		addObject(&_girlPostit);
 		renderer().push_priority(&_girlPostit);
 		_girlPostit.scale(6.f, 6.f);
 		_girlText.attach_parent(&_girlPostit);
-		_girlText.setPosition(25, 125);
+		_girlText.setPosition(25, 135);
 		_girlText.setFillColor(sf::Color::Black);
 		renderer().push_priority(&_girlText);
 		_girlPostit.setPosition(1600 + 500, 125);
@@ -356,12 +356,12 @@ public:
 		animator->findAnimation("in")->setDistance({ -500, 0 });
 		animator->findAnimation("in")->setTime(sf::seconds(6.f));
 
-		_dogPostit.setTexture(&engine::Assets::getTexture("UI/postit2"));
+		_dogPostit.setTexture(&engine::Assets::getTexture("UI/dog_postit"));
 		addObject(&_dogPostit);
 		renderer().push_priority(&_dogPostit);
 		_dogPostit.scale(6.f, 6.f);
 		_dogText.attach_parent(&_dogPostit);
-		_dogText.setPosition(25, 125);
+		_dogText.setPosition(25, 135);
 		_dogText.setFillColor(sf::Color::Black);
 		renderer().push_priority(&_dogText);
 		_dogPostit.setPosition(50 - 500, 525);
@@ -370,12 +370,12 @@ public:
 		animator->findAnimation("in")->setDistance({ 500, 0 });
 		animator->findAnimation("in")->setTime(sf::seconds(6.f));
 
-		_grandpaPostit.setTexture(&engine::Assets::getTexture("UI/postit"));
+		_grandpaPostit.setTexture(&engine::Assets::getTexture("UI/grandpa_postit"));
 		addObject(&_grandpaPostit);
 		renderer().push_priority(&_grandpaPostit);
 		_grandpaPostit.scale(6.f, 6.f);
 		_grandpaText.attach_parent(&_grandpaPostit);
-		_grandpaText.setPosition(25, 125);
+		_grandpaText.setPosition(25, 135);
 		_grandpaText.setFillColor(sf::Color::Black);
 		renderer().push_priority(&_grandpaText);
 		_grandpaPostit.setPosition(1600 + 500, 525);
@@ -444,7 +444,7 @@ private:
 
 	engine::Sprite _boyPostit, _girlPostit, _grandpaPostit, _dogPostit;
 	engine::Text _boyText{ "taking over", engine::Assets::getFont("unlearned"), 26 };
-	engine::Text _girlText{ "reversing", engine::Assets::getFont("unlearned"), 26 };
+	engine::Text _girlText{ "anyone going back", engine::Assets::getFont("unlearned"), 26 };
 	engine::Text _grandpaText{ "standing on corner", engine::Assets::getFont("unlearned"), 26 };
 	engine::Text _dogText{ "being with someone", engine::Assets::getFont("unlearned"), 26 };
 
