@@ -2,7 +2,6 @@
 
 #include "states/game/gamestates/GamePlayState.hpp"
 #include "states/game/gamestates/GamePausedState.hpp"
-#include "states/game/gamestates/GameOverState.hpp"
 #include "engine/Assets.hpp"
 #include "animations/Bezier.hpp"
 
@@ -11,7 +10,6 @@ GameState::GameState() {
 	addStateMachine(&_stateMachine);
 	_stateMachine.addState("Play", std::make_unique<GamePlayState>());
 	_stateMachine.addState("Paused", std::make_unique<GamePausedState>());
-	_stateMachine.addState("Over", std::make_unique<GameOverState>());
 
 	_stateMachine.setInitialState("Play");
 
