@@ -15,6 +15,7 @@ public:
 
 protected:
 	void on_activate() override;
+    void on_deactivate() override;
 
 	void on_update() override;
 	void on_draw() override;
@@ -25,6 +26,7 @@ private:
 	void character_setup();
 	void postits_setup();
 	void helper_setup();
+    void music_setup();
 
 	///////////////
 	// Variables //
@@ -38,6 +40,7 @@ private:
 	engine::Animation* _fillPulseOffAnimation = nullptr;
 	engine::Animation* _outlinePulseOnAnimation = nullptr;
 	engine::Animation* _outlinePulseOffAnimation = nullptr;
+    sf::Music _menuMusic;
 
 	engine::Text _clickText{ "( click to start the game )", engine::Assets::getFont("unlearned2"), 56 };
 
