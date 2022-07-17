@@ -30,7 +30,7 @@ MenuState::MenuState() {
 
 	_title.setTexture(&engine::Assets::getTexture("UI/title"));
 	_title.setPosition(935, 480);
-	_title.scale(7.5f / 5.f, 7.5f / 5.f);
+	_title.scale(1.f);
 	renderer().push_background(&_title);
 
 	_plant.setTexture(&engine::Assets::getTexture("Environment/plant"));
