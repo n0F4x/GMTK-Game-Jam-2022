@@ -138,7 +138,7 @@ void GameInitState::on_update() {
 		}
 	}
 
-	if (_clock.getElapsedTime() >= sf::seconds(6) && !_init6) {
+	if (!_init6) {
 		_init6 = true;
 		// START ANIMATIONS
 		_boy.getComponent<engine::Animator>()->findAnimation("in")->start();
@@ -152,7 +152,7 @@ void GameInitState::on_update() {
 		_dogBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
 	}
 
-	if (_clock.getElapsedTime() >= sf::seconds(12)) {
+	if (_clock.getElapsedTime() >= sf::seconds(6)) {
 		*_storeInit = "false";
 		_init = false;
 		_init6 = false;
