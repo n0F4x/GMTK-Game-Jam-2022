@@ -224,7 +224,7 @@ public:
 		animator->findAnimation("in")->setTime(sf::seconds(3));
 
 		_girl.setTexture(&engine::Assets::getTexture("Environment/green_player"));
-		_girl.setPosition(sf::Vector2f(1320 + 500, 120 - 500));
+		_girl.setPosition(sf::Vector2f(1320 + 500 - 20, 120 - 500 - 20));
 		_girl.scale(10.f, 10.f);
 		addObject(&_girl);
 		renderer().push_background(&_girl);
@@ -333,7 +333,7 @@ public:
 		renderer().push_priority(&_boyPostit);
 		_boyPostit.scale(6.f, 6.f);
 		_boyText.attach_parent(&_boyPostit);
-		_boyText.setPosition(30, 125);
+		_boyText.setPosition(25, 125);
 		_boyText.setFillColor(sf::Color::Black);
 		renderer().push_priority(&_boyText);
 		_boyPostit.setPosition(50 - 500, 125);
@@ -347,7 +347,7 @@ public:
 		renderer().push_priority(&_girlPostit);
 		_girlPostit.scale(6.f, 6.f);
 		_girlText.attach_parent(&_girlPostit);
-		_girlText.setPosition(30, 125);
+		_girlText.setPosition(25, 125);
 		_girlText.setFillColor(sf::Color::Black);
 		renderer().push_priority(&_girlText);
 		_girlPostit.setPosition(1600 + 500, 125);
@@ -361,7 +361,7 @@ public:
 		renderer().push_priority(&_dogPostit);
 		_dogPostit.scale(6.f, 6.f);
 		_dogText.attach_parent(&_dogPostit);
-		_dogText.setPosition(30, 125);
+		_dogText.setPosition(25, 125);
 		_dogText.setFillColor(sf::Color::Black);
 		renderer().push_priority(&_dogText);
 		_dogPostit.setPosition(50 - 500, 525);
@@ -375,7 +375,7 @@ public:
 		renderer().push_priority(&_grandpaPostit);
 		_grandpaPostit.scale(6.f, 6.f);
 		_grandpaText.attach_parent(&_grandpaPostit);
-		_grandpaText.setPosition(30, 125);
+		_grandpaText.setPosition(25, 125);
 		_grandpaText.setFillColor(sf::Color::Black);
 		renderer().push_priority(&_grandpaText);
 		_grandpaPostit.setPosition(1600 + 500, 525);
@@ -443,10 +443,10 @@ private:
 	UI::ProgressBar _boyBar { {392.f, 32.f} }, _girlBar{ {392.f, 32.f} }, _grandpaBar{ {392.f, 32.f} }, _dogBar{ {392.f, 32.f} };
 
 	engine::Sprite _boyPostit, _girlPostit, _grandpaPostit, _dogPostit;
-	engine::Text _boyText{ "taking over", engine::Assets::getFont("unlearned"), 24 };
-	engine::Text _girlText{ "other's suffering", engine::Assets::getFont("unlearned"), 24 };
-	engine::Text _grandpaText{ "standing on corner", engine::Assets::getFont("unlearned"), 24 };
-	engine::Text _dogText{ "being with someone", engine::Assets::getFont("unlearned"), 24 };
+	engine::Text _boyText{ "taking over", engine::Assets::getFont("unlearned"), 26 };
+	engine::Text _girlText{ "other's suffering", engine::Assets::getFont("unlearned"), 26 };
+	engine::Text _grandpaText{ "standing on corner", engine::Assets::getFont("unlearned"), 26 };
+	engine::Text _dogText{ "being with someone", engine::Assets::getFont("unlearned"), 26 };
 
 	//Tabletop
 	engine::Sprite _title;

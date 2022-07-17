@@ -2,7 +2,6 @@
 
 #include "engine/Assets.hpp"
 #include "animations/Bezier.hpp"
-#include <iostream>
 #include "engine/Window.hpp"
 
 
@@ -18,7 +17,7 @@ GameInitState::GameInitState() {
 	animator->findAnimation("in")->setTime(sf::seconds(3));
 
 	_girl.setTexture(&engine::Assets::getTexture("Environment/green_player"));
-	_girl.setPosition(sf::Vector2f(1320 + 500, 120 - 500));
+	_girl.setPosition(sf::Vector2f(1320 + 500 - 20, 120 - 500 - 20));
 	_girl.scale(10.f, 10.f);
 	addObject(&_girl);
 	renderer().push_basic(&_girl);
@@ -170,18 +169,8 @@ int GameInitState::setup() {
 
 
 void GameInitState::on_update() {
-	if (!_init) {
-		if (*_storeInit == "true") {
-			_init = true;
-			_clock.restart();
-		}
-		else {
-			return;
-		}
-	}
-
-	if (!_init6) {
-		_init6 = true;
+	if (!_init && *_storeInit == "true") {
+		_init = true;
 		// START ANIMATIONS
 		_boy.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_girl.getComponent<engine::Animator>()->findAnimation("in")->start();
@@ -197,7 +186,6 @@ void GameInitState::on_update() {
 	if (_clock.getElapsedTime() >= sf::seconds(6)) {
 		*_storeInit = "false";
 		_init = false;
-		_init6 = false;
 		//changeState("Play");
 	}
 }
