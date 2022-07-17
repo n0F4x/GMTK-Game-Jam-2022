@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "engine/Color.hpp"
 
 
 namespace engine {
@@ -66,7 +67,7 @@ namespace engine {
 		/**
 		 * @brief	Set the amount of color to transition.
 		*/
-		void setColor(const sf::Color& color);
+		void setColor(const Color& color);
 
 
 		/////////////
@@ -79,7 +80,7 @@ namespace engine {
 		const sf::Vector2f& getScale() const;
 		std::vector<const sf::Texture*>& getTextures();
 		sf::Time getTextureTime() const;
-		const sf::Color& getColor() const;
+		const Color& getColor() const;
 
 
 	protected:
@@ -100,7 +101,7 @@ namespace engine {
 		sf::Vector2f _scale = { 0.f, 0.f };
 		std::vector<const sf::Texture*> _textures;
 		sf::Time _textureTime;
-		sf::Color _color;
+		Color _color;
 	};
 
 }
