@@ -93,7 +93,6 @@ void Character::calculateHappinessAfterTurn(int diceNumber, TileType tile, Chara
 
 void Character::setCurrentTile(Tile *tile) {
     _currentTile = tile;
-    setPosition(tile->getPosition());
 }
 
 Tile *Character::getCurrentTile() {
