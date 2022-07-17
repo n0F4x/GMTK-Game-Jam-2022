@@ -15,6 +15,8 @@ public:
 protected:
 	void on_draw() override;
 	void on_update() override;
+    void on_activate() override;
+    void on_deactivate() override;
 
 private:
 	void background_setup();
@@ -22,12 +24,16 @@ private:
 	void postits_setup();
 	void game_board_setup();
 	void helper_setup();
+    void music_setup();
 
-	///////////////
+    ///////////////
 	// Variables //
 	///////////////
 
-	// Background
+    // Music
+    sf::Music _gameoverMusic;
+
+    // Background
 	engine::Sprite _floor;
 	engine::Sprite _table;
 	engine::Sprite _table2;
