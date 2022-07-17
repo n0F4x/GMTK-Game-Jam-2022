@@ -21,6 +21,7 @@
 #include "states/BoardGameManager.hpp"
 #include "states/CharacterType.hpp"
 #include "states/CharacterCallbacks.hpp"
+#include "engine/drawables/Text.hpp"
 
 class SampleChildState : public engine::State {
 public:
@@ -328,40 +329,56 @@ public:
 		// PrOS-TITS xd (pov: kp at 3:37AM)
 		
 		_boyPostit.setTexture(&engine::Assets::getTexture("UI/postit"));
-		_boyPostit.setPosition(50 - 500, 125);
-		_boyPostit.scale(6.f, 6.f);
 		addObject(&_boyPostit);
 		renderer().push_priority(&_boyPostit);
+		_boyPostit.scale(6.f, 6.f);
+		_boyText.attach_parent(&_boyPostit);
+		_boyText.setPosition(30, 125);
+		_boyText.setFillColor(sf::Color::Black);
+		renderer().push_priority(&_boyText);
+		_boyPostit.setPosition(50 - 500, 125);
 		animator = _boyPostit.setComponent(std::make_unique<engine::Animator>());
 		animator->addAnimation("in", std::make_unique<animations::Ease>());
 		animator->findAnimation("in")->setDistance({ 500, 0 });
 		animator->findAnimation("in")->setTime(sf::seconds(6.f));
 
 		_girlPostit.setTexture(&engine::Assets::getTexture("UI/postit"));
-		_girlPostit.setPosition(1600 + 500, 125);
-		_girlPostit.scale(6.f, 6.f);
 		addObject(&_girlPostit);
 		renderer().push_priority(&_girlPostit);
+		_girlPostit.scale(6.f, 6.f);
+		_girlText.attach_parent(&_girlPostit);
+		_girlText.setPosition(30, 125);
+		_girlText.setFillColor(sf::Color::Black);
+		renderer().push_priority(&_girlText);
+		_girlPostit.setPosition(1600 + 500, 125);
 		animator = _girlPostit.setComponent(std::make_unique<engine::Animator>());
 		animator->addAnimation("in", std::make_unique<animations::Ease>());
 		animator->findAnimation("in")->setDistance({ -500, 0 });
 		animator->findAnimation("in")->setTime(sf::seconds(6.f));
 
 		_dogPostit.setTexture(&engine::Assets::getTexture("UI/postit2"));
-		_dogPostit.setPosition(50 - 500, 525);
-		_dogPostit.scale(6.f, 6.f);
 		addObject(&_dogPostit);
 		renderer().push_priority(&_dogPostit);
+		_dogPostit.scale(6.f, 6.f);
+		_dogText.attach_parent(&_dogPostit);
+		_dogText.setPosition(30, 125);
+		_dogText.setFillColor(sf::Color::Black);
+		renderer().push_priority(&_dogText);
+		_dogPostit.setPosition(50 - 500, 525);
 		animator = _dogPostit.setComponent(std::make_unique<engine::Animator>());
 		animator->addAnimation("in", std::make_unique<animations::Ease>());
 		animator->findAnimation("in")->setDistance({ 500, 0 });
 		animator->findAnimation("in")->setTime(sf::seconds(6.f));
 
 		_grandpaPostit.setTexture(&engine::Assets::getTexture("UI/postit"));
-		_grandpaPostit.setPosition(1600 + 500, 525);
-		_grandpaPostit.scale(6.f, 6.f);
 		addObject(&_grandpaPostit);
 		renderer().push_priority(&_grandpaPostit);
+		_grandpaPostit.scale(6.f, 6.f);
+		_grandpaText.attach_parent(&_grandpaPostit);
+		_grandpaText.setPosition(30, 125);
+		_grandpaText.setFillColor(sf::Color::Black);
+		renderer().push_priority(&_grandpaText);
+		_grandpaPostit.setPosition(1600 + 500, 525);
 		animator = _grandpaPostit.setComponent(std::make_unique<engine::Animator>());
 		animator->addAnimation("in", std::make_unique<animations::Ease>());
 		animator->findAnimation("in")->setDistance({ -500, 0 });
@@ -418,6 +435,10 @@ private:
 	UI::ProgressBar _boyBar { {392.f, 32.f} }, _girlBar{ {392.f, 32.f} }, _grandpaBar{ {392.f, 32.f} }, _dogBar{ {392.f, 32.f} };
 
 	engine::Sprite _boyPostit, _girlPostit, _grandpaPostit, _dogPostit;
+	engine::Text _boyText{ "taking over", engine::Assets::getFont("unlearned"), 24 };
+	engine::Text _girlText{ "other's suffering", engine::Assets::getFont("unlearned"), 24 };
+	engine::Text _grandpaText{ "standing on corner", engine::Assets::getFont("unlearned"), 24 };
+	engine::Text _dogText{ "being with someone", engine::Assets::getFont("unlearned"), 24 };
 
 	//Tabletop
 	engine::Sprite _title;
