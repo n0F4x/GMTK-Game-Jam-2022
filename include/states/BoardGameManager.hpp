@@ -9,11 +9,9 @@ using namespace engine;
 class BoardGameManager : public sf::Drawable {
 public:
     BoardGameManager() {
-        _tilesBg.setSize({ (21 * 11 + 1) * 3.f + 12, (21 * 7 + 1) * 3.f + 12 });
-        _tilesBg.setPosition(Window::getSize().x / 2.f - (21 * 11 + 1) / 2.f * 3.f - 6, Window::getSize().y / 2.f - (21 * 7 + 1) / 2.f * 3.f - 6);
-        _tilesBg.setFillColor(sf::Color(255, 255, 255, 255));
-        _tilesBg.setOutlineColor(sf::Color(150, 150, 150, 255));
-        _tilesBg.setOutlineThickness(6);
+        _tilesBg.setTexture(&engine::Assets::getTexture("Tiles/board_background"));
+        _tilesBg.setPosition(Window::getSize().x / 2.f - (21 * 11 + 1) / 2.f * 3.f - 12, Window::getSize().y / 2.f - (21 * 7 + 1) / 2.f * 3.f - 12);
+        _tilesBg.setScale(3, 3);
 
         _tileMgr.addTile(TileType::NORMAL, RIGHT);
         _tileMgr.addTile(TileType::NORMAL, RIGHT);
@@ -109,6 +107,6 @@ protected:
     }
 private:
     TileManager _tileMgr;
-    RectangleShape _tilesBg;
+    engine::Sprite _tilesBg;
     std::unique_ptr<Character> _characters[4];
 };
