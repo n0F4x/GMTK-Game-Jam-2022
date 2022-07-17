@@ -20,6 +20,7 @@
 #include "states/TileManager.hpp"
 #include "states/BoardGameManager.hpp"
 #include "states/CharacterType.hpp"
+#include "states/CharacterCallbacks.hpp"
 
 class SampleChildState : public engine::State {
 public:

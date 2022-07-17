@@ -1,27 +1,41 @@
 #include "states/Character.hpp"
 #include "states/CharacterType.hpp"
+#include "states//CharacterCallbacks.hpp"
 
 #include <utility>
 
 const int Character::MAX_HAPPINESS = 100;
 
 Character::Character(CharacterType type, int happinessLoss,
-                     const int favoriteNumber, int favoriteNumberHappinessChange,
+                     int favoriteNumber, int favoriteNumberHappinessChange,
                      int hatedNumber, int hatedNumberHappinessChange,
                      TileType favoriteTile, int favoriteTileHappinessChange,
                      TileType hatedTile, int hatedTileHappinessChange,
-                     std::string specialDescription,
-                     std::function<int(Character& character, BoardGameManager& boardGameMgr, int oldPositions[], int newPositions[])> specialCallback,
+                     int specialCallbackHappinessChange,
                      std::function<void(Character&)> loseCallback)
         : _type(type), _happinessLoss(happinessLoss),
           _favoriteNumber(favoriteNumber), _favoriteNumberHappinessChange(favoriteNumberHappinessChange),
           _hatedNumber(hatedNumber), _hatedNumberHappinessChange(hatedNumberHappinessChange),
           _favoriteTile(favoriteTile), _favoriteTileHappinessChange(favoriteTileHappinessChange),
           _hatedTile(hatedTile), _hatedTileHappinessChange(hatedTileHappinessChange),
-          _specialDescription(std::move(specialDescription)),
-          _specialCallback(std::move(specialCallback)), _loseCallback(std::move(loseCallback)) {
+          _specialCallbackHappinessChange(specialCallbackHappinessChange),
+          _loseCallback(std::move(loseCallback)) {
 
     engine::Sprite::setTexture(&getCharacterTexture(type));
+    switch (_type) {
+        case BOY:
+            _specialCallback = boyCallback;
+            break;
+        case GIRL:
+            _specialCallback = girlCallback;
+            break;
+        case GRANDPA:
+            _specialCallback = grandpaCallback;
+            break;
+        case DOGE:
+            _specialCallback = dogeCallback;
+            break;
+    }
 }
 
 void Character::setHappiness(const int amount) {
@@ -69,7 +83,7 @@ void Character::calculateHappinessAfterTurn(int diceNumber, TileType tile, Chara
     }
 
     if (_happiness <= 0) return;
-    addHappiness(_specialCallback(*this, boardGameMgr, oldPositions, newPositions));
+    addHappiness(_specialCallbackHappinessChange * _specialCallback(*this, boardGameMgr, oldPositions, newPositions));
 }
 
 void Character::setCurrentTile(Tile *tile) {
@@ -85,14 +99,6 @@ void Character::move(int offset) {
     setCurrentTile(getCurrentTile()->getRelativeTile(offset));
 }
 
-void Character::setSpecialCallback(std::function<int(Character& character, BoardGameManager& boardGameMgr, int oldPositions[], int newPositions[])> callback) {
-    _specialCallback = std::move(callback);
-}
-
 void Character::setLoseCallback(std::function<void(Character&)> callback) {
     _loseCallback = std::move(callback);
-}
-
-std::string Character::getSpecialDescription() {
-    return _specialDescription;
 }
