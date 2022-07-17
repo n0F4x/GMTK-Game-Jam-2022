@@ -24,6 +24,7 @@ private:
 	// Variables //
 	///////////////
 	bool _startGame = false;
+	bool _started = false;
 	sf::Clock _clock;
 	sf::Clock _pulseClock;
 	bool _pulseOn = false;

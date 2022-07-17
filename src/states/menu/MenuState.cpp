@@ -128,6 +128,7 @@ void MenuState::handle_event(const sf::Event& event) {
 
 void MenuState::on_activate() {
 	_startGame = false;
+	_started = false;
 }
 
 
@@ -148,11 +149,11 @@ void MenuState::on_update() {
 		_coffee.getComponent<engine::Animator>()->findAnimation("out")->start();
 		_plant.getComponent<engine::Animator>()->findAnimation("out")->start();
 		_startGame = false;
-		if (_clock.getElapsedTime() >= sf::seconds(3)) {
-			changeState("Game");
-		}
+		_started = true;
+		_clock.restart();
 	}
-	else {
+
+	if (!_started) {
 		if (_pulseClock.getElapsedTime() >= sf::seconds(2)) {
 			if (_pulseOn) {
 				_fillPulseOnAnimation->stop();
@@ -168,6 +169,11 @@ void MenuState::on_update() {
 			}
 			_pulseOn = !_pulseOn;
 			_pulseClock.restart();
+		}
+	}
+	else {
+		if (_clock.getElapsedTime() >= sf::seconds(4)) {
+			changeState("Game");
 		}
 	}
 }
