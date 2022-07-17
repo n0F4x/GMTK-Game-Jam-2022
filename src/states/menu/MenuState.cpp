@@ -227,7 +227,7 @@ void MenuState::background_setup() {
 	renderer().push_background(&_table);
 
 	_table2.setTexture(&engine::Assets::getTexture("Environment/coffeetable"));
-	_table2.setPosition(550, -120);
+	_table2.setPosition(625, -120);
 	_table2.scale(6.f, 6.f);
 	renderer().push_background(&_table2);
 
