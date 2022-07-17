@@ -30,7 +30,7 @@ private:
 	engine::Sprite _table;
 	engine::Sprite _table2;
 	engine::Object _scaler;
-	//Tabletop
+
 	engine::Sprite _title;
 	engine::Sprite _croissant;
 	engine::Sprite _plant;

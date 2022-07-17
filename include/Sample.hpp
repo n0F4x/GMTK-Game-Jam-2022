@@ -99,6 +99,8 @@ public:
 		store().add("restart", "true");
 
 		// SELECT STUFF
+		_selectHolder.setPosition(960, 540);
+
 		_selectBackdrop.setFillColor(sf::Color(100, 100, 100, 200));
 		_selectBackdrop.setSize(sf::Vector2f(1920, 1080));
 		renderer().push_priority(&_selectBackdrop);
@@ -138,6 +140,25 @@ public:
 		_selectTime.setPosition({ 495,600 });
 		renderer().push_priority(&_selectTime);
 		addObject(&_selectTime);
+
+		_selectHolder.attach_child(&_dice1);
+		_selectHolder.attach_child(&_dice2);
+		_selectHolder.attach_child(&_dice3);
+		_selectHolder.attach_child(&_dice4);
+		_selectHolder.attach_child(&_dice5);
+		_selectHolder.attach_child(&_dice6);
+		_selectHolder.attach_child(&_selectBackdrop);
+		_selectHolder.attach_child(&_selectText);
+		_selectHolder.attach_child(&_selectTime);
+		addObject(&_selectHolder);
+
+		_selectHolder.setPosition(960, -540);
+		Animator* selectAnimator = _selectHolder.setComponent(std::make_unique<engine::Animator>());
+		_selectHolder.getComponent<engine::Animator>()->addAnimation("down", std::make_unique<animations::Ease>());
+		selectAnimator->findAnimation("down")->setDistance({ 0, 1080 });
+		selectAnimator->findAnimation("down")->setTime(sf::seconds(1));
+
+		_selectHolder.getComponent<engine::Animator>()->findAnimation("down")->start();
 
 		// END OF SELECT STUFF
 
@@ -353,6 +374,7 @@ private:
 	engine::Sprite _croissant, _plant, _coffee;
 
 	//Select!
+	engine::Object _selectHolder;
 	engine::Sprite _dice1, _dice2, _dice3, _dice4, _dice5, _dice6;
 	engine::Sprite _selectText;
 	UI::ProgressBar _selectTime {{930,20}};
