@@ -11,6 +11,7 @@
 #include "Sample.hpp"
 #include "states/menu/MenuState.hpp"
 #include "states/game/GameState.hpp"
+#include "states/game/GameOverState.hpp"
 #include "states/description/DescriptionState.hpp"
 
 
@@ -33,6 +34,7 @@ int main() {
 	machine.addState("Animations", std::make_unique<AnimationsSampleState>());
 	machine.addState("Menu", std::make_unique<MenuState>());
 	machine.addState("Game", std::make_unique<GameState>());
+	machine.addState("GameOver", std::make_unique<GameOverState>());
     machine.addState("Description", std::make_unique<DescriptionState>());
 
 
