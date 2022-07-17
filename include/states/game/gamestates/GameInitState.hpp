@@ -33,4 +33,15 @@ private:
 
 	engine::Sprite _boyBarBack, _girlBarBack, _gradpaBarBack, _dogBarBack;
 	UI::ProgressBar _boyBar{ {392.f, 32.f} }, _girlBar{ {392.f, 32.f} }, _grandpaBar{ {392.f, 32.f} }, _dogBar{ {392.f, 32.f} };
+
+	// Background
+	engine::Sprite _floor;
+	engine::Sprite _table;
+	engine::Sprite _table2;
+
+	engine::Sprite _title;
+	engine::Sprite _croissant;
+	engine::Sprite _plant;
+	engine::Sprite _plant2;
+	engine::Sprite _coffee;
 };
