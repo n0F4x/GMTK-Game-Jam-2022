@@ -18,6 +18,7 @@ GamePlayState::GamePlayState() {
 
 int GamePlayState::setup() {
 	store().add("selector", "LookAround");
+	store().add("dice", "0"); // from 1 to 6 is okay
 
 	return 0;
 }
