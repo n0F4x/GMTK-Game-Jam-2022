@@ -66,8 +66,13 @@ float Character::getHappinessNormed() const {
     return (float)_happiness / (float)MAX_HAPPINESS;
 }
 
+int Character::getHappinessChange() const {
+    return _happinessChangeSinceLastTurn;
+}
+
 void Character::calculateHappinessAfterTurn(int diceNumber, TileType tile, CharacterType activeCharacter,
                                             BoardGameManager &boardGameMgr, int oldPositions[], int newPositions[]) {
+    int oldHappiness = _happiness;
     if (this->_type == activeCharacter) {
         if (diceNumber == _favoriteNumber)
             addHappiness(_favoriteNumberHappinessChange);
@@ -81,7 +86,7 @@ void Character::calculateHappinessAfterTurn(int diceNumber, TileType tile, Chara
     else {
         addHappiness(-_happinessLoss);
     }
-
+    _happinessChangeSinceLastTurn = _happiness - oldHappiness;
     if (_happiness <= 0) return;
     addHappiness(_specialCallbackHappinessChange * _specialCallback(*this, boardGameMgr, oldPositions, newPositions));
 }
