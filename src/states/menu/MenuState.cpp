@@ -1,3 +1,4 @@
+#include <iostream>
 #include "states/menu/MenuState.hpp"
 
 #include "engine/Window.hpp"
@@ -122,6 +123,11 @@ void MenuState::on_update() {
         else if (_clock.getElapsedTime() >= sf::seconds(1.f))
             _menuMusic.setVolume(75.f);
 	}
+
+    _boyBar.setProgress(0);
+    _girlBar.setProgress(0);
+    _grandpaBar.setProgress(0);
+    _dogBar.setProgress(0);
 }
 
 void MenuState::on_draw() {
@@ -441,4 +447,13 @@ void MenuState::helper_setup() {
 void MenuState::music_setup() {
     _menuMusic.openFromFile(engine::Assets::ASSETS_PATH + "/music/menu.ogg");
     _menuMusic.setLoop(true);
+}
+
+int MenuState::setup() {
+    globalStore()->add("boy_happiness", std::to_string(_boardGame.getCharacter(BOY).getHappiness()));
+    globalStore()->add("girl_happiness", std::to_string(_boardGame.getCharacter(GIRL).getHappiness()));
+    globalStore()->add("grandpa_happiness", std::to_string(_boardGame.getCharacter(GRANDPA).getHappiness()));
+    globalStore()->add("doge_happiness", std::to_string(_boardGame.getCharacter(DOGE).getHappiness()));
+
+    return 0;
 }

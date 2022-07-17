@@ -21,9 +21,7 @@ public:
               int specialCallbackHappinessChange,
               std::function<void(Character&)> loseCallback = std::function<void(Character&)>());
 
-    CharacterType getType() {
-        return _type;
-    }
+    CharacterType getType();
 
     /**
      * @brief set happiness of character between 0 and MAX_HAPPINESS

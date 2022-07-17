@@ -36,6 +36,13 @@ Character::Character(CharacterType type, int happinessLoss,
             _specialCallback = dogeCallback;
             break;
     }
+
+    _happiness = 50 + (rand() % 11) * 5;
+    printf("%d\n", _happiness);
+}
+
+CharacterType Character::getType() {
+    return _type;
 }
 
 void Character::setHappiness(const int amount) {

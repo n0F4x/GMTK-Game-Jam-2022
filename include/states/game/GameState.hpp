@@ -30,6 +30,8 @@ protected:
 	void on_update() override;
 	void on_draw() override;
 
+    void on_activate() override;
+
 
 private:
 	void background_setup();
