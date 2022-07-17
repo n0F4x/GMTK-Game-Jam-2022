@@ -14,13 +14,11 @@ public:
     static const int MAX_HAPPINESS;
 
     Character(CharacterType type, int happinessLoss,
-              const int favoriteNumber, int favoriteNumberHappinessChange,
+              int favoriteNumber, int favoriteNumberHappinessChange,
               int hatedNumber, int hatedNumberHappinessChange,
               TileType favoriteTile, int favoriteTileHappinessChange,
               TileType hatedTile, int hatedTileHappinessChange,
-              std::string specialDescription,
-              std::function<int(Character& character, BoardGameManager& boardGameMgr, int oldPositions[], int newPositions[])> specialCallback =
-                      std::function<int(Character& character, BoardGameManager& boardGameMgr, int oldPositions[], int newPositions[])>(),
+              int specialCallbackHappinessChange,
               std::function<void(Character&)> loseCallback = std::function<void(Character&)>());
 
     CharacterType getType() {
@@ -59,10 +57,7 @@ public:
 
     void move(int offset);
 
-    void setSpecialCallback(std::function<int(Character& character, BoardGameManager& boardGameMgr, int oldPositions[], int newPositions[])> callback);
     void setLoseCallback(std::function<void(Character& character)> callback);
-
-    std::string getSpecialDescription();
 
 private:
     CharacterType _type;
@@ -84,6 +79,7 @@ private:
 
     std::string _specialDescription;
 
+    int _specialCallbackHappinessChange;
     std::function<int(Character& character, BoardGameManager& boardGameMgr, int oldPositions[], int newPositions[])> _specialCallback;
     std::function<void(Character&)> _loseCallback;
 
