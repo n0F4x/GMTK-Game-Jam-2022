@@ -45,6 +45,8 @@ private:
 	///////////////
 	engine::StateMachine _stateMachine;
 
+	// Marker
+	engine::Sprite _marker{ &engine::Assets::getTexture("UI/marker") };
 
 	// Background
 	engine::Sprite _floor;
