@@ -54,6 +54,7 @@ void MenuState::on_update() {
 		_title.getComponent<engine::Animator>()->findAnimation("out")->start();
 		_coffee.getComponent<engine::Animator>()->findAnimation("out")->start();
 		_plant.getComponent<engine::Animator>()->findAnimation("out")->start();
+		_boardGame.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_startGame = false;
 		_started = true;
 		_clock.restart();
@@ -264,6 +265,15 @@ void MenuState::background_setup() {
 	_plant2.scale(4.f, 4.f);
 	renderer().push_background(&_plant2);
 
+	_boardGame.setPosition(_boardGame.getPosition() + sf::Vector2f(0, 500));
+	renderer().push_basic(&_boardGame);
+	addObject(&_boardGame);
+
+	engine::Animator* gameAnimator = _boardGame.setComponent(std::make_unique<engine::Animator>());
+	_boardGame.getComponent<engine::Animator>()->addAnimation("in", std::make_unique<animations::Ease>());
+	gameAnimator->findAnimation("in")->setDistance({ 0.f, -1678.f });
+	gameAnimator->findAnimation("in")->setTime(sf::seconds(2));
+
 	_scaler.setPosition(960, 540);
 	_scaler.setOrigin(960, 540);
 	_scaler.attach_child(&_floor);
@@ -274,6 +284,7 @@ void MenuState::background_setup() {
 	_scaler.attach_child(&_title);
 	_scaler.attach_child(&_coffee);
 	_scaler.attach_child(&_plant2);
+	_scaler.attach_child(&_boardGame);
 	_scaler.setScale(5, 5);
 
 	engine::Animator* scaleAnimator = _scaler.setComponent(std::make_unique<engine::Animator>());

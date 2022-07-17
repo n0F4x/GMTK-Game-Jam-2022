@@ -6,6 +6,7 @@
 #include "engine/drawables/Text.hpp"
 #include "UI/ProgressBar.hpp"
 
+#include "states/BoardGameManager.hpp"
 
 class MenuState : public engine::State {
 public:
@@ -55,6 +56,8 @@ private:
 	engine::Sprite _coffee;
 	engine::Object _scaler;
 
+	// Board
+	BoardGameManager _boardGame {BOY};
 
 	bool _characterAnimations = false;
 	// Characters
