@@ -10,6 +10,8 @@
 MenuState::MenuState() {
 	background_setup();
 	character_setup();
+	postits_setup();
+	helper_setup();
 }
 
 
@@ -82,6 +84,13 @@ void MenuState::on_update() {
 			_girlBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
 			_gradpaBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
 			_dogBarBack.getComponent<engine::Animator>()->findAnimation("in")->start();
+
+			_boyPostit.getComponent<engine::Animator>()->findAnimation("in")->start();
+			_girlPostit.getComponent<engine::Animator>()->findAnimation("in")->start();
+			_grandpaPostit.getComponent<engine::Animator>()->findAnimation("in")->start();
+			_dogPostit.getComponent<engine::Animator>()->findAnimation("in")->start();
+
+			_tileInfoDisplay.getComponent<engine::Animator>()->findAnimation("in")->start();
 		}
 	}
 }
@@ -315,4 +324,76 @@ void MenuState::background_setup() {
 	_outlinePulseOffAnimation->setOutlineColor({ 0.f, 0.f, 0.f, -255.f });
 	addObject(&_clickText);
 	renderer().push_background(&_clickText);
+}
+
+
+void MenuState::postits_setup() {
+	_boyPostit.setTexture(&engine::Assets::getTexture("UI/boy_postit"));
+	addObject(&_boyPostit);
+	renderer().push_priority(&_boyPostit);
+	_boyPostit.scale(6.f, 6.f);
+	_boyText.attach_parent(&_boyPostit);
+	_boyText.setPosition(25, 135);
+	_boyText.setFillColor(sf::Color::Black);
+	renderer().push_priority(&_boyText);
+	_boyPostit.setPosition(50 - 500, 125);
+	auto animator = _boyPostit.setComponent(std::make_unique<engine::Animator>());
+	animator->addAnimation("in", std::make_unique<animations::Ease>());
+	animator->findAnimation("in")->setDistance({ 500, 0 });
+	animator->findAnimation("in")->setTime(sf::seconds(6.f));
+
+	_girlPostit.setTexture(&engine::Assets::getTexture("UI/girl_postit"));
+	addObject(&_girlPostit);
+	renderer().push_priority(&_girlPostit);
+	_girlPostit.scale(6.f, 6.f);
+	_girlText.attach_parent(&_girlPostit);
+	_girlText.setPosition(25, 135);
+	_girlText.setFillColor(sf::Color::Black);
+	renderer().push_priority(&_girlText);
+	_girlPostit.setPosition(1600 + 500, 125);
+	animator = _girlPostit.setComponent(std::make_unique<engine::Animator>());
+	animator->addAnimation("in", std::make_unique<animations::Ease>());
+	animator->findAnimation("in")->setDistance({ -500, 0 });
+	animator->findAnimation("in")->setTime(sf::seconds(6.f));
+
+	_dogPostit.setTexture(&engine::Assets::getTexture("UI/dog_postit"));
+	addObject(&_dogPostit);
+	renderer().push_priority(&_dogPostit);
+	_dogPostit.scale(6.f, 6.f);
+	_dogText.attach_parent(&_dogPostit);
+	_dogText.setPosition(25, 135);
+	_dogText.setFillColor(sf::Color::Black);
+	renderer().push_priority(&_dogText);
+	_dogPostit.setPosition(50 - 500, 525);
+	animator = _dogPostit.setComponent(std::make_unique<engine::Animator>());
+	animator->addAnimation("in", std::make_unique<animations::Ease>());
+	animator->findAnimation("in")->setDistance({ 500, 0 });
+	animator->findAnimation("in")->setTime(sf::seconds(6.f));
+
+	_grandpaPostit.setTexture(&engine::Assets::getTexture("UI/grandpa_postit"));
+	addObject(&_grandpaPostit);
+	renderer().push_priority(&_grandpaPostit);
+	_grandpaPostit.scale(6.f, 6.f);
+	_grandpaText.attach_parent(&_grandpaPostit);
+	_grandpaText.setPosition(25, 135);
+	_grandpaText.setFillColor(sf::Color::Black);
+	renderer().push_priority(&_grandpaText);
+	_grandpaPostit.setPosition(1600 + 500, 525);
+	animator = _grandpaPostit.setComponent(std::make_unique<engine::Animator>());
+	animator->addAnimation("in", std::make_unique<animations::Ease>());
+	animator->findAnimation("in")->setDistance({ -500, 0 });
+	animator->findAnimation("in")->setTime(sf::seconds(6.f));
+}
+
+
+void MenuState::helper_setup() {
+	_tileInfoDisplay.setTexture(&engine::Assets::getTexture("UI/helper"));
+	addObject(&_tileInfoDisplay);
+	_tileInfoDisplay.scale(6.f, 6.f);
+	renderer().push_basic(&_tileInfoDisplay);
+	_tileInfoDisplay.setPosition(1040, 885 + 500);
+	auto animator = _tileInfoDisplay.setComponent(std::make_unique<engine::Animator>());
+	animator->addAnimation("in", std::make_unique<animations::Ease>());
+	animator->findAnimation("in")->setDistance({ 0, -500 });
+	animator->findAnimation("in")->setTime(sf::seconds(6.f));
 }

@@ -9,7 +9,7 @@ namespace UI {
 
     class Button : public engine::Sprite {
     public:
-        Button(const sf::Texture* texture, const sf::Texture* hoverTexture, std::function<void()> callback = std::function<void()>());
+        Button(const sf::Texture* texture, const sf::Texture* hoverTexture, std::function<void()> callback = nullptr);
 
         /**
          * @brief sets the callback function of the button
@@ -30,9 +30,9 @@ namespace UI {
     private:
         bool _pressed = false;
         bool _wasButtonPressedLastFrame = false;
-        std::function<void()> _callback;
-        const sf::Texture* _texture;
-        const sf::Texture* _hoverTexture;
+        std::function<void()> _callback = nullptr;
+        const sf::Texture* _texture = nullptr;
+        const sf::Texture* _hoverTexture = nullptr;
         using engine::Sprite::setTexture;
     };
 
