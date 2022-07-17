@@ -11,8 +11,6 @@ public:
 	GameState();
 
 protected:
-	void on_activate() override;
-
 	void handle_event(const sf::Event& event) override;
 	void on_update() override;
 	void on_draw() override;
