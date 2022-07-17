@@ -26,4 +26,10 @@ private:
 	///////////////
 	engine::StateMachine _stateMachine;
     sf::Music _gameplayMusic;
+
+	std::string* _storeState = nullptr;
+	std::string* _globalState = nullptr;
+	std::string* _globalDice = nullptr;
+	std::string* _storeDice = nullptr;
+	sf::Clock _volumeFadeInClock;
 };
