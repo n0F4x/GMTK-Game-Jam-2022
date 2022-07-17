@@ -65,7 +65,6 @@ MenuState::MenuState() {
 	scaleAnimator->findAnimation("zoomOut")->setScale({ -4.f, -4.f });
 	scaleAnimator->findAnimation("zoomOut")->setTime(sf::seconds(3));
 
-	//TODO - test
 	engine::Animator* takerAnimator = _croissant.setComponent(std::make_unique<engine::Animator>());
 	_croissant.getComponent<engine::Animator>()->addAnimation("out", std::make_unique<animations::Ease>());
 	takerAnimator->findAnimation("out")->setDistance({ -150.f, -1300.f });
@@ -117,8 +116,6 @@ MenuState::MenuState() {
 	_outlinePulseOffAnimation->setOutlineColor({ 0.f, 0.f, 0.f, -255.f });
 	addObject(&_clickText);
 	renderer().push_background(&_clickText);
-
-	//TODO - animation
 }
 
 void MenuState::handle_event(const sf::Event& event) {
