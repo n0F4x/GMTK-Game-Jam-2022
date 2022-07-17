@@ -5,7 +5,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_compile_definitions(ENGINE_DEBUG)
+add_compile_definitions()
 
 if(MSVC)
     add_compile_options(/WX)
@@ -59,7 +59,7 @@ set(SOURCE_FILES
     "src/states/description/DescriptionState.cpp"
     "src/animations/BezierOutlineColor.cpp"
     "src/states/CharacterCallbacks.cpp"
-)
+        src/states/BoardGameManager.cpp src/states/Tile.cpp src/states/TileManager.cpp)
 
 set(SFML_DIR ./dependencies/SFML-2.5.1/lib/cmake/SFML)
 
