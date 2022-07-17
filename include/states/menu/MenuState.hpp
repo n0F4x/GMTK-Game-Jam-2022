@@ -28,11 +28,13 @@ private:
 
 	engine::Sprite _floor;
 	engine::Sprite _table;
+	engine::Sprite _table2;
 	engine::Object _scaler;
 	//Tabletop
 	engine::Sprite _title;
 	engine::Sprite _croissant;
 	engine::Sprite _plant;
+	engine::Sprite _plant2;
 	engine::Sprite _coffee;
 
 	engine::Text _clickText{ "( click to start the game )", engine::Assets::getFont("unlearned2"), 56 };

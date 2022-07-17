@@ -20,6 +20,11 @@ MenuState::MenuState() {
 	_table.scale(6.f, 6.f);
 	renderer().push_background(&_table);
 
+	_table2.setTexture(&engine::Assets::getTexture("Environment/coffeetable"));
+	_table2.setPosition(500, -120);
+	_table2.scale(6.f, 6.f);
+	renderer().push_background(&_table2);
+
 	_croissant.setTexture(&engine::Assets::getTexture("Environment/croissant2"));
 	_croissant.setPosition(800, 480);
 	_croissant.scale(4.f, 4.f);
@@ -40,14 +45,21 @@ MenuState::MenuState() {
 	_coffee.scale(4.f, 4.f);
 	renderer().push_background(&_coffee);
 
+	_plant2.setTexture(&engine::Assets::getTexture("Environment/plant2"));
+	_plant2.setPosition(700, 900);
+	_plant2.scale(4.f, 4.f);
+	renderer().push_background(&_plant2);
+
 	_scaler.setPosition(960, 540);
 	_scaler.setOrigin(960, 540);
 	_scaler.attach_child(&_floor);
 	_scaler.attach_child(&_table);
+	_scaler.attach_child(&_table2);
 	_scaler.attach_child(&_croissant);
 	_scaler.attach_child(&_plant);
 	_scaler.attach_child(&_title);
 	_scaler.attach_child(&_coffee);
+	_scaler.attach_child(&_plant2);
 	_scaler.setScale(5, 5);
 
 	engine::Animator* scaleAnimator = _scaler.setComponent(std::make_unique<engine::Animator>());
@@ -56,11 +68,29 @@ MenuState::MenuState() {
 	scaleAnimator->findAnimation("zoomOut")->setTime(sf::seconds(3));
 
 	//TODO - test
-	engine::Animator* testAnimator = _croissant.setComponent(std::make_unique<engine::Animator>());
+	engine::Animator* takerAnimator = _croissant.setComponent(std::make_unique<engine::Animator>());
 	_croissant.getComponent<engine::Animator>()->addAnimation("out", std::make_unique<animations::Ease>());
-	testAnimator->findAnimation("out")->setDistance({ -400.f, -600.f });
-	testAnimator->findAnimation("out")->setTime(sf::seconds(3));
+	takerAnimator->findAnimation("out")->setDistance({ -150.f, -1300.f });
+	takerAnimator->findAnimation("out")->setTime(sf::seconds(3));
 	addObject(&_croissant);
+
+	takerAnimator = _title.setComponent(std::make_unique<engine::Animator>());
+	_title.getComponent<engine::Animator>()->addAnimation("out", std::make_unique<animations::Ease>());
+	takerAnimator->findAnimation("out")->setDistance({ -630.f, -920.f });
+	takerAnimator->findAnimation("out")->setTime(sf::seconds(4));
+	addObject(&_title);
+
+	takerAnimator = _coffee.setComponent(std::make_unique<engine::Animator>());
+	_coffee.getComponent<engine::Animator>()->addAnimation("out", std::make_unique<animations::Ease>());
+	takerAnimator->findAnimation("out")->setDistance({ -400.f, -1300.f });
+	takerAnimator->findAnimation("out")->setTime(sf::seconds(3));
+	addObject(&_coffee);
+
+	takerAnimator = _plant.setComponent(std::make_unique<engine::Animator>());
+	_plant.getComponent<engine::Animator>()->addAnimation("out", std::make_unique<animations::Ease>());
+	takerAnimator->findAnimation("out")->setDistance({ 400.f, -900.f });
+	takerAnimator->findAnimation("out")->setTime(sf::seconds(2));
+	addObject(&_plant);
 
 	addObject(&_scaler);
 
@@ -75,8 +105,7 @@ MenuState::MenuState() {
 	addObject(&_clickText);
 	renderer().push_background(&_clickText);
 
-	//TODO - (click to start game) text on bottom center of screen
-	//TODO - take items off table animation, main title, click text fadeOut while zooming out
+	//TODO - animation
 }
 
 void MenuState::handle_event(const sf::Event& event) {
@@ -98,6 +127,10 @@ void MenuState::on_update() {
 		_clickText.getComponent<engine::Animator>()->findAnimation("colorOut")->start();
 		_scaler.getComponent<engine::Animator>()->findAnimation("zoomOut")->start();
 		_croissant.getComponent<engine::Animator>()->findAnimation("out")->start();
+		_title.getComponent<engine::Animator>()->findAnimation("out")->start();
+		_coffee.getComponent<engine::Animator>()->findAnimation("out")->start();
+		_plant.getComponent<engine::Animator>()->findAnimation("out")->start();
+		_startGame = false;
 		if (_clock.getElapsedTime() >= sf::seconds(3)) {
 			//changeState("Game");
 		}
