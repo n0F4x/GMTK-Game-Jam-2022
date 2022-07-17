@@ -14,6 +14,7 @@ public:
 
 protected:
 	void on_draw() override;
+	void handle_event(const sf::Event&) override;
 	void on_update() override;
     void on_activate() override;
     void on_deactivate() override;
@@ -29,6 +30,9 @@ private:
     ///////////////
 	// Variables //
 	///////////////
+
+	bool _backToMenu = false;
+	bool _clockRestarted = false;
 
     // Music
     sf::Music _gameoverMusic;
