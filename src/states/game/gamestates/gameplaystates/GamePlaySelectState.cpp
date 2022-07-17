@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "engine/Assets.hpp"
+#include "engine/Window.hpp"
 #include "animations/Bezier.hpp"
 
 
@@ -38,19 +39,24 @@ GamePlaySelectState::GamePlaySelectState() {
 	_dice6.setPosition(1369, 700);
 	renderer().push_priority(&_dice6);
 
-
 	_button1.setPosition(369, 700);
 	_button1.scale(7.f, 7.f);
+	_button1.setCallback([this]() { *_storeDice = "1"; _skipped = true; });
 	_button2.setPosition(569, 700);
 	_button2.scale(7.f, 7.f);
+	_button2.setCallback([this]() { *_storeDice = "2"; _skipped = true; });
 	_button3.setPosition(769, 700);
 	_button3.scale(7.f, 7.f);
+	_button3.setCallback([this]() { *_storeDice = "3"; _skipped = true; });
 	_button4.setPosition(969, 700);
 	_button4.scale(7.f, 7.f);
+	_button4.setCallback([this]() { *_storeDice = "4"; _skipped = true; });
 	_button5.setPosition(1169, 700);
 	_button5.scale(7.f, 7.f);
+	_button5.setCallback([this]() { *_storeDice = "5"; _skipped = true; });
 	_button6.setPosition(1369, 700);
 	_button6.scale(7.f, 7.f);
+	_button6.setCallback([this]() { *_storeDice = "6"; _skipped = true; });
 
 	_selectText.setTexture(&engine::Assets::getTexture("UI/select"));
 	_selectText.scale(10.f, 10.f);
@@ -90,6 +96,10 @@ int GamePlaySelectState::setup() {
 		std::cerr << "\nGamePlaySelectState: [ERROR] _storeState is nullptr.\n";
 		return 1;
 	}
+	if (_storeDice = globalStore()->get("dice"); _storeDice == nullptr) {
+		std::cerr << "\nGamePlaySelectState: [ERROR] _storeDice is nullptr.\n";
+		return 1;
+	}
 	return 0;
 }
 
@@ -99,13 +109,13 @@ void GamePlaySelectState::on_activate() {
 	_clock.restart();
 	_exiting = false;
 	_active = false;
+	_skipped = false;
 }
 
 
 void GamePlaySelectState::on_update() {
 	if (!_exiting && _clock.getElapsedTime() > sf::seconds(0.5f)) {
 		_selectTime.setProgress(1.f - (_clock.getElapsedTime().asSeconds() - 0.5f) / 3.f);
-
 		_button1.update();
 		_button2.update();
 		_button3.update();
@@ -122,10 +132,11 @@ void GamePlaySelectState::on_update() {
 			_active = true;
 		}
 	}
-	if (_clock.getElapsedTime() > sf::seconds(3.5f)) {
+	if (_clock.getElapsedTime() > sf::seconds(3.5f) || _skipped) {
 		_selectHolder.getComponent<engine::Animator>()->findAnimation("out")->start();
 		_clock.restart();
 		_exiting = true;
+		_skipped = false;
 		renderer().remove_priority(&_button1);
 		renderer().remove_priority(&_button2);
 		renderer().remove_priority(&_button3);
