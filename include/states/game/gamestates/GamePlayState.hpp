@@ -26,4 +26,5 @@ private:
 	///////////////
 	engine::StateMachine _stateMachine;
     sf::Music _gameplayMusic;
+    sf::Clock _volumeFadeInClock;
 };
