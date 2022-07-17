@@ -5,6 +5,7 @@
 #include "animations/BezierScale.hpp"
 #include "animations/BezierFillColor.hpp"
 #include "animations/BezierOutlineColor.hpp"
+#include "states/Settings.hpp"
 
 
 MenuState::MenuState() {
@@ -12,6 +13,7 @@ MenuState::MenuState() {
 	character_setup();
 	postits_setup();
 	helper_setup();
+    music_setup();
 }
 
 
@@ -27,6 +29,12 @@ void MenuState::on_activate() {
 	_startGame = false;
 	_started = false;
 	_characterAnimations = false;
+
+    if(Settings::soundOn) _menuMusic.play();
+}
+
+void MenuState::on_deactivate() {
+    _menuMusic.stop();
 }
 
 
@@ -397,4 +405,9 @@ void MenuState::helper_setup() {
 	animator->addAnimation("in", std::make_unique<animations::Ease>());
 	animator->findAnimation("in")->setDistance({ 0, -500 });
 	animator->findAnimation("in")->setTime(sf::seconds(5.f));
+}
+
+void MenuState::music_setup() {
+    _menuMusic.openFromFile(engine::Assets::ASSETS_PATH + "/music/menu.ogg");
+    _menuMusic.setLoop(true);
 }
