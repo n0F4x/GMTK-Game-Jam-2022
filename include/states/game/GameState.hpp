@@ -61,6 +61,9 @@ private:
 
     BoardGameManager _boardGameManager { CharacterType::BOY };
 
+	// Time
+	UI::ProgressBar _timeDisplay{ { 600, 20 } };
+
 	// Helper
 	engine::Sprite _tileInfoDisplay;
 };
