@@ -77,18 +77,26 @@ GameOverState::GameOverState() {
 	_boardGameManager.getComponent<engine::Animator>()->findAnimation("fade")->start();
 }
 
+void GameOverState::handle_event(const sf::Event& event) {
+	if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+		_backToMenu = true;
+	}
+}
+
 void GameOverState::on_update() {
-	if (_clock.getElapsedTime() > sf::seconds(3)) {
+	if (_clockRestarted && _clock.getElapsedTime() >= sf::seconds(3)) {
+		changeState("Menu");
+	}
+	if (_backToMenu) {
 		_gameOver.getComponent<engine::Animator>()->findAnimation("fade")->start();
 		_title.getComponent<engine::Animator>()->findAnimation("fade")->start();
 		_coffee.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_plant.getComponent<engine::Animator>()->findAnimation("in")->start();
 		_croissant.getComponent<engine::Animator>()->findAnimation("in")->start();
+		_backToMenu = false;
+		_clock.restart();
+		_clockRestarted = true;
 	}
-	if (_clock.getElapsedTime() > sf::seconds(6)) {
-		changeState("Menu");
-	}
-
 }
 
 void GameOverState::on_draw() {
@@ -96,6 +104,8 @@ void GameOverState::on_draw() {
 }
 
 void GameOverState::on_activate() {
+	_backToMenu = false;
+	_clockRestarted = false;
     if(Settings::soundOn) _gameoverMusic.play();
 }
 
