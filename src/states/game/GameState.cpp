@@ -133,7 +133,7 @@ void GameState::background_setup() {
 	renderer().push_background(&_table);
 
 	_table2.setTexture(&engine::Assets::getTexture("Environment/coffeetable"));
-	_table2.setPosition(500, -120);
+	_table2.setPosition(550, -120);
 	_table2.scale(6.f, 6.f);
 	renderer().push_background(&_table2);
 
@@ -143,8 +143,8 @@ void GameState::background_setup() {
 	renderer().push_background(&_croissant);
 
 	_title.setTexture(&engine::Assets::getTexture("UI/title"));
-	_title.setPosition(620, 18);
-	//_title.scale(7.5f / 5.f, 7.5f / 5.f);
+	_title.setPosition(618.5f, 18);
+	_title.scale(1.25f, 1.25f);
 	renderer().push_background(&_title);
 
 	_plant.setTexture(&engine::Assets::getTexture("Environment/plant"));
