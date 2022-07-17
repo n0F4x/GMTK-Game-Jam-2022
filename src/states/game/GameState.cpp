@@ -47,21 +47,21 @@ void GameState::on_update() {
 		_marker.setRotation(-45);
     }
     if (_boardGameManager.getActiveCharacter().getType() == GIRL) {
-        _marker.setPosition(360, 140);
+        _marker.setPosition(1570, 140);
 		_marker.setRotation(45);
     }
     if (_boardGameManager.getActiveCharacter().getType() == GRANDPA) {
-		_marker.setPosition(360, 140);
+		_marker.setPosition(1570, 960);
 		_marker.setRotation(135);
     }
     if (_boardGameManager.getActiveCharacter().getType() == DOGE) {
-		_marker.setPosition(360, 140);
+		_marker.setPosition(360, 935);
 		_marker.setRotation(-135);
     }
 
     if (state == 0) {
-        _timeDisplay.setProgress((5.f - timer.getElapsedTime().asSeconds()) / 5.f);
-        if (timer.getElapsedTime().asSeconds() >= 5.f) {
+        _timeDisplay.setProgress((0.5f - timer.getElapsedTime().asSeconds()) / 0.5f);
+        if (timer.getElapsedTime().asSeconds() >= 0.5f) {
             state = 1;
             *store().get("selector") = "Select";
             *store().get("dice") = "7";
