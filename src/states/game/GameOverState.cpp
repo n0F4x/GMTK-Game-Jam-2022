@@ -9,12 +9,44 @@
 
 GameOverState::GameOverState() {
 	_scaler.setPosition(960, 540);
+}
+
+void GameOverState::on_update() {
+	if (_clock.getElapsedTime() > sf::seconds(3)) {
+		_gameOver.getComponent<engine::Animator>()->findAnimation("fade")->start();
+		_title.getComponent<engine::Animator>()->findAnimation("fade")->start();
+		_coffee.getComponent<engine::Animator>()->findAnimation("in")->start();
+		_plant.getComponent<engine::Animator>()->findAnimation("in")->start();
+		_croissant.getComponent<engine::Animator>()->findAnimation("in")->start();
+	}
+	if (_clock.getElapsedTime() > sf::seconds(6)) {
+		renderer().flush_background();
+		renderer().flush_basic();
+		renderer().flush_priority();
+		changeState("Menu");
+	}
+
+}
+
+void GameOverState::on_draw() {
+	renderer().render();
+}
+
+void GameOverState::on_activate() {
+    if(Settings::soundOn) _gameoverMusic.play();
+
+	renderer().flush_background();
+	renderer().flush_basic();
+	renderer().flush_priority();
+
+	_scaler.setScale(1, 1);
 
 	background_setup();
 	character_setup();
 	postits_setup();
 	game_board_setup();
 	helper_setup();
+    music_setup();
 
 	_clock.restart();
 
@@ -32,7 +64,7 @@ GameOverState::GameOverState() {
 
 	_gameOver.setTexture(&engine::Assets::getTexture("UI/gameover"));
 	_gameOver.setPosition(935, 480);
-	_gameOver.scale(1.5f);
+	_gameOver.setScale(1.5f);
 	_gameOver.attach_parent(&_scaler);
 	renderer().push_background(&_gameOver);
 
@@ -44,12 +76,12 @@ GameOverState::GameOverState() {
 
 	_title.setTexture(&engine::Assets::getTexture("UI/title"));
 	_title.setPosition(935, 480);
-	_title.scale(1.5f);
+	_title.setScale(1.5f);
 	_title.attach_parent(&_scaler);
 	renderer().push_background(&_title);
 	addObject(&_title);
 
-	_title.setFillColor({_title.getFillColor()->r, _title.getFillColor()->g, _title.getFillColor()->b, 0});
+	_title.setFillColor({ _title.getFillColor()->r, _title.getFillColor()->g, _title.getFillColor()->b, 0 });
 	animator = _title.setComponent(std::make_unique<engine::Animator>());
 	animator->addAnimation("fade", std::make_unique<animations::EaseFillColor>());
 	animator->findAnimation("fade")->setFillColor({ 0,0,0,255 });
@@ -77,6 +109,7 @@ GameOverState::GameOverState() {
 	_boardGameManager.getComponent<engine::Animator>()->findAnimation("fade")->start();
 }
 
+<<<<<<< HEAD
 void GameOverState::handle_event(const sf::Event& event) {
 	if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
 		_backToMenu = true;
@@ -109,6 +142,8 @@ void GameOverState::on_activate() {
     if(Settings::soundOn) _gameoverMusic.play();
 }
 
+=======
+>>>>>>> 0d176bb16c39c574644e11c584fe0103d01a43ea
 void GameOverState::on_deactivate() {
     _gameoverMusic.stop();
 }
@@ -116,32 +151,32 @@ void GameOverState::on_deactivate() {
 void GameOverState::character_setup() {
 	_boy.setTexture(&engine::Assets::getTexture("Environment/blue_player"));
 	_boy.setPosition(360, 120);
-	_boy.scale(8.f, 8.f);
+	_boy.setScale(8.f, 8.f);
 	addObject(&_boy);
 	renderer().push_basic(&_boy);
 
 	_girl.setTexture(&engine::Assets::getTexture("Environment/green_player"));
 	_girl.setPosition(sf::Vector2f(1300, 100));
-	_girl.scale(10.f, 10.f);
+	_girl.setScale(10.f, 10.f);
 	addObject(&_girl);
 	renderer().push_basic(&_girl);
 
 	_grandpa.setTexture(&engine::Assets::getTexture("Environment/red_player"));
 	_grandpa.setPosition(1290, 650);
-	_grandpa.scale(12.f, 12.f);
+	_grandpa.setScale(12.f, 12.f);
 	addObject(&_grandpa);
 	renderer().push_basic(&_grandpa);
 
 	_dog.setTexture(&engine::Assets::getTexture("Environment/yellow_player"));
 	_dog.setPosition(sf::Vector2f(350, 700));
-	_dog.scale(8.f, 8.f);
+	_dog.setScale(8.f, 8.f);
 	addObject(&_dog);
 	renderer().push_basic(&_dog);
 
 	// Happinesses
 	_boyBarBack.setTexture(&engine::Assets::getTexture("UI/bar_background"));
 	_boyBarBack.setPosition(50, 50);
-	_boyBarBack.scale(4.f, 4.f);
+	_boyBarBack.setScale(4.f, 4.f);
 	addObject(&_boyBarBack);
 	renderer().push_basic(&_boyBarBack);
 
@@ -153,7 +188,7 @@ void GameOverState::character_setup() {
 	_boyBar.setSecondaryColor(sf::Color(223, 63, 35, 255));
 
 	_girlBarBack.setTexture(&engine::Assets::getTexture("UI/bar_background"));
-	_girlBarBack.scale(4.f, 4.f);
+	_girlBarBack.setScale(4.f, 4.f);
 	addObject(&_girlBarBack);
 	renderer().push_basic(&_girlBarBack);
 
@@ -169,7 +204,7 @@ void GameOverState::character_setup() {
 
 	_dogBarBack.setTexture(&engine::Assets::getTexture("UI/bar_background"));
 	_dogBarBack.setPosition(50, 990);
-	_dogBarBack.scale(4.f, 4.f);
+	_dogBarBack.setScale(4.f, 4.f);
 	addObject(&_dogBarBack);
 	renderer().push_basic(&_dogBarBack);
 
@@ -181,7 +216,7 @@ void GameOverState::character_setup() {
 	_dogBar.setSecondaryColor(sf::Color(223, 63, 35, 255));
 
 	_gradpaBarBack.setTexture(&engine::Assets::getTexture("UI/bar_background"));
-	_gradpaBarBack.scale(4.f, 4.f);
+	_gradpaBarBack.setScale(4.f, 4.f);
 	addObject(&_gradpaBarBack);
 	renderer().push_basic(&_gradpaBarBack);
 
@@ -208,37 +243,37 @@ void GameOverState::character_setup() {
 
 void GameOverState::background_setup() {
 	_floor.setTexture(&engine::Assets::getTexture("Environment/floor"));
-	_floor.scale(6.f, 6.f);
+	_floor.setScale(6.f, 6.f);
 	renderer().push_background(&_floor);
 
 	_table.setTexture(&engine::Assets::getTexture("Environment/table"));
 	_table.setPosition(480, 270);
-	_table.scale(6.f, 6.f);
+	_table.setScale(6.f, 6.f);
 	renderer().push_background(&_table);
 
 	_table2.setTexture(&engine::Assets::getTexture("Environment/coffeetable"));
 	_table2.setPosition(625, -120);
-	_table2.scale(6.f, 6.f);
+	_table2.setScale(6.f, 6.f);
 	renderer().push_background(&_table2);
 
 	_croissant.setTexture(&engine::Assets::getTexture("Environment/croissant2"));
 	_croissant.setPosition(740, -40);
-	_croissant.scale(4.f, 4.f);
+	_croissant.setScale(4.f, 4.f);
 	renderer().push_background(&_croissant);
 
 	_plant.setTexture(&engine::Assets::getTexture("Environment/plant"));
 	_plant.setPosition(1170, 82);
-	_plant.scale(4.f, 4.f);
+	_plant.setScale(4.f, 4.f);
 	renderer().push_background(&_plant);
 
 	_coffee.setTexture(&engine::Assets::getTexture("Environment/coffee"));
 	_coffee.setPosition(890, 30);
-	_coffee.scale(4.f, 4.f);
+	_coffee.setScale(4.f, 4.f);
 	renderer().push_background(&_coffee);
 
 	_plant2.setTexture(&engine::Assets::getTexture("Environment/plant2"));
 	_plant2.setPosition(700, 900);
-	_plant2.scale(4.f, 4.f);
+	_plant2.setScale(4.f, 4.f);
 	renderer().push_background(&_plant2);
 
 	_scaler.attach_child(&_floor);
@@ -255,7 +290,7 @@ void GameOverState::postits_setup() {
 	_boyPostit.setTexture(&engine::Assets::getTexture("UI/boy_postit"));
 	addObject(&_boyPostit);
 	renderer().push_priority(&_boyPostit);
-	_boyPostit.scale(6.f, 6.f);
+	_boyPostit.setScale(6.f, 6.f);
 	_boyText.attach_parent(&_boyPostit);
 	_boyText.setPosition(25, 135);
 	_boyText.setFillColor(sf::Color::Black);
@@ -265,7 +300,7 @@ void GameOverState::postits_setup() {
 	_girlPostit.setTexture(&engine::Assets::getTexture("UI/girl_postit"));
 	addObject(&_girlPostit);
 	renderer().push_priority(&_girlPostit);
-	_girlPostit.scale(6.f, 6.f);
+	_girlPostit.setScale(6.f, 6.f);
 	_girlText.attach_parent(&_girlPostit);
 	_girlText.setPosition(25, 135);
 	_girlText.setFillColor(sf::Color::Black);
@@ -275,7 +310,7 @@ void GameOverState::postits_setup() {
 	_dogPostit.setTexture(&engine::Assets::getTexture("UI/dog_postit"));
 	addObject(&_dogPostit);
 	renderer().push_priority(&_dogPostit);
-	_dogPostit.scale(6.f, 6.f);
+	_dogPostit.setScale(6.f, 6.f);
 	_dogText.attach_parent(&_dogPostit);
 	_dogText.setPosition(25, 135);
 	_dogText.setFillColor(sf::Color::Black);
@@ -285,7 +320,7 @@ void GameOverState::postits_setup() {
 	_grandpaPostit.setTexture(&engine::Assets::getTexture("UI/grandpa_postit"));
 	addObject(&_grandpaPostit);
 	renderer().push_priority(&_grandpaPostit);
-	_grandpaPostit.scale(6.f, 6.f);
+	_grandpaPostit.setScale(6.f, 6.f);
 	_grandpaText.attach_parent(&_grandpaPostit);
 	_grandpaText.setPosition(25, 135);
 	_grandpaText.setFillColor(sf::Color::Black);
@@ -315,7 +350,7 @@ void GameOverState::game_board_setup() {
 void GameOverState::helper_setup() {
 	_tileInfoDisplay.setTexture(&engine::Assets::getTexture("UI/helper"));
 	addObject(&_tileInfoDisplay);
-	_tileInfoDisplay.scale(6.f, 6.f);
+	_tileInfoDisplay.setScale(6.f, 6.f);
 	renderer().push_basic(&_tileInfoDisplay);
 	_tileInfoDisplay.setPosition(1040, 885);
 
