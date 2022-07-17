@@ -23,7 +23,7 @@ namespace animations {
 
 		sf::Time _timePassed;
 
-		sf::Color _colored;
+		engine::Color _colored;
 	};
 
 

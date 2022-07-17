@@ -5,15 +5,6 @@
 using namespace animations;
 
 
-sf::Color operator*(sf::Color color, float factor) {
-	color.r = static_cast<sf::Uint8>((float)color.r * factor);
-	color.g = static_cast<sf::Uint8>((float)color.g * factor);
-	color.b = static_cast<sf::Uint8>((float)color.b * factor);
-	color.a = static_cast<sf::Uint8>((float)color.a * factor);
-	return color;
-}
-
-
 BezierColor::BezierColor(const sf::Vector2f& point1, const sf::Vector2f& point2) : _bezier{ point1, point2 }, _bezierCopy{ point1, point2 } {}
 
 
@@ -25,7 +16,7 @@ void BezierColor::update(sf::Time deltaTime) {
 	_timePassed += deltaTime;
 
 	if (_timePassed >= getTime()) {
-		object()->setColor(*object()->getColor() + getColor() - _colored);
+		object()->setColor(engine::Color{ *object()->getColor() } + getColor() - _colored);
 
 		stop();
 		return;
@@ -34,8 +25,8 @@ void BezierColor::update(sf::Time deltaTime) {
 	float progress = _bezier.GetEasingProgress(_timePassed / getTime());
 
 	// Color
-	sf::Color colored = getColor() * progress;
-	object()->setColor(*object()->getColor() + colored - _colored);
+	engine::Color colored = getColor() * progress;
+	object()->setColor(engine::Color{ *object()->getColor() } + colored - _colored);
 	_colored = colored;
 }
 
