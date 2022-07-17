@@ -33,19 +33,21 @@ namespace engine {
 		float b = 255;
 		float a = 255;
 
-		Color operator+(Color other) const {
-			other.r += r;
-			other.g += g;
-			other.b += b;
-			other.a += a;
-			return other;
+		Color operator+(const Color& other) const {
+			Color result = *this;
+			result.r += other.r;
+			result.g += other.g;
+			result.b += other.b;
+			result.a += other.a;
+			return result;
 		}
 		Color operator-(Color other) const {
-			other.r -= r;
-			other.g -= g;
-			other.b -= b;
-			other.a -= a;
-			return other;
+			Color result = *this;
+			result.r -= other.r;
+			result.g -= other.g;
+			result.b -= other.b;
+			result.a -= other.a;
+			return result;
 		}
 		Color operator*(float factor) const {
 			Color result = *this;

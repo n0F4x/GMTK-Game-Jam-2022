@@ -40,7 +40,7 @@ set(SOURCE_FILES
     "src/engine/components/Animation.cpp"
     "src/animations/Bezier.cpp"
     "src/animations/BezierScale.cpp"
-    "src/animations/BezierColor.cpp"
+    "src/animations/BezierFillColor.cpp"
     "src/engine/components/Bezier.cpp"
     "src/UI/Button.cpp"
     "src/UI/ProgressBar.cpp"
@@ -57,7 +57,7 @@ set(SOURCE_FILES
     "src/states/game/gamestates/gameplaystates/GamePlayLookaroundState.cpp"
     "src/states/game/gamestates/gameplaystates/GamePlaySelectState.cpp"
     "src/states/description/DescriptionState.cpp"
-)
+ "src/animations/BezierOutlineColor.cpp")
 
 set(SFML_DIR ./dependencies/SFML-2.5.1/lib/cmake/SFML)
 

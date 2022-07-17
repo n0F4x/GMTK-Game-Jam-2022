@@ -76,18 +76,8 @@ void Shape::setTextureRect(const sf::IntRect& rect) {
 
 
 ////////////////////////////////////////////////////////////
-void Shape::setColor(const sf::Color& color) {
-	setFillColor(color);
-}
-
-
-////////////////////////////////////////////////////////////
 const sf::IntRect& Shape::getTextureRect() const {
 	return m_textureRect;
-}
-
-const sf::Color* engine::Shape::getColor() const {
-	return &getFillColor();
 }
 
 
@@ -99,8 +89,8 @@ void Shape::setFillColor(const sf::Color& color) {
 
 
 ////////////////////////////////////////////////////////////
-const sf::Color& Shape::getFillColor() const {
-	return m_fillColor;
+const sf::Color* Shape::getFillColor() const {
+	return &m_fillColor;
 }
 
 
@@ -112,8 +102,8 @@ void Shape::setOutlineColor(const sf::Color& color) {
 
 
 ////////////////////////////////////////////////////////////
-const sf::Color& Shape::getOutlineColor() const {
-	return m_outlineColor;
+const sf::Color* Shape::getOutlineColor() const {
+	return &m_outlineColor;
 }
 
 

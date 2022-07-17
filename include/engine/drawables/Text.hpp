@@ -17,9 +17,8 @@ namespace engine {
         void setLineSpacing(float spacingFactor);
         void setLetterSpacing(float spacingFactor);
         void setStyle(sf::Uint32 style);
-        void setColor(const sf::Color& color) override;
-        void setFillColor(const sf::Color& color);
-        void setOutlineColor(const sf::Color& color);
+        void setFillColor(const sf::Color& color) override;
+        void setOutlineColor(const sf::Color& color) override;
         void setOutlineThickness(float thickness);
 
         const sf::String& getString() const;
@@ -28,9 +27,8 @@ namespace engine {
         float getLetterSpacing() const;
         float getLineSpacing() const;
         sf::Uint32 getStyle() const;
-        const sf::Color* getColor() const override;
-        const sf::Color& getFillColor() const;
-        const sf::Color& getOutlineColor() const;
+        const sf::Color* getFillColor() const override;
+        const sf::Color* getOutlineColor() const override;
         float getOutlineThickness() const;
 
         sf::Vector2f findCharacterPos(std::size_t index) const;

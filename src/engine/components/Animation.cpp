@@ -61,8 +61,12 @@ void Animation::setTextureTime(sf::Time time) {
 	_textureTime = time;
 }
 
-void Animation::setColor(const Color& color) {
-	_color = color;
+void Animation::setFillColor(const Color& color) {
+	_fillColor = color;
+}
+
+void Animation::setOutlineColor(const Color& color) {
+	_outlineColor = color;
 }
 
 
@@ -90,8 +94,12 @@ sf::Time Animation::getTextureTime() const {
 	return _textureTime;
 }
 
-const Color& Animation::getColor() const {
-	return _color;
+const Color& Animation::getFillColor() const {
+	return _fillColor;
+}
+
+const Color& Animation::getOutlineColor() const {
+	return _outlineColor;
 }
 
 
