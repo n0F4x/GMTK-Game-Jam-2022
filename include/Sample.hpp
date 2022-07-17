@@ -416,18 +416,24 @@ public:
 		_tileInfoDisplay.getComponent<engine::Animator>()->findAnimation("in")->start();
 
 		renderer().push_basic(&_boardGameMgr);
-        _boardGameMgr.tick(1);
+
+        std::function<void(Character&)> loseCallback = [](Character& character) {
+            printf("%d lost\n", character.getType());
+        };
+
+        for (int i = 0; i < 4; ++i) {
+            addObject(&_boardGameMgr.getCharacter(static_cast<CharacterType>(i)));
+            _boardGameMgr.getCharacter(static_cast<CharacterType>(i)).setLoseCallback(loseCallback);
+        }
+
+        _boardGameMgr.setGameOverCallback([](Character& character) {
+            printf("game over, %d won.\n", character.getType());
+        });
 
         _boyBar.setProgress(_boardGameMgr.getCharacter(CharacterType::BOY).getHappinessNormed());
         _girlBar.setProgress(_boardGameMgr.getCharacter(CharacterType::GIRL).getHappinessNormed());
         _grandpaBar.setProgress(_boardGameMgr.getCharacter(CharacterType::GRANDPA).getHappinessNormed());
         _dogBar.setProgress(_boardGameMgr.getCharacter(CharacterType::DOGE).getHappinessNormed());
-
-        _boardGameMgr.tick(3);
-        _boardGameMgr.tick(7);
-        _boardGameMgr.tick(5);
-
-
 	}
 
 	void handle_event(const sf::Event& event) override {
@@ -437,8 +443,22 @@ public:
 		}
 	}
 
+    int counter = 0;
+
 	void on_update() override {
 		_machine->update();
+        _boardGameMgr.updateBoard();
+        if (!_boardGameMgr.isBoardOccupied()) {
+            switch (counter) {
+                case 0:
+                    _boardGameMgr.diceRoll(3);
+                    break;
+                case 1:
+                    _boardGameMgr.diceRoll(2);
+                    break;
+            }
+            counter++;
+        }
 	}
 
 	void on_draw() override {
@@ -479,7 +499,7 @@ private:
 
 	TileManager _tileMgr;
 	engine::RectangleShape _tilesBg;
-    BoardGameManager _boardGameMgr{BOY};
+    BoardGameManager _boardGameMgr{GIRL};
 };
 
 
